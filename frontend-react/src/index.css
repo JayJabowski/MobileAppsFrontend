@@ -11,3 +11,186 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.fullPage{
+  display:flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.mainContainer{
+
+  max-width: 40em;
+  width: 100%;
+  height:100%;
+
+  display:flex;
+  flex-direction:column;
+
+  background-color: cyan;
+
+  margin: 0;
+  padding: 0;
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.loginHeader{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.loginHeader h1{
+  font-size: medium;
+  font-weight: 300;
+  padding: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.loginHeader h1:hover{
+  color: cyan;
+  background-color: darkblue;
+}
+
+.loginHeader .selected{
+  font-weight: bolder;
+}
+
+.loginForm{
+  display:flex;
+  flex-direction: column;
+
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+
+}
+.loginForm input{
+  margin-bottom: 2em;
+}
+
+.loginForm label{
+  font-weight: 300;
+}
+
+button{
+  color:darkblue;
+
+  background-color: cyan;
+  height: 3em;
+  border-radius: 0%;
+  border-width: 0.1em;
+  border-color: darkblue;
+
+  font-weight: bolder;
+}
+
+button:hover{
+  color: cyan;
+  background-color: darkblue;
+}
+
+.chatBox{
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  background-color: azure;
+}
+
+.chatMessage{
+  display:flex;
+  flex-direction: column;
+
+  max-width: 90%;;
+  background-color: cyan;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+
+  padding: 0.4em;
+
+  border-radius: 0.8em;
+}
+
+.chatMessage .message{
+  font-weight: 400;
+  margin: 0;
+  padding: 0em;
+}
+
+.chatMessage label{
+  font-size: small;
+  font-weight: 800;
+}
+
+.chatMessage .time{
+  font-weight:300;
+  font-size: smaller;
+}
+
+.messageBox{
+  margin: 0.5em;
+  display: flex;
+  flex-direction: row;
+}
+
+.messageBox button{
+  max-width: 10em;
+  border-radius: 0.8em;
+}
+
+.messageBox input{
+  margin-right: 0.2em;
+  flex-grow:1;
+
+  border: 0;
+  border-radius: 0.8em;;
+}
+
+.titleBar{
+  padding: 0.5em;
+  width: 100%;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.titleBar .menuButton {
+  font-weight: bolder;
+  font-size: small;
+  padding: 1em;
+  max-width: 10em;
+  margin-right: 0.5em;
+  border-radius: 0.8em;
+}
+
+.titleBar .title{
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.menu{
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: cyan;
+  width: 50%;
+  padding: 1em;
+  border-width: 0.2em;
+  border-color: darkblue;
+}
+
+.menuItem{
+  width: 100%;
+  padding: 0.1em;
+  margin: 0.1em;
+}
+.menuItem:hover{
+  background-color: darkblue;
+  color:cyan;
+}

@@ -1,24 +1,36 @@
-import React from 'react'
-import useActiveState from '../hooks/useActiveState';
+import React from "react";
+import useActiveState from "../hooks/useActiveState";
 
-function Menu({callback}) {
-    const {activeState, setActiveState} = useActiveState();
+function Menu({ callback }) {
+  const { activeState, setActiveState } = useActiveState();
 
-    const updateActiveState = (state) => {
-        setActiveState(state);
-    }
+  const updateActiveState = (state) => {
+    setActiveState(state);
+  };
 
-
-    return (
-        <>
-        <div onClick={(e) => {
+  return (
+    <>
+      <div className="menu">
+        <div
+          className="menuItem"
+          onClick={(e) => {
             updateActiveState("loggedOut");
             callback("menuNotShown");
-        }}>
-            Logout
+          }}
+        >
+          Logout
         </div>
-        </>
-      );
+        <div
+          className="menuItem"
+          onClick={(e) => {
+            callback("menuNotShown");
+          }}
+        >
+          Close Menu
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Menu;

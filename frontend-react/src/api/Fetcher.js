@@ -43,17 +43,38 @@ const deleteCustomer = async (customerObj, token) => {
 */
 
 const fetchLogin = async(user,pass) =>{
-  //TODO: replace token
+//returns token in response.data
+  const lazyFix = pass || "WeakArmsStrongPasswords";
 
-  const response = await axios.get("login", {
-    headers: { "Content-Type": "application/json", Authorization: "REPLACE ME" },
-    withCredentials: true
+  const response = await axios.get(`?request=login&userid=${user}&password=${lazyFix}`, {
+    headers: { "Content-Type": "application/json"}
   });
 
   return response;
 
 }
 
+const register = async ({userid, nickname,fullname, password})=> {
+//returns token in response.data
+
+  const response = await axios.get(`?request=register&userid=${userid}&password=${password}&nickname=${nickname}&fullname=${fullname}`, {
+    headers: { "Content-Type": "application/json"}
+  });
+
+  return response;
+
+}
+
+const fetchMessages = async (token) => {
+  const response = await axios.get(`?request=fetchmessages&token=${token}`, {
+    headers: { "Content-Type": "application/json"}
+  });
+
+  return response;
+}
+
 export {
-  fetchLogin
+  fetchLogin,
+  register,
+  fetchMessages
 }

@@ -8,10 +8,13 @@ import React, {useState} from "react";
 //LOCAL
 import Login from "./pages/login";
 import GroupChat from "./pages/groupchat";
+import Menu from "./components/menu";
+import Register from "./pages/register";
 
 //CSS
 import useActiveState from "./hooks/useActiveState";
 import useAuth from "./hooks/useAuth";
+import TitleBar from "./components/titlebar";
 
 function App() {
   const { auth } = useAuth();
@@ -22,13 +25,30 @@ function App() {
     setMenuStatus(status);
   }
 
-  console.log(activeState)
+  const getTitle = () =>{
+    switch (activeState){
+      case "loggedOut":
+        return "Login";
+      case "register":
+        return "Register";
+      case "groupChat":
+        return "Group Chat";
+    }
+  }
+
+  console.log()
 
   return (
     <>
-     { menuStatus == "menuShown" ? (<Menu callback={updateMenuStatus} />) : (<></>)}
+    <div className="fullPage">
+      <div className="mainContainer">
+      <TitleBar callback={updateMenuStatus} title={getTitle()} />
+     {menuStatus == "menuShown" ? (<Menu callback={updateMenuStatus} />) : (<></>)}
      {activeState == "loggedOut" ? (<Login />) : (<></>) }
+     {activeState == "register" ? (<Register />) : (<></>) }
      {activeState == "groupChat" ? (<GroupChat />) : (<></>) }
+      </div>
+    </div>
     </>
   );
 }

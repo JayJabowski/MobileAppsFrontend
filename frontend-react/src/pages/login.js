@@ -1,48 +1,59 @@
-import React, {useState} from 'react';
-import useActiveState from '../hooks/useActiveState';
-import useAuth from '../hooks/useAuth';
+import React, { useState } from "react";
+import useActiveState from "../hooks/useActiveState";
+import useAuth from "../hooks/useAuth";
 
-import { fetchLogin } from '../api/Fetcher';
+import "../index.css";
+
+import { fetchLogin } from "../api/Fetcher";
 
 function Login() {
-    const { auth, setAuth }= useAuth();
-    const {activeState, setActiveState} = useActiveState();
-    const [ user, setUser ] = useState();
-    const [ password, setPassword ] = useState();
+  const { auth, setAuth } = useAuth();
+  const { activeState, setActiveState } = useActiveState();
+  const [user, setUser] = useState();
+  const [password, setPassword] = useState();
 
-    const updateUser = (e) =>{
-        setUser(e.target.value);
+  const updateUser = (e) => {
+    setUser(e.target.value);
+  };
+  const updatePassword = (e) => {
+    setPassword(e.target.value);
+  };
+  const updateActiveState = (state) => {
+    setActiveState(state);
+  };
+  const updateAuth = (Obj) => {
+    setAuth(Obj);
+  };
+
+  const LoginHandler = async (e) => {
+    e.preventDefault();
+
+    const response = await fetchLogin(user, password);
+
+    if (!response.data.token) {
+      console.log("Login Failed");
+      return;
     }
-    const updatePassword = (e) =>{
-        setPassword(e.target.value);
-    }
-    const updateActiveState = (state) => {
-        setActiveState(state);
-    }
-    const updateAuth = (Obj) => {
-        setAuth(Obj);
-    }
+    updateActiveState("groupChat");
+    updateAuth({ token: response.data.token, user, password });
+  };
 
-    const LoginHandler = async (e) => {
-        e.preventDefault();
+  return (
+    <div>
+      <div className="loginHeader">
+        <h1 className="selected">Login </h1>
+        <h1 onClick={() => updateActiveState("register")}>Register</h1>
+      </div>
 
-        //const response = await fetchLogin(user, password);
-
-        updateActiveState("groupChat");
-        //TODO: add correct username, password parameters
-        //updateAuth(response.data.user, response.data.password);
-    }
-
-
-    
-    return ( 
-        <form>
-            <input type="text" onChange={updateUser}></input>
-            <input type="password" onChange={updatePassword}></input>
-            <button onClick={LoginHandler}>Login</button>
-        </form>
-
-     );
+      <form className="loginForm">
+        <label>HSE-Kürzel</label>
+        <input type="text" onChange={updateUser}></input>
+        <label>Passwort</label>
+        <input type="password" onChange={updatePassword}></input>
+        <button onClick={LoginHandler}>Login</button>
+      </form>
+    </div>
+  );
 }
 
 export default Login;

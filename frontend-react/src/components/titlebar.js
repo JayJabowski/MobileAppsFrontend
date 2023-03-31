@@ -1,13 +1,17 @@
 import React from 'react'
+import useAuth from '../hooks/useAuth';
 
 function TitleBar({callback, title}) {
+    const { auth } = useAuth();
+
+
     return ( 
-        <>
-        <div onClick={() => {
+        <div className='titleBar'>
+        { auth.token ? <button className='menuButton' onClick={() => {
             callback("menuShown");
-        }}>Menu</div>
-        <div>{title}</div>
-        </>
+        }}>Menu</button> : <></> }
+        <div className="title">{title}</div>
+        </div>
      );
 }
 
