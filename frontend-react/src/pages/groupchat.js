@@ -6,6 +6,8 @@ import useAuth from '../hooks/useAuth';
 //MockData
 import { MockChat } from '../MockData';
 
+//TODO: periodically update Chat.
+
 function GroupChat() {
     const { auth } = useAuth();
 
