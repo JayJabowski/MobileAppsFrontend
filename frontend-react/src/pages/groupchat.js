@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMessages } from '../api/Fetcher';
+import { fetchMessages, sendMessage } from '../api/Fetcher';
 import ChatMessage from '../components/chatmessage';
 import useAuth from '../hooks/useAuth';
 
@@ -11,42 +11,50 @@ import { MockChat } from '../MockData';
 function GroupChat() {
     const { auth } = useAuth();
 
-    const [ incomingMessages, setIncomingMessages ] = useState([]);
+    const [ messageHistory, setIncomingMessages ] = useState([]);
     const [ message, setMessage ] = useState("");
 
-    const updateMessage = (msg) => {
-        setMessage(msg);
+    const updateMessage = (e) => {
+        setMessage(e?.target.value);
+
+        return message;
     }
-    const updateIncomingMessages = (arr) => {
+    const updateMessageHistory = (arr) => {
         setIncomingMessages(arr);
     }
 
     useEffect(() => {
-        initializeChat();
+        updateChat();
     }, []);
 
     const submitMessageHandler = async (e) => {
         e.preventDefault();
+        console.dir(message);
+        const response = await sendMessage(auth.token, message);
 
-        //TODO Axios Call sending Message
-        //TODO Axios Call refreshing Messages
-
-        updateMessage("");
+        if(response.data.status === "ok"){
+            updateMessage({target: { value: ""}});
+            updateChat();
+        }
     }
 
-    const initializeChat = async () => {
-        const response = await fetchMessages(auth.token);
-        console.dir(response);
+    const updateChat = async () => {
+        const response = await fetchMessages(auth.token);   
+
+        if (response.data.status === "ok"){
+            updateMessageHistory(response.data.messages);
+        }
+
     }
 
     return (
         <>
             <div className="chatBox">
-                {MockChat.map((msg) => <ChatMessage {...msg} />)}
+                {messageHistory.map((msg) => <ChatMessage {...msg} />)}
             </div>
             <div className="messageBox">
-                <input type="text" onChange={updateMessage}></input>
-                <button onSubmit={submitMessageHandler}>Send</button>
+                <input type="text" value={message} onChange={updateMessage}></input>
+                <button onClick={submitMessageHandler}>Send</button>
             </div>
         </>
       );

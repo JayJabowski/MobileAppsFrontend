@@ -73,8 +73,25 @@ const fetchMessages = async (token) => {
   return response;
 }
 
+const sendMessage = async (token, message) =>{
+  const response = await axios.get(`?request=sendmessage&token=${token}&text=${message}`, {
+    headers: { "Content-Type": "application/json"}
+  });
+
+  return response;
+}
+
+const logout = async (token) => {
+  const response = await axios.get(`?request=logout&token=${token}`, {
+    headers: { "Content-Type": "application/json" }
+  });
+  return response;
+}
+
 export {
   fetchLogin,
+  logout,
   register,
-  fetchMessages
+  fetchMessages,
+  sendMessage
 }

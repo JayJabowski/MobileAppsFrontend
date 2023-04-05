@@ -7,7 +7,7 @@ import React, { createContext, useState } from "react";
 const AuthContext = createContext({});
 
 export const AuthProvider = ( { children }) => {
-    const [ auth, setAuth ] = useState({ token: "REMOVE_ME"});
+    const [ auth, setAuth ] = useState({});
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>

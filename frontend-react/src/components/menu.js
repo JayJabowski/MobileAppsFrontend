@@ -1,12 +1,28 @@
 import React from "react";
 import useActiveState from "../hooks/useActiveState";
+import useAuth from "../hooks/useAuth";
+import { logout } from "../api/Fetcher";
 
 function Menu({ callback }) {
+  const { auth, setAuth } = useAuth();
   const { activeState, setActiveState } = useActiveState();
 
   const updateActiveState = (state) => {
     setActiveState(state);
   };
+
+  const updateAuth = (Obj) =>{
+    setAuth(Obj);
+  }
+
+  const LogoutHandler = async () => {
+    const response = await logout(auth.token);
+
+    if(response.data.status === "ok"){
+      updateActiveState("loggedOut");
+      updateAuth({});
+    }
+  }
 
   return (
     <>
@@ -14,7 +30,7 @@ function Menu({ callback }) {
         <div
           className="menuItem"
           onClick={(e) => {
-            updateActiveState("loggedOut");
+            LogoutHandler();
             callback("menuNotShown");
           }}
         >
