@@ -1,7 +1,7 @@
 import React from "react";
 import useActiveState from "../hooks/useActiveState";
 import useAuth from "../hooks/useAuth";
-import { logout } from "../api/Fetcher";
+import { logout, logoutPost } from "../api/Fetcher";
 
 function Menu({ callback }) {
   const { auth, setAuth } = useAuth();
@@ -16,7 +16,7 @@ function Menu({ callback }) {
   }
 
   const LogoutHandler = async () => {
-    const response = await logout(auth.token);
+    const response = await logoutPost(auth.token);
 
     if(response.data.status === "ok"){
       updateActiveState("loggedOut");

@@ -1,38 +1,38 @@
 export const MockChat = [
     {
         userid:"000000",
-        sender:"Tim",
-        message:"Hallo... wie geht's?",
+        user:"Tim",
+        text:"Hallo... wie geht's?",
         time:"19:00"
     },
     {
         userid:"000001",
-        sender:"John",
-        message:"Gut Danke",
+        user:"John",
+        text:"Gut Danke",
         time:"19:00"
     },
     {
         userid:"000000",
-        sender:"Tim",
-        message:"blabla",
+        user:"Tim",
+        text:"blabla",
         time:"19:00"
     },
     {
         userid:"000002",
-        sender:"troy",
-        message:"more blabla",
+        user:"troy",
+        text:"more blabla",
         time:"19:00"
     },
     {
         userid:"000002",
-        sender:"troy",
-        message:"...",
+        user:"troy",
+        text:"...",
         time:"19:00"
     },
     {
         userid:"000001",
-        sender:"John",
-        message:"bye",
+        user:"John",
+        text:"bye",
         time:"19:00"
     },
 ]

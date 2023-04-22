@@ -4,49 +4,29 @@
 
 import axios from "./axios";
 
-/*
-const getAllCustomers = async (token) => {
-  const response = await axios.get("Customer", {
-    headers: { "Content-Type": "application/json", Authorization: token },
-    withCredentials: true
-  });
-
-  return response;
-};
-
-const updateCustomer = async (customerObj, token) => {
-  const response = await axios.put("Customer", customerObj, {
-    headers: { "Content-Type": "application/json", Authorization: token },
-    withCredentials: true
-  });
-
-  return response;
-};
-
-const addCustomer = async (customerObj, token) => {
-  const response = await axios.post("Customer", customerObj, {
-    headers: { "Content-Type": "application/json", Authorization: token },
-    withCredentials: true
-  });
-
-  return response;
-};
-const deleteCustomer = async (customerObj, token) => {
-  const response = await axios.delete(`Customer/${customerObj.id}`, {
-    headers: { "Content-Type": "application/json", Authorization: token },
-    withCredentials: true
-  });
-
-  return response;
-};
-
-*/
-
 const fetchLogin = async(user,pass) =>{
 //returns token in response.data
   const lazyFix = pass || "WeakArmsStrongPasswords";
 
   const response = await axios.get(`?request=login&userid=${user}&password=${lazyFix}`, {
+    headers: { "Content-Type": "application/json"}
+  });
+
+  return response;
+
+}
+
+const fetchLoginPost = async(user,pass) =>{
+//returns token in response.data
+  const lazyFix = pass || "WeakArmsStrongPasswords";
+
+  const request = {
+    request : "login",
+    userid: user,
+    password: lazyFix
+  }
+
+  const response = await axios.post("",request, {
     headers: { "Content-Type": "application/json"}
   });
 
@@ -65,8 +45,38 @@ const register = async ({userid, nickname,fullname, password})=> {
 
 }
 
+const registerPost = async (Obj)=> {
+//returns token in response.data
+
+  const request = {
+    request: "register",
+    ...Obj
+  }
+
+  const response = await axios.post("", request, {
+    headers: { "Content-Type": "application/json"}
+  });
+
+  return response;
+
+}
+
 const fetchMessages = async (token) => {
   const response = await axios.get(`?request=fetchmessages&token=${token}`, {
+    headers: { "Content-Type": "application/json"}
+  });
+
+  return response;
+}
+
+const fetchMessagesPost = async (token) => {
+
+  const request = {
+    token,
+    request : "fetchmessages"
+  }
+
+  const response = await axios.post("",request, {
     headers: { "Content-Type": "application/json"}
   });
 
@@ -80,6 +90,20 @@ const sendMessage = async (token, message) =>{
 
   return response;
 }
+const sendMessagePost = async (token, message) =>{
+
+  const request = {
+    token,
+    request : "sendmessage",
+    text: message
+  }
+
+  const response = await axios.post("",request, {
+    headers: { "Content-Type": "application/json"}
+  });
+
+  return response;
+}
 
 const logout = async (token) => {
   const response = await axios.get(`?request=logout&token=${token}`, {
@@ -87,11 +111,44 @@ const logout = async (token) => {
   });
   return response;
 }
+const logoutPost = async (token) => {
+
+  const request = {
+    request: "logout",
+    token
+  }
+  
+  const response = await axios.post("", request, {
+    headers: { "Content-Type": "application/json" }
+  });
+  return response;
+}
+
+const fetchPhoto = async (token, photoid) =>{
+
+  const request = {
+    request: "fetchphoto",
+    token,  
+    photoid
+  }
+  
+  const response = await axios.post("", request, {
+    headers: { "Content-Type": "application/json" },
+    responseType : "blob"
+  });
+  return response;
+}
 
 export {
   fetchLogin,
+  fetchLoginPost,
   logout,
+  logoutPost,
   register,
+  registerPost,
   fetchMessages,
-  sendMessage
+  fetchMessagesPost,
+  sendMessage,
+  sendMessagePost,
+  fetchPhoto
 }

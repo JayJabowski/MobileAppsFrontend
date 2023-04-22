@@ -4,7 +4,8 @@ import useAuth from "../hooks/useAuth";
 
 import "../index.css";
 
-import { fetchLogin } from "../api/Fetcher";
+import { fetchLogin, fetchLoginPost } from "../api/Fetcher";
+import { fetchLoginNew } from "../api/fetch";
 
 function Login() {
   const { auth, setAuth } = useAuth();
@@ -28,7 +29,7 @@ function Login() {
   const LoginHandler = async (e) => {
     e.preventDefault();
 
-    const response = await fetchLogin(user, password);
+    const response = await fetchLoginPost(user, password);
 
     if (!response.data.token) {
       console.log("Login Failed");

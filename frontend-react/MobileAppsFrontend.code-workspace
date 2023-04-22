@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../../../../SWA/Lab/SWA-FE"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "MobileAppsFrontend"
+	}
+}

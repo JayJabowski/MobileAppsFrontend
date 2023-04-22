@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMessages, sendMessage } from '../api/Fetcher';
+import { fetchMessages, fetchMessagesPost, sendMessagePost } from '../api/Fetcher';
 import ChatMessage from '../components/chatmessage';
 import useAuth from '../hooks/useAuth';
 
@@ -29,8 +29,7 @@ function GroupChat() {
 
     const submitMessageHandler = async (e) => {
         e.preventDefault();
-        console.dir(message);
-        const response = await sendMessage(auth.token, message);
+        const response = await sendMessagePost(auth.token, message);
 
         if(response.data.status === "ok"){
             updateMessage({target: { value: ""}});
@@ -39,7 +38,7 @@ function GroupChat() {
     }
 
     const updateChat = async () => {
-        const response = await fetchMessages(auth.token);   
+        const response = await fetchMessagesPost(auth.token);   
 
         if (response.data.status === "ok"){
             updateMessageHistory(response.data.messages);
@@ -47,10 +46,12 @@ function GroupChat() {
 
     }
 
+   //console.dir(messageHistory);
+
     return (
         <>
             <div className="chatBox">
-                {messageHistory.map((msg) => <ChatMessage {...msg} />)}
+                {messageHistory.map((msg) => <ChatMessage {...msg} key={Math.random()} />)}
             </div>
             <div className="messageBox">
                 <input type="text" value={message} onChange={updateMessage}></input>

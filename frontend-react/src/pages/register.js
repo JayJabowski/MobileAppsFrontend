@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import useActiveState from '../hooks/useActiveState';
 import useAuth from '../hooks/useAuth';
 
-import { register } from '../api/Fetcher';
+import { register, registerPost } from '../api/Fetcher';
 
 function Register() {
     const { auth, setAuth }= useAuth();
@@ -49,7 +49,7 @@ function Register() {
             return;
         }
 
-        const response = await register(userForm);
+        const response = await registerPost(userForm);
 
         if(!response.data.token){
             console.log("Login Failed");
