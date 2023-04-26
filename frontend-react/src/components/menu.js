@@ -1,9 +1,12 @@
 import React from "react";
 import useActiveState from "../hooks/useActiveState";
 import useAuth from "../hooks/useAuth";
-import { logout, logoutPost } from "../api/Fetcher";
+import { logoutPost } from "../api/Fetcher";
+import LocalStorageHandler from "../tools/localstoragehandler";
 
 function Menu({ callback }) {
+  const storageHandler = LocalStorageHandler();
+
   const { auth, setAuth } = useAuth();
   const { activeState, setActiveState } = useActiveState();
 
@@ -21,6 +24,7 @@ function Menu({ callback }) {
     if(response.data.status === "ok"){
       updateActiveState("loggedOut");
       updateAuth({});
+      storageHandler.clearLocalStorage();
     }
   }
 

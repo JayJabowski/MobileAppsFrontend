@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import useActiveState from "../hooks/useActiveState";
 import useAuth from "../hooks/useAuth";
 
+import LocalStorageHandler from "../tools/localstoragehandler";
+
 import "../index.css";
 
-import { fetchLogin, fetchLoginPost } from "../api/Fetcher";
-import { fetchLoginNew } from "../api/fetch";
+import { fetchLoginPost } from "../api/Fetcher";
+import RememberMe from "../components/rememberme";
 
 function Login() {
+
+  const storageHandler = LocalStorageHandler();
+
   const { auth, setAuth } = useAuth();
   const { activeState, setActiveState } = useActiveState();
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
+  const [rememberLoginCheck, setRememberLoginCheck] = useState(false);
 
   const updateUser = (e) => {
     setUser(e.target.value);
@@ -22,6 +28,9 @@ function Login() {
   const updateActiveState = (state) => {
     setActiveState(state);
   };
+  const updateRememberLoginCheck = (bool) => {
+    setRememberLoginCheck(bool);
+  };
   const updateAuth = (Obj) => {
     setAuth(Obj);
   };
@@ -30,13 +39,28 @@ function Login() {
     e.preventDefault();
 
     const response = await fetchLoginPost(user, password);
+    console.log(response.data);
 
-    if (!response.data.token) {
-      console.log("Login Failed");
-      return;
+    //TODO: replace console.logs with proper error messages
+    switch(response.data.code){
+      case 200:
+        break;
+      case 456:
+        console.log(response.data.message);
+        storageHandler.clearLocalStorage();
+        break;
+      default:
+        console.log(response.data.message);
+        return;
     }
+    
     updateActiveState("groupChat");
-    updateAuth({ token: response.data.token, user, password });
+
+    updateAuth({ token: response.data.token, user, hash : response.data.hash });
+
+    if(typeof(Storage) !== "undefined" && rememberLoginCheck){
+      storageHandler.addLoginToLocalStorage({hash: response.data.hash, token: response.data.token, user});
+    }
   };
 
   return (
@@ -53,6 +77,7 @@ function Login() {
         <input type="password" onChange={updatePassword}></input>
         <button onClick={LoginHandler}>Login</button>
       </form>
+      <RememberMe callback={updateRememberLoginCheck}/>
     </div>
   );
 }

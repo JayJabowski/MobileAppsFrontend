@@ -48,7 +48,7 @@ const addResourcesToCache = async (resources) => {
 
 const putInCache = async (request, response) => {
   const cache = await caches.open("" + cacheVersion);
-  await cache.put(request, response);
+  await cache.add(request);
 };
 
 const addToOfflineQueue = (request) => {

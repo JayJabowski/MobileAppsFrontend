@@ -9,7 +9,9 @@ const fetchLogin = async(user,pass) =>{
   const lazyFix = pass || "WeakArmsStrongPasswords";
 
   const response = await axios.get(`?request=login&userid=${user}&password=${lazyFix}`, {
-    headers: { "Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json",
+              "Cache-Control": "max-age=604800"
+              }
   });
 
   return response;
@@ -27,7 +29,8 @@ const fetchLoginPost = async(user,pass) =>{
   }
 
   const response = await axios.post("",request, {
-    headers: { "Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json",
+              }
   });
 
   return response;
@@ -63,7 +66,8 @@ const registerPost = async (Obj)=> {
 
 const fetchMessages = async (token) => {
   const response = await axios.get(`?request=fetchmessages&token=${token}`, {
-    headers: { "Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json"
+              }
   });
 
   return response;
@@ -77,7 +81,8 @@ const fetchMessagesPost = async (token) => {
   }
 
   const response = await axios.post("",request, {
-    headers: { "Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json"
+              }
   });
 
   return response;
@@ -99,7 +104,8 @@ const sendMessagePost = async (token, message) =>{
   }
 
   const response = await axios.post("",request, {
-    headers: { "Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json"
+              }
   });
 
   return response;

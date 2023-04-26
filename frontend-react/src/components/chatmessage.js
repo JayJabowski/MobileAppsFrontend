@@ -29,7 +29,7 @@ function ChatMessage({userhash, usernickname, user, text, time, photoid}) {
     }
 
     return (
-        <div className={`chatMessage ${userhash === auth.userid ? "alignRight" : "alignLeft"}`}>
+        <div className={`chatMessage ${userhash === auth.hash ? "alignRight" : "alignLeft"}`}>
             <label className="sender">{usernickname || user}</label>
             { photoid && image ? <img src={URL.createObjectURL(image)} alt="photo" /> : <></>}
             <label className="message">{text}</label>

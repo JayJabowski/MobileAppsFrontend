@@ -3,7 +3,7 @@
 //------------------------
 
 //EXTERNAL
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 //LOCAL
 import Login from "./pages/login";
@@ -11,20 +11,41 @@ import GroupChat from "./pages/groupchat";
 import Menu from "./components/menu";
 import Register from "./pages/register";
 
+//TOOLS
+import LocalStorageHandler from "./tools/localstoragehandler";
+
 //CSS
 import useActiveState from "./hooks/useActiveState";
 import useAuth from "./hooks/useAuth";
 import TitleBar from "./components/titlebar";
 
+
 function App() {
-  const { auth } = useAuth();
-  const { activeState } = useActiveState();
+
+  const storageHandler = LocalStorageHandler();
+
+  const { auth, setAuth } = useAuth();
+  const { activeState,setActiveState } = useActiveState();
   const [ menuStatus, setMenuStatus ] = useState("menuNotShown")
 
   const updateMenuStatus = (status) => {
     setMenuStatus(status);
   }
+  const updateAuth = (status) => {
+    setAuth(status);
+  }
+  const updateActiveState = (status) => {
+    setActiveState(status);
+  }
 
+  useEffect(() => {
+    const tempAuth = storageHandler.getLoginFromStorage();
+    if(tempAuth.token){
+      updateAuth(tempAuth);
+      updateActiveState("groupChat");
+    }
+  }, [])
+  
   const getTitle = () =>{
     switch (activeState){
       case "loggedOut":
@@ -35,8 +56,6 @@ function App() {
         return "Group Chat";
     }
   }
-
-  console.log()
 
   return (
     <>
