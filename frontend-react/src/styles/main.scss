@@ -13,6 +13,7 @@ $primaryDark :  #002333;
 
 //FONT-SIZES
 
+$listItemSize : 16px;
 $inputSize : 14px;
 $textSize : 14px;
 $titleSize : 20px;
@@ -25,8 +26,8 @@ $semibold : 600;
 $regular : 400;
 $thin: 300;
 
-//absolute Layouting
-
+//ABSOLUTE LAYOUT
+$menuWidth : 40%;
 $heightTitlebar : 3em;
 
 
@@ -124,8 +125,10 @@ html{
 }
 
 .mainContainer{
+    @include dropShadow();
     @include flexOAJ(column, stretch, flex-start);
     position: relative;
+    overflow-y: hidden;
     background-color: $secondaryLight;
 
     width: 100%;
@@ -144,6 +147,10 @@ html{
     .wrapper{
         @include flexOAJ(column, flex-start, flex-start);
         width:100%;
+        
+        &:last-child{
+            margin-bottom: 4em;
+        }
     }
     .self{
         align-items: flex-end;
@@ -155,6 +162,8 @@ html{
         @include roundedCorners(false);
         @include flexOAJ(column, flex-start, flex-start);
         @include insertSpacing();
+
+      
 
         .name{
             @include baseFont($bold, $textSize);
@@ -197,12 +206,13 @@ html{
     }
     button{
         @include defaultButton();
+        @include dropShadow();
         margin-top: 0;
     }
 }
 
 .titleBar{
-    @include flexOAJ(row, center, space-between);
+    @include flexOAJ(row, center, felx-start);
 
     @include baseFont($bold, $titleSize);
     height: $heightTitlebar;
@@ -210,18 +220,72 @@ html{
     background-color: $primaryLight;
 
     .menuButton{
-        background-color: $primaryLight;
-        background-image: url("../../icons/burger.svg");
+        @include roundedCorners(false);
 
-        width: 3em;
-        height: 3em;
+        background-color: $primaryLight;
+        background-image: url(../../icons/burger.svg) ;
+        background-size: 1.2em 1.2em;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        width: 2em;
+        height: 2em;
 
         border-style: none;
+
+        &:hover{
+            background-color: $primaryColor;
+            background-image: url(../../icons/burger_light.svg);
+
+            cursor: pointer;
+        }
     }
-
-
-
 }
+
+.menu{
+    position:absolute;
+    
+    top: $heightTitlebar *1.4;
+    //height: calc(100% - $heightTitlebar *1.4);
+    
+    width: $menuWidth;
+    left: -$menuWidth;
+    transition: left 0.2s linear;
+
+    @include baseFont($semibold, $textSize);
+    @include flexOAJ(column, center , flex-start);
+    @include dropShadow();
+    @include roundedCorners(false);
+
+
+    background-color: $primaryLight;
+    
+
+    
+    .menuItem{
+        @include roundedCorners(false);
+
+
+        color: $primaryDark;
+
+        font-size: $listItemSize;
+        padding: 1em;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+
+.menuVisible{
+    left: 1em;
+    transition: left 0.2s linear;
+}
+
+#menuToggle{
+    display: none;
+}
+
 
 .loginRegister{
     @include flexOAJ(column, stretch, flex-start);

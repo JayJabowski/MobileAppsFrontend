@@ -19,11 +19,13 @@ html {
 }
 
 .mainContainer {
+  box-shadow: 0 0 0.5em #DEEFE7;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
   position: relative;
+  overflow-y: hidden;
   background-color: #DEEFE7;
   width: 100%;
   max-width: 500px;
@@ -50,6 +52,9 @@ html {
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
+}
+.chatBox .wrapper:last-child {
+  margin-bottom: 4em;
 }
 .chatBox .self {
   align-items: flex-end;
@@ -124,6 +129,7 @@ html {
   margin-top: 1em;
   margin-bottom: em;
   border-width: 0;
+  box-shadow: 0 0 0.5em #DEEFE7;
   margin-top: 0;
 }
 .messageBox button:hover {
@@ -135,7 +141,7 @@ html {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: felx-start;
   font-family: Outfit;
   font-weight: 700;
   font-size: 20px;
@@ -143,11 +149,56 @@ html {
   background-color: #FFFFFF;
 }
 .titleBar .menuButton {
+  border-radius: 0.6em;
   background-color: #FFFFFF;
-  background-image: url("../../icons/burger.svg");
-  width: 3em;
-  height: 3em;
+  background-image: url(../../icons/burger.svg);
+  background-size: 1.2em 1.2em;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 2em;
+  height: 2em;
   border-style: none;
+}
+.titleBar .menuButton:hover {
+  background-color: #159A9C;
+  background-image: url(../../icons/burger_light.svg);
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  top: 4.2em;
+  width: 40%;
+  left: -40%;
+  transition: left 0.2s linear;
+  font-family: Outfit;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: 0 0 0.5em #DEEFE7;
+  border-radius: 0.6em;
+  background-color: #FFFFFF;
+}
+.menu .menuItem {
+  border-radius: 0.6em;
+  color: #002333;
+  font-size: 16px;
+  padding: 1em;
+}
+.menu .menuItem:hover {
+  cursor: pointer;
+}
+
+.menuVisible {
+  left: 1em;
+  transition: left 0.2s linear;
+}
+
+#menuToggle {
+  display: none;
 }
 
 .loginRegister {

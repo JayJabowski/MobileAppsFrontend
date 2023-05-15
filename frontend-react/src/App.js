@@ -28,10 +28,10 @@ function App() {
 
   const { auth, setAuth } = useAuth();
   const { activeState,setActiveState } = useActiveState();
-  const [ menuStatus, setMenuStatus ] = useState("menuNotShown")
+  const [ menuStatus, setMenuStatus ] = useState(false);
 
-  const updateMenuStatus = (status) => {
-    setMenuStatus(status);
+  const toggleMenuStatus = () => {
+    setMenuStatus(!menuStatus);
   }
   const updateAuth = (status) => {
     setAuth(status);
@@ -63,8 +63,8 @@ function App() {
     <>
     <div className="background">
       <div className="mainContainer">
-      <TitleBar callback={updateMenuStatus} title={getTitle()} />
-     {menuStatus == "menuShown" ? (<Menu callback={updateMenuStatus} />) : (<></>)}
+      <TitleBar callback={toggleMenuStatus} title={getTitle()} />
+     <Menu callback={toggleMenuStatus} status={menuStatus} />
      {activeState == "loggedOut" ? (<Login />) : (<></>) }
      {activeState == "register" ? (<Register />) : (<></>) }
      {activeState == "groupChat" ? (<GroupChat />) : (<></>) }

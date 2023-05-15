@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 import { logoutPost } from "../api/Fetcher";
 import LocalStorageHandler from "../tools/localstoragehandler";
 
-function Menu({ callback }) {
+function Menu({ callback, status }) {
   const storageHandler = LocalStorageHandler();
 
   const { auth, setAuth } = useAuth();
@@ -29,13 +29,12 @@ function Menu({ callback }) {
   }
 
   return (
-    <>
-      <div className="menu">
+      <div className={status ? "menu" : "menu menuVisible"}>
         <div
           className="menuItem"
           onClick={(e) => {
             LogoutHandler();
-            callback("menuNotShown");
+            callback();
           }}
         >
           Logout
@@ -43,13 +42,12 @@ function Menu({ callback }) {
         <div
           className="menuItem"
           onClick={(e) => {
-            callback("menuNotShown");
+            callback();
           }}
         >
           Close Menu
         </div>
       </div>
-    </>
   );
 }
 
