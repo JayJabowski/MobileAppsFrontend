@@ -64,10 +64,10 @@ function Register() {
 
     
     return ( 
-        <div>
-        <div className='loginHeader'>
-            <h1 onClick={() => updateActiveState("loggedOut")}>Login</h1>
-            <h1 className='selected'>Register</h1>
+        <div className="loginRegister">
+        <div className="loginHeader">
+            <label onClick={() => updateActiveState("loggedOut")}>Login</label>
+            <label className='selected'>Register</label>
         </div>
         <form className='loginForm'>
             <label>Enter Your HSE id (e.g. mamu00)</label>

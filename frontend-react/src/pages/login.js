@@ -4,8 +4,6 @@ import useAuth from "../hooks/useAuth";
 
 import LocalStorageHandler from "../tools/localstoragehandler";
 
-import "../index.css";
-
 import { fetchLoginPost } from "../api/Fetcher";
 import RememberMe from "../components/rememberme";
 
@@ -64,10 +62,10 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="loginRegister">
       <div className="loginHeader">
-        <h1 className="selected">Login </h1>
-        <h1 onClick={() => updateActiveState("register")}>Register</h1>
+        <label className="selected">Login </label>
+        <label onClick={() => updateActiveState("register")}>Register</label>
       </div>
 
       <form className="loginForm">
@@ -76,8 +74,8 @@ function Login() {
         <label>Passwort</label>
         <input type="password" onChange={updatePassword}></input>
         <button onClick={LoginHandler}>Login</button>
+        <RememberMe callback={updateRememberLoginCheck}/>
       </form>
-      <RememberMe callback={updateRememberLoginCheck}/>
     </div>
   );
 }

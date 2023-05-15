@@ -3,12 +3,29 @@ import { fetchMessages, fetchMessagesPost, sendMessagePost } from '../api/Fetche
 import ChatMessage from '../components/chatmessage';
 import useAuth from '../hooks/useAuth';
 
+//Tools
+import CameraHandler from '../tools/camerahandler';
+
 //MockData
 import { MockChat } from '../MockData';
+import PhotoButton from '../components/photobutton';
 
 //TODO: periodically update Chat.
 
 function GroupChat() {
+
+
+    //RECEIVING:
+    const unescapeQuotationMarks = (string) => {
+        //swaps HTML-entity for quotation mark with actual quotation mark
+
+        const newString = string.replaceAll("&#34;", "\"");
+        return newString;
+    }
+
+    const camera = CameraHandler();
+    camera.switchOn();
+
     const { auth } = useAuth();
 
     const [ messageHistory, setIncomingMessages ] = useState([]);
@@ -28,12 +45,15 @@ function GroupChat() {
     }, []);
 
     const submitMessageHandler = async (e) => {
+        if(!message) return;
+        
         e.preventDefault();
         const response = await sendMessagePost(auth.token, message);
 
         if(response.data.status === "ok"){
             updateMessage({target: { value: ""}});
             updateChat();
+            
         }
     }
 
@@ -45,6 +65,11 @@ function GroupChat() {
         }
 
     }
+
+
+   
+
+
 
    //console.dir(messageHistory);
 

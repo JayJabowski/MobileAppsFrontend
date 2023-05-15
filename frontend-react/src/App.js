@@ -10,15 +10,17 @@ import Login from "./pages/login";
 import GroupChat from "./pages/groupchat";
 import Menu from "./components/menu";
 import Register from "./pages/register";
+import TitleBar from "./components/titlebar";
 
 //TOOLS
 import LocalStorageHandler from "./tools/localstoragehandler";
 
-//CSS
+//CUSTOM HOOKS
 import useActiveState from "./hooks/useActiveState";
 import useAuth from "./hooks/useAuth";
-import TitleBar from "./components/titlebar";
 
+//CSS
+import "./styles/main.css";
 
 function App() {
 
@@ -59,7 +61,7 @@ function App() {
 
   return (
     <>
-    <div className="fullPage">
+    <div className="background">
       <div className="mainContainer">
       <TitleBar callback={updateMenuStatus} title={getTitle()} />
      {menuStatus == "menuShown" ? (<Menu callback={updateMenuStatus} />) : (<></>)}

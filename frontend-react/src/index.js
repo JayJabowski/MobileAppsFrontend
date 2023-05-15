@@ -7,7 +7,6 @@ import { createRoot } from "react-dom/client";
 
 //Local
 import App from "./App";
-import {LocalServiceWorkerRegister} from "./sw-register.js";
 
 //Context
 import { AuthProvider } from "./auth/AuthProvider";

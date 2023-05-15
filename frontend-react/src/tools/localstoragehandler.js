@@ -3,7 +3,7 @@ const LocalStorageHandler = () =>{
     const addLoginToLocalStorage = (Obj) =>{
         const keys = Object.keys(Obj);
   
-        keys.map((k) => {
+        keys.forEach((k) => {
           localStorage.setItem(k,Obj[`${k}`]);
         })
   

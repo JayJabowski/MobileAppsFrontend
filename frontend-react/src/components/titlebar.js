@@ -9,7 +9,7 @@ function TitleBar({callback, title}) {
         <div className='titleBar'>
         { auth.token ? <button className='menuButton' onClick={() => {
             callback("menuShown");
-        }}>Menu</button> : <></> }
+        }}></button> : <></> }
         <div className="title">{title}</div>
         </div>
      );

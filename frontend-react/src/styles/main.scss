@@ -1,0 +1,270 @@
+@font-face{
+    font-family: Outfit;
+    src: url(../../font/Outfit-VariableFont_wght.ttf);
+}
+
+$primaryColor : #159A9C;
+$secondaryColor : #B4BEC9;
+
+$primaryLight : #FFFFFF;
+$secondaryLight : #DEEFE7;
+
+$primaryDark :  #002333;
+
+//FONT-SIZES
+
+$inputSize : 14px;
+$textSize : 14px;
+$titleSize : 20px;
+$smallSize : 10px;
+
+//FONT-WEIGHTS
+
+$bold : 700;
+$semibold : 600;
+$regular : 400;
+$thin: 300;
+
+//absolute Layouting
+
+$heightTitlebar : 3em;
+
+
+@mixin baseFont($weight, $size){
+    font-family: Outfit;
+    font-weight: $weight;
+    font-size: $size;
+}
+
+@mixin roundedCorners($radius){
+    @if $radius{
+        border-radius: $radius;
+    }
+    @else{
+        border-radius: 0.6em;
+    }
+}
+@mixin dropShadow(){
+    $size : 0.5em;
+
+    box-shadow: 0 0 $size $secondaryLight;
+}
+
+@mixin flexOAJ($orientation, $align, $justify){
+    display: flex;
+    flex-direction: $orientation;
+    align-items: $align;
+    justify-content: $justify;
+}
+
+@mixin insertSpacing(){
+    padding: 0.4em;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin: 0.4em;
+    margin-left: 0.8em;
+    margin-right: 0.8em;
+}
+
+@mixin hideScrollbar(){
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */ 
+    
+    
+    &::-webkit-scrollbar {
+        display: none; /* for Chrome, Safari, and Opera */
+    }
+}
+
+@mixin textInput(){
+    @include roundedCorners(false);
+                
+                border-width:  0;
+                padding: 1em;
+                margin-bottom: 1em;
+                margin-top: 0.2em;
+
+                &:focus{
+                    border-color: $primaryColor;
+                }
+}
+
+@mixin defaultButton(){
+
+    @include roundedCorners(false);
+    @include baseFont($semibold,$textSize);
+
+    color:$primaryLight;
+    background-color: $primaryColor;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: em;
+    border-width: 0;
+
+    &:hover{
+        background-color: $primaryLight;
+        color: $primaryDark;
+    }
+}
+
+html{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.background{
+    @include flexOAJ(column, center, flex-start);
+
+    width: 100%;
+    height: 100%;
+
+    //override:
+    margin: 0;
+}
+
+.mainContainer{
+    @include flexOAJ(column, stretch, flex-start);
+    position: relative;
+    background-color: $secondaryLight;
+
+    width: 100%;
+    max-width: 500px;
+
+    height: 100vh;
+}
+
+.chatBox{
+    @include flexOAJ(column, flex-start, flex-start);
+    @include hideScrollbar();
+    height: calc(100% - $heightTitlebar);
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .wrapper{
+        @include flexOAJ(column, flex-start, flex-start);
+        width:100%;
+    }
+    .self{
+        align-items: flex-end;
+    }
+
+    .messageCard{
+        background-color: $primaryLight;
+        
+        @include roundedCorners(false);
+        @include flexOAJ(column, flex-start, flex-start);
+        @include insertSpacing();
+
+        .name{
+            @include baseFont($bold, $textSize);
+        }
+        .text{
+            @include baseFont(Light, $textSize);
+        }
+        .time{
+            @include baseFont($bold, $smallSize);
+            color: $secondaryColor;
+        }
+        
+    }
+    
+}
+
+.messageBox{
+    $margin : 0.5em;
+
+    @include baseFont($regular, $inputSize);
+    @include flexOAJ(row, stretch, space-between);
+
+    position: absolute;
+    top: calc(100% - 4em);
+    left: $margin;
+
+    width: calc(100% - 2*$margin);
+
+    input{
+        &[type="text"]{
+            @include dropShadow();
+            @include textInput();
+            flex-grow: 1;
+
+            margin-right: 0.5em;
+            margin-bottom: 0;
+            margin-top: 0;
+
+        }
+    }
+    button{
+        @include defaultButton();
+        margin-top: 0;
+    }
+}
+
+.titleBar{
+    @include flexOAJ(row, center, space-between);
+
+    @include baseFont($bold, $titleSize);
+    height: $heightTitlebar;
+
+    background-color: $primaryLight;
+
+    .menuButton{
+        background-color: $primaryLight;
+        background-image: url("../../icons/burger.svg");
+
+        width: 3em;
+        height: 3em;
+
+        border-style: none;
+    }
+
+
+
+}
+
+.loginRegister{
+    @include flexOAJ(column, stretch, flex-start);
+
+    .loginHeader{
+        @include flexOAJ(row, center, space-around);
+        @include baseFont($regular,$titleSize);
+
+        height: 4em;
+
+        label{
+            &:hover{
+                cursor: pointer;
+            }
+        }
+
+        .selected{
+            text-decoration: underline;
+        }
+    }
+    form{
+        @include flexOAJ(column,stretch, center);
+        @include insertSpacing();
+        @include baseFont($regular,$inputSize);
+
+        padding-left: 2em;
+        padding-right : 2em;
+
+
+        input{
+            &[type="text"], &[type="password"]{
+                @include textInput();
+            }
+        }
+        label{
+            color: $primaryColor;
+        }
+        button{
+           @include defaultButton();
+        }
+
+    }
+    .labeledCheckbox{
+        @include flexOAJ(row, center , flex-start);
+    }
+}
