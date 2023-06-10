@@ -1,23 +1,57 @@
+/*
+Deliveroo-Colors:
+
+primary Color: #5bc9bb
+secondary light: #fafafa
+primary light: #ffffff
+secondary color: #367d89
+light text: #c3c8cb
+
+*/
+
+/*
+Old Colors:
+
+    primaryColor : #159A9C;
+    secondaryColor : #B4BEC9;
+
+    primaryLight : #FFFFFF;
+    secondaryLight : #DEEFE7;
+
+    primaryDark :  #002333;
+
+*/
+:root{
+
+    --fontFactor : 1;
+
+    //FONT-SIZES
+
+    --listItemSize : calc(16px * var(--fontFactor));
+    --inputSize : calc(14px * var(--fontFactor));
+    --textSize : calc(14px * var(--fontFactor));
+    --titleSize : calc(20px * var(--fontFactor));
+    --smallSize : calc(10px * var(--fontFactor));
+
+    //COLORS (LightMode initial)
+
+    --primaryC : #5bc9bb;
+    --primaryShadeC : #e9ebea;
+
+    --backgroundC : #FFFFFF;
+    --backgroundShadeC : #fafafa;
+
+    --textC :  #090909;
+    --textShadeC : #c3c8cb;
+
+}
+
+
 @font-face{
     font-family: Outfit;
     src: url(../../font/Outfit-VariableFont_wght.ttf);
 }
 
-$primaryColor : #159A9C;
-$secondaryColor : #B4BEC9;
-
-$primaryLight : #FFFFFF;
-$secondaryLight : #DEEFE7;
-
-$primaryDark :  #002333;
-
-//FONT-SIZES
-
-$listItemSize : 16px;
-$inputSize : 14px;
-$textSize : 14px;
-$titleSize : 20px;
-$smallSize : 10px;
 
 //FONT-WEIGHTS
 
@@ -35,6 +69,7 @@ $heightTitlebar : 3em;
     font-family: Outfit;
     font-weight: $weight;
     font-size: $size;
+    color: var(--textC);
 }
 
 @mixin roundedCorners($radius){
@@ -48,7 +83,7 @@ $heightTitlebar : 3em;
 @mixin dropShadow(){
     $size : 0.5em;
 
-    box-shadow: 0 0 $size $secondaryLight;
+    box-shadow: 0 0 $size var(--backgroundShadeC);
 }
 
 @mixin flexOAJ($orientation, $align, $justify){
@@ -86,25 +121,25 @@ $heightTitlebar : 3em;
                 margin-top: 0.2em;
 
                 &:focus{
-                    border-color: $primaryColor;
+                    border-color: var(--primaryC);
                 }
 }
 
 @mixin defaultButton(){
 
     @include roundedCorners(false);
-    @include baseFont($semibold,$textSize);
+    @include baseFont($semibold,var(--textSize));
 
-    color:$primaryLight;
-    background-color: $primaryColor;
+    color:var(--backgroundC);
+    background-color: var(--primaryC);
     padding: 1em;
     margin-top: 1em;
     margin-bottom: em;
     border-width: 0;
 
     &:hover{
-        background-color: $primaryLight;
-        color: $primaryDark;
+        background-color: var(--backgroundC);
+        color: var(--textC);
     }
 }
 
@@ -112,24 +147,28 @@ html{
     margin: 0;
     padding: 0;
     border: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .background{
-    @include flexOAJ(column, center, flex-start);
-
+    @include flexOAJ(column, center, center);
+    background-color: var(--backgroundC);
+    
     width: 100%;
     height: 100%;
 
     //override:
     margin: 0;
+    padding: 0;
 }
 
 .mainContainer{
     @include dropShadow();
-    @include flexOAJ(column, stretch, flex-start);
+    @include flexOAJ(column, stretch, center);
     position: relative;
     overflow-y: hidden;
-    background-color: $secondaryLight;
+    background-color: var(--backgroundShadeC);
 
     width: 100%;
     max-width: 500px;
@@ -156,26 +195,51 @@ html{
         align-items: flex-end;
     }
 
+    .self .time{
+        align-items: flex-end;
+    }
+
     .messageCard{
-        background-color: $primaryLight;
+        background-color: var(--backgroundC);
         
         @include roundedCorners(false);
         @include flexOAJ(column, flex-start, flex-start);
         @include insertSpacing();
 
+        max-width: 90%;
       
 
         .name{
-            @include baseFont($bold, $textSize);
+            @include baseFont($bold, var(--textSize));
         }
         .text{
-            @include baseFont(Light, $textSize);
+            @include baseFont(Light, var(--textSize));
+            word-break: break-word;
+            
         }
         .time{
-            @include baseFont($bold, $smallSize);
-            color: $secondaryColor;
+            @include baseFont($bold, var(--smallSize));
+            color: var(--primaryShadeC);
+        }
+        img{
+            @include roundedCorners(false);
         }
         
+    }
+
+    .timeWrapper{
+        @include flexOAJ(column, center, center);
+        width:100%;
+
+    }
+
+    .timecard{
+        @include baseFont($thin, var(--textSize));
+        @include roundedCorners(false);
+        @include flexOAJ(row, stretch, center);
+        @include insertSpacing();
+
+        background-color: var(--backgroundC);
     }
     
 }
@@ -183,7 +247,7 @@ html{
 .messageBox{
     $margin : 0.5em;
 
-    @include baseFont($regular, $inputSize);
+    
     @include flexOAJ(row, stretch, space-between);
 
     position: absolute;
@@ -192,17 +256,21 @@ html{
 
     width: calc(100% - 2*$margin);
 
-    input{
-        &[type="text"]{
+    textarea{
+        @include baseFont($regular, var(--inputSize));
             @include dropShadow();
             @include textInput();
             flex-grow: 1;
+            overflow-y: hidden;
+            resize: none;
 
             margin-right: 0.5em;
             margin-bottom: 0;
             margin-top: 0;
 
-        }
+            word-break: break-word;
+
+        
     }
     button{
         @include defaultButton();
@@ -212,17 +280,17 @@ html{
 }
 
 .titleBar{
-    @include flexOAJ(row, center, felx-start);
+    @include flexOAJ(row, center, flex-start);
 
-    @include baseFont($bold, $titleSize);
+    @include baseFont($bold, var(--titleSize));
     height: $heightTitlebar;
 
-    background-color: $primaryLight;
+    background-color: var(--backgroundC);
 
     .menuButton{
         @include roundedCorners(false);
 
-        background-color: $primaryLight;
+        background-color: var(--backgroundC);
         background-image: url(../../icons/burger.svg) ;
         background-size: 1.2em 1.2em;
         background-repeat: no-repeat;
@@ -234,15 +302,13 @@ html{
         border-style: none;
 
         &:hover{
-            background-color: $primaryColor;
-            background-image: url(../../icons/burger_light.svg);
-
             cursor: pointer;
         }
     }
 }
 
 .menu{
+    display: none;
     position:absolute;
     
     top: $heightTitlebar *1.4;
@@ -252,13 +318,13 @@ html{
     left: -$menuWidth;
     transition: left 0.2s linear;
 
-    @include baseFont($semibold, $textSize);
+    @include baseFont($semibold, var(--textSize));
     @include flexOAJ(column, center , flex-start);
     @include dropShadow();
     @include roundedCorners(false);
 
 
-    background-color: $primaryLight;
+    background-color: var(--backgroundC);
     
 
     
@@ -266,9 +332,9 @@ html{
         @include roundedCorners(false);
 
 
-        color: $primaryDark;
+        color: var(--textC);
 
-        font-size: $listItemSize;
+        font-size: var(--listItemSize);
         padding: 1em;
 
         &:hover{
@@ -290,9 +356,11 @@ html{
 .loginRegister{
     @include flexOAJ(column, stretch, flex-start);
 
+    height: calc(100% - $heightTitlebar);
+
     .loginHeader{
         @include flexOAJ(row, center, space-around);
-        @include baseFont($regular,$titleSize);
+        @include baseFont($regular,var(--titleSize));
 
         height: 4em;
 
@@ -309,7 +377,7 @@ html{
     form{
         @include flexOAJ(column,stretch, center);
         @include insertSpacing();
-        @include baseFont($regular,$inputSize);
+        @include baseFont($regular,var(--inputSize));
 
         padding-left: 2em;
         padding-right : 2em;
@@ -321,14 +389,78 @@ html{
             }
         }
         label{
-            color: $primaryColor;
+            color: var(--primaryC);
         }
-        button{
+        .breakButton{
            @include defaultButton();
+        }
+        .passwordWrapper{
+            @include flexOAJ(row,stretch, center);
+
+            margin-bottom: 1em;
+            margin-top: 0.2em;
+
+            input{
+                &[type="text"], &[type="password"]{
+                    @include textInput();
+                    flex-grow: 1;
+                    margin:0;
+                }
+            }
+            
+            .inlineButton{
+                @include roundedCorners(false);
+                @include baseFont($semibold,var(--textSize));
+                
+                color:var(--backgroundC);
+               
+                background-size: 1.8em 1.8em;
+                background-repeat: no-repeat;
+                background-position: center;
+                color: var(--textC);
+                background-color: var(--backgroundC);
+                background-image:  url(../../icons/eye_svg_repo.svg);
+                
+                padding: 1em;
+                width: 2.8em;
+                border-width: 0;
+                margin:0;
+                margin-left: 0.6em;
+                
+                cursor: pointer;                
+                
+                
+                &:hover{
+                    
+
+                    background-color: var(--primaryC);
+                    background-image:  url(../../icons/eye_svg_repo_light.svg);
+                    
+                 
+                }
+            }
         }
 
     }
     .labeledCheckbox{
         @include flexOAJ(row, center , flex-start);
+        margin-top: 0.4em;
+    }
+}
+
+.errMsgWrapper{
+
+    .errMsg{
+        @include roundedCorners(false);
+        @include baseFont($regular, var(--inputSize) );
+        color: var(--backgroundC);
+        background-color: var(--textC);
+        margin-bottom: 0.4em;
+
+        padding: 1em;
+    }
+
+    button{
+        cursor: pointer;
     }
 }

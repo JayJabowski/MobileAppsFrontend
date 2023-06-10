@@ -1,3 +1,40 @@
+/*
+Deliveroo-Colors:
+
+primary Color: #5bc9bb
+secondary light: #fafafa
+primary light: #ffffff
+secondary color: #367d89
+light text: #c3c8cb
+
+*/
+/*
+Old Colors:
+
+    primaryColor : #159A9C;
+    secondaryColor : #B4BEC9;
+
+    primaryLight : #FFFFFF;
+    secondaryLight : #DEEFE7;
+
+    primaryDark :  #002333;
+
+*/
+:root {
+  --fontFactor: 1;
+  --listItemSize: calc(16px * var(--fontFactor));
+  --inputSize: calc(14px * var(--fontFactor));
+  --textSize: calc(14px * var(--fontFactor));
+  --titleSize: calc(20px * var(--fontFactor));
+  --smallSize: calc(10px * var(--fontFactor));
+  --primaryC: #5bc9bb;
+  --primaryShadeC: #e9ebea;
+  --backgroundC: #FFFFFF;
+  --backgroundShadeC: #fafafa;
+  --textC: #090909;
+  --textShadeC: #c3c8cb;
+}
+
 @font-face {
   font-family: Outfit;
   src: url(../../font/Outfit-VariableFont_wght.ttf);
@@ -6,27 +43,31 @@ html {
   margin: 0;
   padding: 0;
   border: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .background {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  background-color: var(--backgroundC);
   width: 100%;
   height: 100%;
   margin: 0;
+  padding: 0;
 }
 
 .mainContainer {
-  box-shadow: 0 0 0.5em #DEEFE7;
+  box-shadow: 0 0 0.5em var(--backgroundShadeC);
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: flex-start;
+  justify-content: center;
   position: relative;
   overflow-y: hidden;
-  background-color: #DEEFE7;
+  background-color: var(--backgroundShadeC);
   width: 100%;
   max-width: 500px;
   height: 100vh;
@@ -59,8 +100,11 @@ html {
 .chatBox .self {
   align-items: flex-end;
 }
+.chatBox .self .time {
+  align-items: flex-end;
+}
 .chatBox .messageCard {
-  background-color: #FFFFFF;
+  background-color: var(--backgroundC);
   border-radius: 0.6em;
   display: flex;
   flex-direction: column;
@@ -72,28 +116,58 @@ html {
   margin: 0.4em;
   margin-left: 0.8em;
   margin-right: 0.8em;
+  max-width: 90%;
 }
 .chatBox .messageCard .name {
   font-family: Outfit;
   font-weight: 700;
-  font-size: 14px;
+  font-size: var(--textSize);
+  color: var(--textC);
 }
 .chatBox .messageCard .text {
   font-family: Outfit;
   font-weight: Light;
-  font-size: 14px;
+  font-size: var(--textSize);
+  color: var(--textC);
+  word-break: break-word;
 }
 .chatBox .messageCard .time {
   font-family: Outfit;
   font-weight: 700;
-  font-size: 10px;
-  color: #B4BEC9;
+  font-size: var(--smallSize);
+  color: var(--textC);
+  color: var(--primaryShadeC);
+}
+.chatBox .messageCard img {
+  border-radius: 0.6em;
+}
+.chatBox .timeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.chatBox .timecard {
+  font-family: Outfit;
+  font-weight: 300;
+  font-size: var(--textSize);
+  color: var(--textC);
+  border-radius: 0.6em;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0.4em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin: 0.4em;
+  margin-left: 0.8em;
+  margin-right: 0.8em;
+  background-color: var(--backgroundC);
 }
 
 .messageBox {
-  font-family: Outfit;
-  font-weight: 400;
-  font-size: 14px;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -103,54 +177,63 @@ html {
   left: 0.5em;
   width: calc(100% - 1em);
 }
-.messageBox input[type=text] {
-  box-shadow: 0 0 0.5em #DEEFE7;
+.messageBox textarea {
+  font-family: Outfit;
+  font-weight: 400;
+  font-size: var(--inputSize);
+  color: var(--textC);
+  box-shadow: 0 0 0.5em var(--backgroundShadeC);
   border-radius: 0.6em;
   border-width: 0;
   padding: 1em;
   margin-bottom: 1em;
   margin-top: 0.2em;
   flex-grow: 1;
+  overflow-y: hidden;
+  resize: none;
   margin-right: 0.5em;
   margin-bottom: 0;
   margin-top: 0;
+  word-break: break-word;
 }
-.messageBox input[type=text]:focus {
-  border-color: #159A9C;
+.messageBox textarea:focus {
+  border-color: var(--primaryC);
 }
 .messageBox button {
   border-radius: 0.6em;
   font-family: Outfit;
   font-weight: 600;
-  font-size: 14px;
-  color: #FFFFFF;
-  background-color: #159A9C;
+  font-size: var(--textSize);
+  color: var(--textC);
+  color: var(--backgroundC);
+  background-color: var(--primaryC);
   padding: 1em;
   margin-top: 1em;
   margin-bottom: em;
   border-width: 0;
-  box-shadow: 0 0 0.5em #DEEFE7;
+  box-shadow: 0 0 0.5em var(--backgroundShadeC);
   margin-top: 0;
 }
 .messageBox button:hover {
-  background-color: #FFFFFF;
-  color: #002333;
+  background-color: var(--backgroundC);
+  color: var(--textC);
 }
 
 .titleBar {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: felx-start;
+  justify-content: flex-start;
   font-family: Outfit;
   font-weight: 700;
-  font-size: 20px;
+  font-size: var(--titleSize);
+  color: var(--textC);
   height: 3em;
-  background-color: #FFFFFF;
+  background-color: var(--backgroundC);
 }
 .titleBar .menuButton {
   border-radius: 0.6em;
-  background-color: #FFFFFF;
+  background-color: var(--backgroundC);
   background-image: url(../../icons/burger.svg);
   background-size: 1.2em 1.2em;
   background-repeat: no-repeat;
@@ -160,12 +243,11 @@ html {
   border-style: none;
 }
 .titleBar .menuButton:hover {
-  background-color: #159A9C;
-  background-image: url(../../icons/burger_light.svg);
   cursor: pointer;
 }
 
 .menu {
+  display: none;
   position: absolute;
   top: 4.2em;
   width: 40%;
@@ -173,19 +255,20 @@ html {
   transition: left 0.2s linear;
   font-family: Outfit;
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--textSize);
+  color: var(--textC);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  box-shadow: 0 0 0.5em #DEEFE7;
+  box-shadow: 0 0 0.5em var(--backgroundShadeC);
   border-radius: 0.6em;
-  background-color: #FFFFFF;
+  background-color: var(--backgroundC);
 }
 .menu .menuItem {
   border-radius: 0.6em;
-  color: #002333;
-  font-size: 16px;
+  color: var(--textC);
+  font-size: var(--listItemSize);
   padding: 1em;
 }
 .menu .menuItem:hover {
@@ -206,6 +289,7 @@ html {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
+  height: calc(100% - 3em);
 }
 .loginRegister .loginHeader {
   display: flex;
@@ -214,7 +298,8 @@ html {
   justify-content: space-around;
   font-family: Outfit;
   font-weight: 400;
-  font-size: 20px;
+  font-size: var(--titleSize);
+  color: var(--textC);
   height: 4em;
 }
 .loginRegister .loginHeader label:hover {
@@ -236,7 +321,8 @@ html {
   margin-right: 0.8em;
   font-family: Outfit;
   font-weight: 400;
-  font-size: 14px;
+  font-size: var(--inputSize);
+  color: var(--textC);
   padding-left: 2em;
   padding-right: 2em;
 }
@@ -248,30 +334,91 @@ html {
   margin-top: 0.2em;
 }
 .loginRegister form input[type=text]:focus, .loginRegister form input[type=password]:focus {
-  border-color: #159A9C;
+  border-color: var(--primaryC);
 }
 .loginRegister form label {
-  color: #159A9C;
+  color: var(--primaryC);
 }
-.loginRegister form button {
+.loginRegister form .breakButton {
   border-radius: 0.6em;
   font-family: Outfit;
   font-weight: 600;
-  font-size: 14px;
-  color: #FFFFFF;
-  background-color: #159A9C;
+  font-size: var(--textSize);
+  color: var(--textC);
+  color: var(--backgroundC);
+  background-color: var(--primaryC);
   padding: 1em;
   margin-top: 1em;
   margin-bottom: em;
   border-width: 0;
 }
-.loginRegister form button:hover {
-  background-color: #FFFFFF;
-  color: #002333;
+.loginRegister form .breakButton:hover {
+  background-color: var(--backgroundC);
+  color: var(--textC);
+}
+.loginRegister form .passwordWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  margin-bottom: 1em;
+  margin-top: 0.2em;
+}
+.loginRegister form .passwordWrapper input[type=text], .loginRegister form .passwordWrapper input[type=password] {
+  border-radius: 0.6em;
+  border-width: 0;
+  padding: 1em;
+  margin-bottom: 1em;
+  margin-top: 0.2em;
+  flex-grow: 1;
+  margin: 0;
+}
+.loginRegister form .passwordWrapper input[type=text]:focus, .loginRegister form .passwordWrapper input[type=password]:focus {
+  border-color: var(--primaryC);
+}
+.loginRegister form .passwordWrapper .inlineButton {
+  border-radius: 0.6em;
+  font-family: Outfit;
+  font-weight: 600;
+  font-size: var(--textSize);
+  color: var(--textC);
+  color: var(--backgroundC);
+  background-size: 1.8em 1.8em;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: var(--textC);
+  background-color: var(--backgroundC);
+  background-image: url(../../icons/eye_svg_repo.svg);
+  padding: 1em;
+  width: 2.8em;
+  border-width: 0;
+  margin: 0;
+  margin-left: 0.6em;
+  cursor: pointer;
+}
+.loginRegister form .passwordWrapper .inlineButton:hover {
+  background-color: var(--primaryC);
+  background-image: url(../../icons/eye_svg_repo_light.svg);
 }
 .loginRegister .labeledCheckbox {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  margin-top: 0.4em;
+}
+
+.errMsgWrapper .errMsg {
+  border-radius: 0.6em;
+  font-family: Outfit;
+  font-weight: 400;
+  font-size: var(--inputSize);
+  color: var(--textC);
+  color: var(--backgroundC);
+  background-color: var(--textC);
+  margin-bottom: 0.4em;
+  padding: 1em;
+}
+.errMsgWrapper button {
+  cursor: pointer;
 }/*# sourceMappingURL=main.css.map */

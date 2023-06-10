@@ -22,6 +22,18 @@ const fetchLoginPost = async(user,pass) =>{
   return response;
 
 }
+const fetchLoginGet = async(user,pass) =>{
+//returns token in response.data
+  const lazyFix = pass || "WeakArmsStrongPasswords";
+
+  const response = await axios.get(`request=login&userid=${user}&password=${lazyFix}`, {
+    headers: { "Content-Type": "application/json"
+               }
+  });
+
+  return response;
+
+}
 
 const registerPost = async (Obj)=> {
 //returns token in response.data
@@ -92,7 +104,7 @@ const fetchPhoto = async (token, photoid) =>{
   
   const response = await axios.post("", request, {
     headers: { "Content-Type": "application/json",
-               "Expires" : `${getDateInFuture(4)}` },
+              },
     responseType : "blob"
   });
   return response;

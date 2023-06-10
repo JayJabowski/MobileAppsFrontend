@@ -3,6 +3,8 @@ import useActiveState from "../hooks/useActiveState";
 import useAuth from "../hooks/useAuth";
 import { logoutPost } from "../api/Fetcher";
 import LocalStorageHandler from "../tools/localstoragehandler";
+import FontSizeChanger from "./fontSizechanger";
+import ThemeChanger from "./ThemeChanger";
 
 function Menu({ callback, status }) {
   const storageHandler = LocalStorageHandler();
@@ -29,7 +31,7 @@ function Menu({ callback, status }) {
   }
 
   return (
-      <div className={status ? "menu" : "menu menuVisible"}>
+      <div className={status ? "menu menuVisible" : "menu"}>
         <div
           className="menuItem"
           onClick={(e) => {
@@ -47,6 +49,8 @@ function Menu({ callback, status }) {
         >
           Close Menu
         </div>
+        <FontSizeChanger />
+        <ThemeChanger />
       </div>
   );
 }

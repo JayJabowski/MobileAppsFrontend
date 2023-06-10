@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { fetchPhoto } from '../api/Fetcher';
+import { parseTimeString } from '../tools/tools';
 
 function ChatMessage({userhash, usernickname, user, text, time, photoid}) {
     const { auth } = useAuth();
@@ -18,23 +19,40 @@ function ChatMessage({userhash, usernickname, user, text, time, photoid}) {
 
     const photoLoader = async () =>{
         const response = await fetchPhoto(auth.token,photoid);
-
-        console.dir(response);
-
-        const url = URL.createObjectURL(new Blob([response.data], {type: "image/png"}));
-
-        console.log(url);
         
         updateImage(new Blob([response.data]));
+    }
+
+    const getFormattedTime = () => {
+        const now = new Date();
+
+        const messageTime = parseTimeString(time);
+        let timeString = "";
+
+        /*
+        if(now.getFullYear() !=  messageTime.year){
+            timeString = messageTime.year;
+            }
+        if(now.getMonth() !== messageTime.month 
+            && now.getDay() !==  messageTime.day){
+                timeString = messageTime.day+"."+messageTime.month+"."+timeString;
+            }
+        */
+
+
+        timeString = messageTime.hour+":"+messageTime.minute+" "+timeString;
+
+        
+        return timeString;
     }
 
     return (
         <div className={`${userhash === auth.hash ? "self" : ""} wrapper`}>
             <div className="messageCard" >
                 <label className="name">{usernickname || user}</label>
-                { photoid && image ? <img src={URL.createObjectURL(image)} alt="photo" /> : <></>}
+                { photoid && image ? <img src={URL.createObjectURL(image)} alt="photo" width="100%" /> : <></>}
                 <label className="text">{text}</label>
-                <label className="time">{time}</label>
+                <label className="time">{getFormattedTime()}</label>
             </div>
         </div>
       );

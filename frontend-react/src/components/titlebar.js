@@ -7,10 +7,9 @@ function TitleBar({callback, title}) {
 
     return ( 
         <div className='titleBar'>
-        { auth.token 
-            ? <div className='menuButton' onClick={() => { callback();}}>
-                <input type="checkbox" id="menuToggle"/></div> 
-            : <></> }
+            <div className='menuButton' onClick={auth.token ? callback : null}>
+                <input type="checkbox" id="menuToggle"/>
+            </div> 
         <div className="title">{title}</div>
         </div>
      );

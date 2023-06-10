@@ -15,13 +15,18 @@ function Login() {
   const { activeState, setActiveState } = useActiveState();
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
+  const [passwordShown, setPasswordShown] = useState(false);
   const [rememberLoginCheck, setRememberLoginCheck] = useState(false);
+  const [ infomsg, setInfomsg ] = useState([]);
 
   const updateUser = (e) => {
     setUser(e.target.value);
   };
   const updatePassword = (e) => {
     setPassword(e.target.value);
+  };
+  const togglePasswordShown = () => {
+    setPasswordShown(!passwordShown);
   };
   const updateActiveState = (state) => {
     setActiveState(state);
@@ -32,6 +37,9 @@ function Login() {
   const updateAuth = (Obj) => {
     setAuth(Obj);
   };
+  const updateInfoMsg = (arr) =>{
+    setInfomsg( arr);
+}
 
   const LoginHandler = async (e) => {
     e.preventDefault();
@@ -61,6 +69,14 @@ function Login() {
     }
   };
 
+  const generateUserMessages = () => {
+    let tmpmsgs = [];
+
+    if(true){
+        tmpmsgs.push("Passwords do not match");
+    }
+}
+
   return (
     <div className="loginRegister">
       <div className="loginHeader">
@@ -72,8 +88,11 @@ function Login() {
         <label>HSE-Kürzel</label>
         <input type="text" onChange={updateUser}></input>
         <label>Passwort</label>
-        <input type="password" onChange={updatePassword}></input>
-        <button onClick={LoginHandler}>Login</button>
+        <div className="passwordWrapper">
+          <input type={passwordShown ? "text" : "password"} onChange={updatePassword}></input>
+          <button  className="inlineButton" onClick={() => togglePasswordShown()}></button>
+        </div>
+        <button className="breakButton" onClick={LoginHandler}>Login</button>
         <RememberMe callback={updateRememberLoginCheck}/>
       </form>
     </div>

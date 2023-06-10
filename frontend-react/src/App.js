@@ -59,16 +59,18 @@ function App() {
     }
   }
 
+
+
   return (
     <>
     <div className="background">
       <div className="mainContainer">
       <TitleBar callback={toggleMenuStatus} title={getTitle()} />
-     <Menu callback={toggleMenuStatus} status={menuStatus} />
-     {activeState == "loggedOut" ? (<Login />) : (<></>) }
-     {activeState == "register" ? (<Register />) : (<></>) }
-     {activeState == "groupChat" ? (<GroupChat />) : (<></>) }
-      </div>
+      <Menu callback={toggleMenuStatus} status={menuStatus} />
+      {activeState == "loggedOut" ? (<Login />) : (<></>) }
+      {activeState == "register" ? (<Register />) : (<></>) }
+      {activeState == "groupChat" ? (<GroupChat />) : (<></>) }
+        </div>
     </div>
     </>
   );
