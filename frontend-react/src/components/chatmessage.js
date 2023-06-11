@@ -3,7 +3,7 @@ import useAuth from '../hooks/useAuth';
 import { fetchPhoto } from '../api/Fetcher';
 import { parseTimeString } from '../tools/tools';
 
-function ChatMessage({userhash, usernickname, user, text, time, photoid}) {
+function ChatMessage({userhash, usernickname, user, text, time, photoid, id}) {
     const { auth } = useAuth();
     const [image, setImage] = useState(undefined);
 
@@ -47,7 +47,7 @@ function ChatMessage({userhash, usernickname, user, text, time, photoid}) {
     }
 
     return (
-        <div className={`${userhash === auth.hash ? "self" : ""} wrapper`}>
+        <div id={`msg${id}`} className={`${userhash === auth.hash ? "self" : ""} wrapper`}>
             <div className="messageCard" >
                 <label className="name">{usernickname || user}</label>
                 { photoid && image ? <img src={URL.createObjectURL(image)} alt="photo" width="100%" /> : <></>}

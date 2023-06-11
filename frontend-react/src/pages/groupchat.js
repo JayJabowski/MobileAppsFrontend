@@ -14,7 +14,8 @@ import { parseTimeString } from '../tools/tools';
 
 //TODO: periodically update Chat.
 
-function GroupChat() {
+function GroupChat({messageHistory, updateMessageHistory}) {
+    const { auth } = useAuth();
 
     //RECEIVING:
     const unescapeQuotationMarks = (string) => {
@@ -24,34 +25,32 @@ function GroupChat() {
         return newString;
     }
 
+    //Taking Photos
     const camera = CameraHandler();
     camera.switchOn();
 
-    const { auth } = useAuth();
 
-    const [ messageHistory, setIncomingMessages ] = useState([]);
-    let scrollDiv = useRef(null);
-    
-    const updateMessageHistory = (arr) => {
-        setIncomingMessages(arr);
-    }
-
+    //useEffect
     useEffect(() => {
         updateChat();
-        scrollDown();
+        console.log("groupChat.js called useEffect")
     }, []);
+    useEffect(() => {
+        scrollDown();
+    }, [messageHistory]);
 
 
+    //Fetches
     const updateChat = async () => {
         const response = await fetchMessagesPost(auth.token);   
 
         if (response.data.status === "ok"){
             updateMessageHistory(response.data.messages);
-            scrollDown();
         }
 
     }
 
+    //Date-Formatting
     const isNewDay = (current, prev) => {
         return (current?.time.substring(0,9) !== prev?.time.substring(0,9));
     }
@@ -74,11 +73,13 @@ function GroupChat() {
         return;
     }
 
-    const scrollDown = () => {
-        scrollDiv.current?.scrollIntoView({behavior: "smooth"});
-    }
+    //Scrolling
 
-   //console.dir(messageHistory);
+    const scrollDown = () => {
+        const chatBottom = document.getElementById("chatBottom");
+        console.dir(chatBottom);
+        chatBottom.scrollIntoView({behavior: "instant", block: "end"});
+    }
 
     return (
         <>
@@ -87,9 +88,10 @@ function GroupChat() {
                     return(
                         <>
                             {insertDatecard(msg,i)}
-                            <ChatMessage {...msg} key={Math.random()} />
+                            <ChatMessage {...msg} key={msg.id} />
                         </>)
                 })}
+                <div id="chatBottom"></div>
             </div>
             <MessageInput updateChat={updateChat} />
         </>

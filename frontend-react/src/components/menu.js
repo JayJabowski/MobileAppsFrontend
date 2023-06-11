@@ -1,34 +1,11 @@
 import React from "react";
 import useActiveState from "../hooks/useActiveState";
 import useAuth from "../hooks/useAuth";
-import { logoutPost } from "../api/Fetcher";
 import LocalStorageHandler from "../tools/localstoragehandler";
 import FontSizeChanger from "./fontSizechanger";
 import ThemeChanger from "./ThemeChanger";
 
-function Menu({ callback, status }) {
-  const storageHandler = LocalStorageHandler();
-
-  const { auth, setAuth } = useAuth();
-  const { activeState, setActiveState } = useActiveState();
-
-  const updateActiveState = (state) => {
-    setActiveState(state);
-  };
-
-  const updateAuth = (Obj) =>{
-    setAuth(Obj);
-  }
-
-  const LogoutHandler = async () => {
-    const response = await logoutPost(auth.token);
-
-    if(response.data.status === "ok"){
-      updateActiveState("loggedOut");
-      updateAuth({});
-      storageHandler.clearLocalStorage();
-    }
-  }
+function Menu({ toggleMenuStatus, status, LogoutHandler }) {
 
   return (
       <div className={status ? "menu menuVisible" : "menu"}>
@@ -36,7 +13,7 @@ function Menu({ callback, status }) {
           className="menuItem"
           onClick={(e) => {
             LogoutHandler();
-            callback();
+            toggleMenuStatus();
           }}
         >
           Logout
@@ -44,7 +21,7 @@ function Menu({ callback, status }) {
         <div
           className="menuItem"
           onClick={(e) => {
-            callback();
+            toggleMenuStatus();
           }}
         >
           Close Menu

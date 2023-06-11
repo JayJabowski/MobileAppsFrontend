@@ -286,6 +286,7 @@ html{
     height: $heightTitlebar;
 
     background-color: var(--backgroundC);
+    position: relative;
 
     .menuButton{
         @include roundedCorners(false);
@@ -464,3 +465,41 @@ html{
         cursor: pointer;
     }
 }
+
+.backButtonWrapper{
+    position: relative;
+
+
+    .backPopup{
+        position: fixed;
+    z-index: 1; /*stay on top*/
+        height: 8em;
+        width: 20em;
+        top: 10em;
+        left: 10em;
+    }
+}
+
+.searchField{
+    position:fixed;
+    z-index: 1;
+    max-width: 500px;
+    left: 15em;
+    top:10em;
+
+}
+
+.filterField{
+    position:fixed;
+    z-index: 1;
+    max-width: 500px;
+    left: 15em;
+    top: 20em;
+
+}
+
+.searchFocus{
+    background-color: var(--primaryC);
+}
+
+

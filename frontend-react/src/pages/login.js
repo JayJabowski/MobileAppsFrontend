@@ -57,7 +57,6 @@ function Login({msg}) {
     const response = await fetchLoginPost(user, password);
     console.log(response.data);
 
-    //TODO: replace console.logs with proper error messages
     switch(response.data.code){
       case 200:
         break;
