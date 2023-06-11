@@ -1,9 +1,31 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import useActiveState from '../hooks/useActiveState';
 
-function BackButton({prevState, state}) {
-    const [activeState, setActiveState] = useState(state);
+function BackButton() {
+    const {activeState, setActiveState} = useActiveState();
+    const [isBackButtonActive, setBackButtonActive] = useState(activeState.length > 1);
 
-    return (  );
+    const updateBackButtonActive = (bool) =>{
+        setBackButtonActive(bool);
+    }
+
+    useEffect(() => {
+        updateBackButtonActive(activeState.length > 1);
+    }, [activeState])
+
+    const goBack = () => {
+            //remove first element of Array
+            activeState.shift();
+
+            const tmpState  = [...activeState];
+            setActiveState(tmpState);
+      }
+
+    return ( 
+        <>
+            <button disabled={!isBackButtonActive} onClick={() => goBack()}>Back</button>
+        </>
+     );
 }
 
 export default BackButton;

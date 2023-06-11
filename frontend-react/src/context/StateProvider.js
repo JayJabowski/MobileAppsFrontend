@@ -8,7 +8,7 @@ import React, { createContext, useState } from "react";
 const StateContext = createContext("");
 
 export const StateProvider = ({ children }) => {
-  const [activeState, setActiveState] = useState("loggedOut");
+  const [activeState, setActiveState] = useState(["loggedOut"]);
 
   return (
     <StateContext.Provider value={{ activeState, setActiveState }}>

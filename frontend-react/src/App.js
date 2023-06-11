@@ -37,7 +37,9 @@ function App() {
     setAuth(status);
   }
   const updateActiveState = (status) => {
-    setActiveState(status);
+    const tmpStates= [ status, ...activeState];
+    
+    setActiveState(tmpStates);
   }
 
   useEffect(() => {
@@ -49,7 +51,7 @@ function App() {
   }, [])
   
   const getTitle = () =>{
-    switch (activeState){
+    switch (activeState[0]){
       case "loggedOut":
         return "Login";
       case "register":
@@ -67,9 +69,9 @@ function App() {
       <div className="mainContainer">
       <TitleBar callback={toggleMenuStatus} title={getTitle()} />
       <Menu callback={toggleMenuStatus} status={menuStatus} />
-      {activeState == "loggedOut" ? (<Login />) : (<></>) }
-      {activeState == "register" ? (<Register />) : (<></>) }
-      {activeState == "groupChat" ? (<GroupChat />) : (<></>) }
+      {activeState[0] == "loggedOut" ? (<Login />) : (<></>) }
+      {activeState[0] == "register" ? (<Register />) : (<></>) }
+      {activeState[0] == "groupChat" ? (<GroupChat />) : (<></>) }
         </div>
     </div>
     </>

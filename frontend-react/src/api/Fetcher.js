@@ -6,20 +6,26 @@ import axios from "./axios";
 
 const fetchLoginPost = async(user,pass) =>{
 //returns token in response.data
-  const lazyFix = pass || "WeakArmsStrongPasswords";
+  try{
 
-  const request = {
-    request : "login",
-    userid: user,
-    password: lazyFix
-  }
-
-  const response = await axios.post("",request, {
-    headers: { "Content-Type": "application/json"
-               }
-  });
-
+    const lazyFix = pass || "WeakArmsStrongPasswords";
+    
+    const request = {
+      request : "login",
+      userid: user,
+      password: lazyFix
+    }
+    
+    const response = await axios.post("",request, {
+      headers: { "Content-Type": "application/json"
+      }
+    });
+  
   return response;
+
+  }catch(err){
+    return err.response;
+  } 
 
 }
 const fetchLoginGet = async(user,pass) =>{

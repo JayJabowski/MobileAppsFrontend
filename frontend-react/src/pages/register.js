@@ -41,9 +41,12 @@ function Register() {
         setInfomsg( arr);
     }
     
-    const updateActiveState = (state) => {
-        setActiveState(state);
-    }
+    const updateActiveState = (status) => {
+        const tmpStates= [ status, ...activeState];
+        
+        setActiveState(tmpStates);
+      }
+
     const updateAuth = (Obj) => {
         setAuth(Obj);
     }
@@ -98,15 +101,18 @@ function Register() {
     
     return ( 
         <div className="loginRegister">
-        <div className="loginHeader">
-            <label onClick={() => updateActiveState("loggedOut")}>Login</label>
-            <label className='selected'>Register</label>
-        </div>
         <form className='loginForm'>
             <div>
-                {infomsg.map((msg) => {
+                {infomsg.map((msg,i) => {
+                    setTimeout(() => { 
+                        const tmpArr = [...infomsg];
+                        tmpArr.splice(i,1);
+          
+                        setInfomsg(tmpArr);
+                       },3000);
+
                     return (
-                        <ErrorMessage text={msg} />
+                        <ErrorMessage key={Math.random()} text={msg} />
                     )
                 })
                 }
@@ -122,6 +128,7 @@ function Register() {
             <label>Repeat Password</label>
             <input type="text"  onChange={updateRepeatedPassword}></input>
             <button className="breakButton" onClick={RegisterHandler}>Register</button>
+            <button className="breakButton" onClick={() => updateActiveState("loggedOut")}>Login</button>
         </form>
         </div>
 

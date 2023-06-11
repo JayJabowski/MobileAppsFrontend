@@ -7,7 +7,7 @@ import LocalStorageHandler from "../tools/localstoragehandler";
 import { fetchLoginPost } from "../api/Fetcher";
 import RememberMe from "../components/rememberme";
 
-function Login() {
+function Login({msg}) {
 
   const storageHandler = LocalStorageHandler();
 
@@ -17,7 +17,9 @@ function Login() {
   const [password, setPassword] = useState();
   const [passwordShown, setPasswordShown] = useState(false);
   const [rememberLoginCheck, setRememberLoginCheck] = useState(false);
-  const [ infomsg, setInfomsg ] = useState([]);
+  const [ infomsg, setInfomsg ] = useState(msg ? [msg] : []);
+
+  //useState-Setter
 
   const updateUser = (e) => {
     setUser(e.target.value);
@@ -28,18 +30,26 @@ function Login() {
   const togglePasswordShown = () => {
     setPasswordShown(!passwordShown);
   };
-  const updateActiveState = (state) => {
-    setActiveState(state);
-  };
+  const updateActiveState = (status) => {
+    const tmpStates= [ status, ...activeState];
+    
+    setActiveState(tmpStates);
+  }
   const updateRememberLoginCheck = (bool) => {
     setRememberLoginCheck(bool);
   };
   const updateAuth = (Obj) => {
     setAuth(Obj);
   };
-  const updateInfoMsg = (arr) =>{
-    setInfomsg( arr);
+  const updateInfoMsg = (msg) =>{
+    const tmpArr = [...infomsg, msg];
+    
+    setInfomsg(tmpArr);
 }
+
+
+
+// Fetch-Handlers
 
   const LoginHandler = async (e) => {
     e.preventDefault();
@@ -52,11 +62,11 @@ function Login() {
       case 200:
         break;
       case 456:
-        console.log(response.data.message);
+        updateInfoMsg(response.data.message);
         storageHandler.clearLocalStorage();
         break;
-      default:
-        console.log(response.data.message);
+        default:
+        updateInfoMsg(response.data.message);
         return;
     }
     
@@ -69,21 +79,33 @@ function Login() {
     }
   };
 
-  const generateUserMessages = () => {
-    let tmpmsgs = [];
-
-    if(true){
-        tmpmsgs.push("Passwords do not match");
-    }
-}
+  console.dir(infomsg);
 
   return (
     <div className="loginRegister">
-      <div className="loginHeader">
-        <label className="selected">Login </label>
-        <label onClick={() => updateActiveState("register")}>Register</label>
+
+      <div className="msgWrapper">
+        {infomsg.map((msg,i) => {
+            setTimeout(() => { 
+              const tmpArr = [...infomsg];
+              tmpArr.splice(i,1);
+
+              setInfomsg(tmpArr);
+             },3000);
+
+            return(
+              <div className="infoMsgBox">{msg}</div>
+            )
+        })}
       </div>
 
+      <div className="infoParagraphWrapper">
+        <p className="infoParagraph">
+          This is a chat client implemented as part of the 'Mobile Apps and User Experience' lecture at Hochschule Esslingen in summer semester 2023. It was implemented by Jan Wittrowski. Enjoy!
+        </p>
+
+      </div>
+     
       <form className="loginForm">
         <label>HSE-Kürzel</label>
         <input type="text" onChange={updateUser}></input>
@@ -92,8 +114,9 @@ function Login() {
           <input type={passwordShown ? "text" : "password"} onChange={updatePassword}></input>
           <button  className="inlineButton" onClick={() => togglePasswordShown()}></button>
         </div>
-        <button className="breakButton" onClick={LoginHandler}>Login</button>
         <RememberMe callback={updateRememberLoginCheck}/>
+        <button className="breakButton" onClick={LoginHandler}>Login</button>
+        <button className="breakButton" onClick={() => updateActiveState("register")}>Sign Up</button>
       </form>
     </div>
   );
