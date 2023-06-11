@@ -11,8 +11,8 @@ function SearchButton({messageHistory}) {
     const [results, setResults] = useState([]);
 
     // useState-Setter
-    const updateSearchString = (str) => {
-        setSearchString(str);
+    const updateSearchString = (e) => {
+        setSearchString(e.target.value);
     }
     const toggleFilterVisible = () => {
         setFilterVisible(!filterVisible);
@@ -35,13 +35,16 @@ function SearchButton({messageHistory}) {
         setResultFocusDirection(num);
     }
 
-    const getSearchResults = (e) => {
-        updateSearchString(e.target.value);
+    useEffect(() => {
+        getSearchResults(searchString);
+    }, [searchString, filter])
+
+    const getSearchResults = (text) => {
         const tmpResults = messageHistory.filter((msg) => {
-            if(filter.includeText && msg.text?.includes(e.target.value)){
+            if(filter.includeText && msg.text?.includes(text)){
                 return true;
             }
-            if(filter.includeNames && msg.usernickname?.includes(e.target.value)){
+            if(filter.includeNames && msg.usernickname?.includes(text)){
                 return true;
             }
         })
@@ -152,7 +155,7 @@ function SearchButton({messageHistory}) {
             ?
             <div className="searchField">
                 <label>{`Showing search results for: ${searchString}`}</label>
-                <input type="text" onChange={getSearchResults}></input>
+                <input type="text" onChange={updateSearchString}></input>
                 <button disabled={!results.length || results.length == messageHistory.length} 
                         className="prevResultBtn" 
                         onClick={() => {
@@ -182,20 +185,18 @@ function SearchButton({messageHistory}) {
                     className="nameFilter" 
                     type="checkbox" 
                     checked={filter.includeNames} 
-                    onChange={() => {
-                        toggleIncludeNames();
-                        getSearchResults({ target : {value : searchString }});
-                        }}></input>
+                    onChange={toggleIncludeNames}>
+
+                    </input>
                 <label for="nameFilter">Search Usernames</label>
 
                 <input id="textFilter" 
                     className="textFilter" 
                     type="checkbox"
                     checked={filter.includeText} 
-                    onChange={()=> {
-                        toggleIncludeText();
-                        getSearchResults({ target : {value : searchString }});
-                        }}></input>
+                    onChange={toggleIncludeText}>
+
+                    </input>
                 <label for="textFilter">Search Messages</label>
             </div>
             :
