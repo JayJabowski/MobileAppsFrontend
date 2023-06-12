@@ -11,13 +11,16 @@ import App from "./App";
 //Context
 import { AuthProvider } from "./auth/AuthProvider";
 import { StateProvider } from "./context/StateProvider";
+import { ThemeProvider } from "./context/ThemeProvider";
 
 function Init() {
   return (
         <AuthProvider>
+          <ThemeProvider>
             <StateProvider>
               <App />
             </StateProvider>
+          </ThemeProvider>
         </AuthProvider>
 
   );

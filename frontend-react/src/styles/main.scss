@@ -21,6 +21,11 @@ Old Colors:
     primaryDark :  #002333;
 
 */
+
+*{
+    margin:0;
+    padding:0;
+}
 :root{
 
     --fontFactor : 1;
@@ -31,6 +36,7 @@ Old Colors:
     --inputSize : calc(14px * var(--fontFactor));
     --textSize : calc(14px * var(--fontFactor));
     --titleSize : calc(20px * var(--fontFactor));
+    --titleSizeBig : calc(40px * var(--fontFactor));
     --smallSize : calc(10px * var(--fontFactor));
 
     //COLORS (LightMode initial)
@@ -43,6 +49,14 @@ Old Colors:
 
     --textC :  #090909;
     --textShadeC : #c3c8cb;
+
+    --lightIndent: 4%;
+    --lightIndentRemainder: calc(100% - 2* var(--lightIndent));
+
+    //Dimensions
+    --maxWidth: 400px;
+    --menuWidth : 40%;
+    --heightTitlebar : 5em;
 
 }
 
@@ -61,8 +75,6 @@ $regular : 400;
 $thin: 300;
 
 //ABSOLUTE LAYOUT
-$menuWidth : 40%;
-$heightTitlebar : 3em;
 
 
 @mixin baseFont($weight, $size){
@@ -77,7 +89,7 @@ $heightTitlebar : 3em;
         border-radius: $radius;
     }
     @else{
-        border-radius: 0.6em;
+        border-radius: 0.3em;
     }
 }
 @mixin dropShadow(){
@@ -102,6 +114,12 @@ $heightTitlebar : 3em;
     margin-right: 0.8em;
 }
 
+@mixin lightIndent(){
+    margin-left: var(--lightIndent);
+    margin-right: var(--lightIndent);
+    width: var(--lightIndentRemainder);
+}
+
 @mixin hideScrollbar(){
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */ 
@@ -110,19 +128,6 @@ $heightTitlebar : 3em;
     &::-webkit-scrollbar {
         display: none; /* for Chrome, Safari, and Opera */
     }
-}
-
-@mixin textInput(){
-    @include roundedCorners(false);
-                
-                border-width:  0;
-                padding: 1em;
-                margin-bottom: 1em;
-                margin-top: 0.2em;
-
-                &:focus{
-                    border-color: var(--primaryC);
-                }
 }
 
 @mixin defaultButton(){
@@ -143,6 +148,49 @@ $heightTitlebar : 3em;
     }
 }
 
+@mixin inlineButton(){
+    button {
+        @include roundedCorners(false);
+        @include flexOAJ(row, center , center);
+        background: transparent;
+        border: 0;
+
+        height: 2.5em;
+        width: 2.5em;
+
+        margin-top: 0;
+
+        &:hover{
+            background-color: var(--backgroundShadeC);
+ 
+        }
+        img{
+            height: 1.5em;
+            width: 1.5em;
+            
+        }
+    }
+}
+
+@mixin titleButton(){
+    background: transparent;
+    border: 0;
+
+    padding: 0;
+
+    &:hover{
+        cursor: pointer;
+        background-color: var(--backgroundShadeC);
+    }
+}
+
+@mixin imageLimiter(){
+    img{
+        height: 100%;
+        width: 100%;
+    }
+}
+
 html{
     margin: 0;
     padding: 0;
@@ -155,8 +203,8 @@ html{
     @include flexOAJ(column, center, center);
     background-color: var(--backgroundC);
     
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 
     //override:
     margin: 0;
@@ -165,21 +213,28 @@ html{
 
 .mainContainer{
     @include dropShadow();
-    @include flexOAJ(column, stretch, center);
+    @include flexOAJ(column, stretch, space-between);
     position: relative;
     overflow-y: hidden;
     background-color: var(--backgroundShadeC);
 
     width: 100%;
-    max-width: 500px;
+    max-width: var(--maxWidth);
 
-    height: 100vh;
+    flex-grow:1;
+}
+
+.chatBoxWrapper{
+    @include flexOAJ(column, flex-start, flex-start);
+    height: calc(100% - var(--heightTitlebar));
+    
 }
 
 .chatBox{
     @include flexOAJ(column, flex-start, flex-start);
+    flex-grow: 1;
+
     @include hideScrollbar();
-    height: calc(100% - $heightTitlebar);
     overflow-y: scroll;
     overflow-x: hidden;
 
@@ -187,9 +242,6 @@ html{
         @include flexOAJ(column, flex-start, flex-start);
         width:100%;
         
-        &:last-child{
-            margin-bottom: 4em;
-        }
     }
     .self{
         align-items: flex-end;
@@ -244,79 +296,81 @@ html{
     
 }
 
-.messageBox{
-    $margin : 0.5em;
+.footer {
+    @include dropShadow();
+    @include flexOAJ(column, stretch , flex-start );
+    background-color: var(--backgroundC);
 
-    
-    @include flexOAJ(row, stretch, space-between);
+    .messageWrapper {
+        @include flexOAJ(row, center, space-between);
+        flex-grow: 1;
+        @include imageLimiter();
+        @include lightIndent();
 
-    position: absolute;
-    top: calc(100% - 4em);
-    left: $margin;
 
-    width: calc(100% - 2*$margin);
+        border-bottom: 0.05em var(--primaryShadeC) solid;
+        
+        margin-bottom: 2em;
 
-    textarea{
-        @include baseFont($regular, var(--inputSize));
-            @include dropShadow();
-            @include textInput();
+        min-height: 3em;
+
+        textarea {
+            @include baseFont($regular, var(--inputSize));
+
             flex-grow: 1;
             overflow-y: hidden;
             resize: none;
 
-            margin-right: 0.5em;
-            margin-bottom: 0;
-            margin-top: 0;
+            border: 0;
+
+            margin-left: 1em;
+            margin-right: 1em;
 
             word-break: break-word;
 
-        
-    }
-    button{
-        @include defaultButton();
-        @include dropShadow();
-        margin-top: 0;
+            &:focus {
+                outline-width: 0;
+            }
+        }
+
+        @include inlineButton();
     }
 }
 
 .titleBar{
     @include flexOAJ(row, center, flex-start);
-
     @include baseFont($bold, var(--titleSize));
-    height: $heightTitlebar;
+    //height: var(--heightTitlebar);
 
     background-color: var(--backgroundC);
-    position: relative;
 
-    .menuButton{
-        @include roundedCorners(false);
 
-        background-color: var(--backgroundC);
-        background-image: url(../../icons/burger.svg) ;
-        background-size: 1.2em 1.2em;
-        background-repeat: no-repeat;
-        background-position: center;
-
-        width: 2em;
-        height: 2em;
-
-        border-style: none;
-
-        &:hover{
-            cursor: pointer;
-        }
+    .titleLeft{
+        margin-left: 0.5em;
+        width: 2.5em;
     }
+    .title{
+        @include flexOAJ(row, center, center);
+        flex-grow: 1;
+
+        height: 2.6em;
+    }
+    .titleRight{
+        margin-right:0.5em;
+        width: 2.5em;
+        @include flexOAJ(row, center, flex-end);
+    }
+    
 }
 
 .menu{
-    display: none;
-    position:absolute;
+    position: fixed;
     
-    top: $heightTitlebar *1.4;
-    //height: calc(100% - $heightTitlebar *1.4);
+    top: calc(var(--heightTitlebar) *1.4);
+    height: 15em;
     
-    width: $menuWidth;
-    left: -$menuWidth;
+    width:  var(--menuWidth);
+    left: var(--menuWidth);
     transition: left 0.2s linear;
 
     @include baseFont($semibold, var(--textSize));
@@ -344,56 +398,90 @@ html{
     }
 }
 
-.menuVisible{
-    left: 1em;
-    transition: left 0.2s linear;
+.menuNew{
+    position: fixed;
+    top: 6em;
+    left: 6em;
+    width: 6em;
+    height: 6em;
 }
 
-#menuToggle{
-    display: none;
-}
+.breakButton{
+    @include defaultButton();
+    @include lightIndent();
+ }
+
+ .firstPrio{
+    background-color: var(--primaryC);
+ }
+
+ .secondPrio{
+    background-color: var(--backgroundC);
+    color: var(--textShadeC);
+ }
+
 
 
 .loginRegister{
     @include flexOAJ(column, stretch, flex-start);
+    @include baseFont($regular,var(--inputSize));
 
-    height: calc(100% - $heightTitlebar);
+    height: calc(100% - var(--heightTitlebar));
 
-    .loginHeader{
-        @include flexOAJ(row, center, space-around);
-        @include baseFont($regular,var(--titleSize));
-
-        height: 4em;
-
-        label{
-            &:hover{
-                cursor: pointer;
-            }
-        }
-
-        .selected{
-            text-decoration: underline;
-        }
-    }
     form{
         @include flexOAJ(column,stretch, center);
-        @include insertSpacing();
-        @include baseFont($regular,var(--inputSize));
 
-        padding-left: 2em;
-        padding-right : 2em;
-
+        margin-top: 1em;
 
         input{
-            &[type="text"], &[type="password"]{
-                @include textInput();
-            }
+               border: 0;
+               border-radius: 0;
+               color: var(--textC);
+               background-color: var(--backgroundC);
         }
+
+        .inputWrapper{
+            background-color: var(--backgroundC);
+
+            @include flexOAJ(row, center, space-between);
+            @include baseFont($regular, var(--inputSize));
+
+            .defaultInput{
+                @include lightIndent();
+                @include flexOAJ(row, center, flex-start);
+                flex-grow: 1;
+
+                input{
+                    flex-grow: 1;
+                    margin-bottom: 0.7em;
+                    margin-top: 0.7em;
+
+                    &:focus{
+                        outline-width: 0;
+                    }
+                }
+
+                button{
+                    &:disabled{
+                        display: none;
+                    }
+                }
+
+                @include inlineButton();
+
+                margin-bottom: 1em;
+                margin-top: 1em;
+                border-bottom: 0.05em var(--textShadeC) solid;
+            }
+
+            
+        
+
+        
+        }
+
         label{
             color: var(--primaryC);
-        }
-        .breakButton{
-           @include defaultButton();
         }
         .passwordWrapper{
             @include flexOAJ(row,stretch, center);
@@ -403,7 +491,6 @@ html{
 
             input{
                 &[type="text"], &[type="password"]{
-                    @include textInput();
                     flex-grow: 1;
                     margin:0;
                 }
@@ -420,7 +507,7 @@ html{
                 background-position: center;
                 color: var(--textC);
                 background-color: var(--backgroundC);
-                background-image:  url(../../icons/eye_svg_repo.svg);
+                
                 
                 padding: 1em;
                 width: 2.8em;
@@ -432,21 +519,44 @@ html{
                 
                 
                 &:hover{
-                    
-
                     background-color: var(--primaryC);
-                    background-image:  url(../../icons/eye_svg_repo_light.svg);
-                    
-                 
                 }
             }
         }
 
     }
-    .labeledCheckbox{
+    .breakinglabeledCheckbox{
         @include flexOAJ(row, center , flex-start);
+        @include lightIndent();
         margin-top: 0.4em;
+
+        label{
+            margin-left: 0.5em;
+        }
     }
+    p{
+        color: var(--textShadeC);
+        @include lightIndent();
+
+        margin-top: 2em;
+        margin-bottom: 2em;
+
+        span{
+            color: var(--textC);
+            font-weight: $bold;
+        }
+
+    }
+    h1{
+        @include lightIndent();
+
+        font-size: var(--titleSizeBig);
+
+        margin-bottom: 0em;
+        margin-top: 3em;
+    }
+
+  
 }
 
 .errMsgWrapper{
@@ -480,12 +590,60 @@ html{
     }
 }
 
+.titleButton{
+    @include titleButton();
+
+    height: calc(var(--titleSize) * 1.2);
+    width: calc(var(--titleSize) * 1.2);
+
+    @include imageLimiter();
+    
+    &:disabled{
+        display:none;
+    }
+    
+}
+
 .searchField{
+    @include roundedCorners(false);
+    @include dropShadow();
+    @include flexOAJ(row, center, center);
+    @include baseFont($regular, var(--inputSize));
     position:fixed;
+    height: 2em;
+    left: calc(50vw - (var(--maxWidth) /2) + 5vw);
+    top:calc(var(--heightTitlebar) + 1em);
+    width: calc(var(--maxWidth) - 10vw);
+
+    @include imageLimiter();
+
+    button{
+        width:  2.5em;
+        height: 2.5em;
+
+        @include imageLimiter();
+
+        background: transparent;
+        border: 0;
+
+        &:disabled{
+            display: none;
+        }
+    }
+
+    @include inlineButton();
+
+    input{
+        flex-grow: 1;
+        border:none;
+
+        &:focus{
+            outline-width: 0;
+        }
+    }
+
+    background-color: var(--backgroundC);
     z-index: 1;
-    max-width: 500px;
-    left: 15em;
-    top:10em;
 
 }
 

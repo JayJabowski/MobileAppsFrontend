@@ -1,29 +1,42 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 //React Local
 import useAuth from '../hooks/useAuth';
-import useActiveState from "../hooks/useActiveState";
 
-//Fetches
-import { logoutPost } from "../api/Fetcher";
+//Components
 import BackButton from './backButton';
 import SearchButton from './searchButton';
+import Menu from './menu';
 
-//Back-End
-import LocalStorageHandler from "../tools/localstoragehandler";
+import useActiveTheme from '../hooks/useActiveTheme';
 
 
-function TitleBar({toggleMenuStatus, title, backButtonInfo, messageHistory}) {
+function TitleBar({ title, backButtonInfo, messageHistory, LogoutHandler}) {
     const { auth, setAuth } = useAuth();
- 
+    const { isLight } = useActiveTheme();
+
+    const [ menuStatus, setMenuStatus ] = useState(false);
+
+    const toggleMenuStatus = () => {
+        setMenuStatus(!menuStatus);
+      }
+
     return ( 
         <div className='titleBar'>
-            <BackButton {...backButtonInfo} />
-        <div className="title">{title}</div>
-            <div className='menuButton' onClick={auth.token ? toggleMenuStatus : null}>
-                <input type="checkbox" id="menuToggle"/>
+            <div className="titleLeft">
+                <BackButton 
+                    {...backButtonInfo} 
+                />
+            </div>
+            <div className="title">{title}</div>
+            <div className="titleRight">
+                <SearchButton  
+                    messageHistory={messageHistory}
+                />
+                <Menu 
+                    LogoutHandler={LogoutHandler} 
+                />
             </div> 
-         <SearchButton  messageHistory={messageHistory}/>
         </div>
      );
 }

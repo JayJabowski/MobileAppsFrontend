@@ -20,12 +20,18 @@ Old Colors:
     primaryDark :  #002333;
 
 */
+* {
+  margin: 0;
+  padding: 0;
+}
+
 :root {
   --fontFactor: 1;
   --listItemSize: calc(16px * var(--fontFactor));
   --inputSize: calc(14px * var(--fontFactor));
   --textSize: calc(14px * var(--fontFactor));
   --titleSize: calc(20px * var(--fontFactor));
+  --titleSizeBig: calc(40px * var(--fontFactor));
   --smallSize: calc(10px * var(--fontFactor));
   --primaryC: #5bc9bb;
   --primaryShadeC: #e9ebea;
@@ -33,6 +39,11 @@ Old Colors:
   --backgroundShadeC: #fafafa;
   --textC: #090909;
   --textShadeC: #c3c8cb;
+  --lightIndent: 4%;
+  --lightIndentRemainder: calc(100% - 2* var(--lightIndent));
+  --maxWidth: 400px;
+  --menuWidth: 40%;
+  --heightTitlebar: 5em;
 }
 
 @font-face {
@@ -53,8 +64,8 @@ html {
   align-items: center;
   justify-content: center;
   background-color: var(--backgroundC);
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -64,13 +75,21 @@ html {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
   overflow-y: hidden;
   background-color: var(--backgroundShadeC);
   width: 100%;
-  max-width: 500px;
-  height: 100vh;
+  max-width: var(--maxWidth);
+  flex-grow: 1;
+}
+
+.chatBoxWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: calc(100% - var(--heightTitlebar));
 }
 
 .chatBox {
@@ -78,9 +97,9 @@ html {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  flex-grow: 1;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
-  height: calc(100% - 3em);
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -94,9 +113,6 @@ html {
   justify-content: flex-start;
   width: 100%;
 }
-.chatBox .wrapper:last-child {
-  margin-bottom: 4em;
-}
 .chatBox .self {
   align-items: flex-end;
 }
@@ -105,7 +121,7 @@ html {
 }
 .chatBox .messageCard {
   background-color: var(--backgroundC);
-  border-radius: 0.6em;
+  border-radius: 0.3em;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -139,7 +155,7 @@ html {
   color: var(--primaryShadeC);
 }
 .chatBox .messageCard img {
-  border-radius: 0.6em;
+  border-radius: 0.3em;
 }
 .chatBox .timeWrapper {
   display: flex;
@@ -153,7 +169,7 @@ html {
   font-weight: 300;
   font-size: var(--textSize);
   color: var(--textC);
-  border-radius: 0.6em;
+  border-radius: 0.3em;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -167,56 +183,65 @@ html {
   background-color: var(--backgroundC);
 }
 
-.messageBox {
+.footer {
+  box-shadow: 0 0 0.5em var(--backgroundShadeC);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  background-color: var(--backgroundC);
+}
+.footer .messageWrapper {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
-  position: absolute;
-  top: calc(100% - 4em);
-  left: 0.5em;
-  width: calc(100% - 1em);
+  flex-grow: 1;
+  margin-left: var(--lightIndent);
+  margin-right: var(--lightIndent);
+  width: var(--lightIndentRemainder);
+  border-bottom: 0.05em var(--primaryShadeC) solid;
+  margin-bottom: 2em;
+  min-height: 3em;
 }
-.messageBox textarea {
+.footer .messageWrapper img {
+  height: 100%;
+  width: 100%;
+}
+.footer .messageWrapper textarea {
   font-family: Outfit;
   font-weight: 400;
   font-size: var(--inputSize);
   color: var(--textC);
-  box-shadow: 0 0 0.5em var(--backgroundShadeC);
-  border-radius: 0.6em;
-  border-width: 0;
-  padding: 1em;
-  margin-bottom: 1em;
-  margin-top: 0.2em;
   flex-grow: 1;
   overflow-y: hidden;
   resize: none;
-  margin-right: 0.5em;
-  margin-bottom: 0;
-  margin-top: 0;
+  border: 0;
+  margin-left: 1em;
+  margin-right: 1em;
   word-break: break-word;
 }
-.messageBox textarea:focus {
-  border-color: var(--primaryC);
+.footer .messageWrapper textarea:focus {
+  outline-width: 0;
 }
-.messageBox button {
-  border-radius: 0.6em;
-  font-family: Outfit;
-  font-weight: 600;
-  font-size: var(--textSize);
-  color: var(--textC);
-  color: var(--backgroundC);
-  background-color: var(--primaryC);
-  padding: 1em;
-  margin-top: 1em;
-  margin-bottom: em;
-  border-width: 0;
-  box-shadow: 0 0 0.5em var(--backgroundShadeC);
+.footer .messageWrapper button {
+  border-radius: 0.3em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  height: 2.5em;
+  width: 2.5em;
   margin-top: 0;
 }
-.messageBox button:hover {
-  background-color: var(--backgroundC);
-  color: var(--textC);
+.footer .messageWrapper button:hover {
+  background-color: var(--backgroundShadeC);
+}
+.footer .messageWrapper button img {
+  height: 1.5em;
+  width: 1.5em;
 }
 
 .titleBar {
@@ -228,31 +253,35 @@ html {
   font-weight: 700;
   font-size: var(--titleSize);
   color: var(--textC);
-  height: 3em;
   background-color: var(--backgroundC);
-  position: relative;
 }
-.titleBar .menuButton {
-  border-radius: 0.6em;
-  background-color: var(--backgroundC);
-  background-image: url(../../icons/burger.svg);
-  background-size: 1.2em 1.2em;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 2em;
-  height: 2em;
-  border-style: none;
+.titleBar .titleLeft {
+  margin-left: 0.5em;
+  width: 2.5em;
 }
-.titleBar .menuButton:hover {
-  cursor: pointer;
+.titleBar .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  height: 2.6em;
+}
+.titleBar .titleRight {
+  margin-right: 0.5em;
+  width: 2.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .menu {
-  display: none;
-  position: absolute;
-  top: 4.2em;
-  width: 40%;
-  left: -40%;
+  position: fixed;
+  top: calc(var(--heightTitlebar) * 1.4);
+  height: 15em;
+  width: var(--menuWidth);
+  left: var(--menuWidth);
   transition: left 0.2s linear;
   font-family: Outfit;
   font-weight: 600;
@@ -263,11 +292,11 @@ html {
   align-items: center;
   justify-content: flex-start;
   box-shadow: 0 0 0.5em var(--backgroundShadeC);
-  border-radius: 0.6em;
+  border-radius: 0.3em;
   background-color: var(--backgroundC);
 }
 .menu .menuItem {
-  border-radius: 0.6em;
+  border-radius: 0.3em;
   color: var(--textC);
   font-size: var(--listItemSize);
   padding: 1em;
@@ -276,72 +305,16 @@ html {
   cursor: pointer;
 }
 
-.menuVisible {
-  left: 1em;
-  transition: left 0.2s linear;
+.menuNew {
+  position: fixed;
+  top: 6em;
+  left: 6em;
+  width: 6em;
+  height: 6em;
 }
 
-#menuToggle {
-  display: none;
-}
-
-.loginRegister {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  height: calc(100% - 3em);
-}
-.loginRegister .loginHeader {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  font-family: Outfit;
-  font-weight: 400;
-  font-size: var(--titleSize);
-  color: var(--textC);
-  height: 4em;
-}
-.loginRegister .loginHeader label:hover {
-  cursor: pointer;
-}
-.loginRegister .loginHeader .selected {
-  text-decoration: underline;
-}
-.loginRegister form {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  padding: 0.4em;
-  padding-left: 1em;
-  padding-right: 1em;
-  margin: 0.4em;
-  margin-left: 0.8em;
-  margin-right: 0.8em;
-  font-family: Outfit;
-  font-weight: 400;
-  font-size: var(--inputSize);
-  color: var(--textC);
-  padding-left: 2em;
-  padding-right: 2em;
-}
-.loginRegister form input[type=text], .loginRegister form input[type=password] {
-  border-radius: 0.6em;
-  border-width: 0;
-  padding: 1em;
-  margin-bottom: 1em;
-  margin-top: 0.2em;
-}
-.loginRegister form input[type=text]:focus, .loginRegister form input[type=password]:focus {
-  border-color: var(--primaryC);
-}
-.loginRegister form label {
-  color: var(--primaryC);
-}
-.loginRegister form .breakButton {
-  border-radius: 0.6em;
+.breakButton {
+  border-radius: 0.3em;
   font-family: Outfit;
   font-weight: 600;
   font-size: var(--textSize);
@@ -352,10 +325,104 @@ html {
   margin-top: 1em;
   margin-bottom: em;
   border-width: 0;
+  margin-left: var(--lightIndent);
+  margin-right: var(--lightIndent);
+  width: var(--lightIndentRemainder);
 }
-.loginRegister form .breakButton:hover {
+.breakButton:hover {
   background-color: var(--backgroundC);
   color: var(--textC);
+}
+
+.firstPrio {
+  background-color: var(--primaryC);
+}
+
+.secondPrio {
+  background-color: var(--backgroundC);
+  color: var(--textShadeC);
+}
+
+.loginRegister {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  font-family: Outfit;
+  font-weight: 400;
+  font-size: var(--inputSize);
+  color: var(--textC);
+  height: calc(100% - var(--heightTitlebar));
+}
+.loginRegister form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  margin-top: 1em;
+}
+.loginRegister form input {
+  border: 0;
+  border-radius: 0;
+  color: var(--textC);
+  background-color: var(--backgroundC);
+}
+.loginRegister form .inputWrapper {
+  background-color: var(--backgroundC);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Outfit;
+  font-weight: 400;
+  font-size: var(--inputSize);
+  color: var(--textC);
+}
+.loginRegister form .inputWrapper .defaultInput {
+  margin-left: var(--lightIndent);
+  margin-right: var(--lightIndent);
+  width: var(--lightIndentRemainder);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  border-bottom: 0.05em var(--textShadeC) solid;
+}
+.loginRegister form .inputWrapper .defaultInput input {
+  flex-grow: 1;
+  margin-bottom: 0.7em;
+  margin-top: 0.7em;
+}
+.loginRegister form .inputWrapper .defaultInput input:focus {
+  outline-width: 0;
+}
+.loginRegister form .inputWrapper .defaultInput button:disabled {
+  display: none;
+}
+.loginRegister form .inputWrapper .defaultInput button {
+  border-radius: 0.3em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  height: 2.5em;
+  width: 2.5em;
+  margin-top: 0;
+}
+.loginRegister form .inputWrapper .defaultInput button:hover {
+  background-color: var(--backgroundShadeC);
+}
+.loginRegister form .inputWrapper .defaultInput button img {
+  height: 1.5em;
+  width: 1.5em;
+}
+.loginRegister form label {
+  color: var(--primaryC);
 }
 .loginRegister form .passwordWrapper {
   display: flex;
@@ -366,19 +433,11 @@ html {
   margin-top: 0.2em;
 }
 .loginRegister form .passwordWrapper input[type=text], .loginRegister form .passwordWrapper input[type=password] {
-  border-radius: 0.6em;
-  border-width: 0;
-  padding: 1em;
-  margin-bottom: 1em;
-  margin-top: 0.2em;
   flex-grow: 1;
   margin: 0;
 }
-.loginRegister form .passwordWrapper input[type=text]:focus, .loginRegister form .passwordWrapper input[type=password]:focus {
-  border-color: var(--primaryC);
-}
 .loginRegister form .passwordWrapper .inlineButton {
-  border-radius: 0.6em;
+  border-radius: 0.3em;
   font-family: Outfit;
   font-weight: 600;
   font-size: var(--textSize);
@@ -389,7 +448,6 @@ html {
   background-position: center;
   color: var(--textC);
   background-color: var(--backgroundC);
-  background-image: url(../../icons/eye_svg_repo.svg);
   padding: 1em;
   width: 2.8em;
   border-width: 0;
@@ -399,18 +457,43 @@ html {
 }
 .loginRegister form .passwordWrapper .inlineButton:hover {
   background-color: var(--primaryC);
-  background-image: url(../../icons/eye_svg_repo_light.svg);
 }
-.loginRegister .labeledCheckbox {
+.loginRegister .breakinglabeledCheckbox {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  margin-left: var(--lightIndent);
+  margin-right: var(--lightIndent);
+  width: var(--lightIndentRemainder);
   margin-top: 0.4em;
+}
+.loginRegister .breakinglabeledCheckbox label {
+  margin-left: 0.5em;
+}
+.loginRegister p {
+  color: var(--textShadeC);
+  margin-left: var(--lightIndent);
+  margin-right: var(--lightIndent);
+  width: var(--lightIndentRemainder);
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+.loginRegister p span {
+  color: var(--textC);
+  font-weight: 700;
+}
+.loginRegister h1 {
+  margin-left: var(--lightIndent);
+  margin-right: var(--lightIndent);
+  width: var(--lightIndentRemainder);
+  font-size: var(--titleSizeBig);
+  margin-bottom: 0em;
+  margin-top: 3em;
 }
 
 .errMsgWrapper .errMsg {
-  border-radius: 0.6em;
+  border-radius: 0.3em;
   font-family: Outfit;
   font-weight: 400;
   font-size: var(--inputSize);
@@ -436,12 +519,86 @@ html {
   left: 10em;
 }
 
+.titleButton {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  height: calc(var(--titleSize) * 1.2);
+  width: calc(var(--titleSize) * 1.2);
+}
+.titleButton:hover {
+  cursor: pointer;
+  background-color: var(--backgroundShadeC);
+}
+.titleButton img {
+  height: 100%;
+  width: 100%;
+}
+.titleButton:disabled {
+  display: none;
+}
+
 .searchField {
+  border-radius: 0.3em;
+  box-shadow: 0 0 0.5em var(--backgroundShadeC);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: Outfit;
+  font-weight: 400;
+  font-size: var(--inputSize);
+  color: var(--textC);
   position: fixed;
+  height: 2em;
+  left: calc(50vw - var(--maxWidth) / 2 + 5vw);
+  top: calc(var(--heightTitlebar) + 1em);
+  width: calc(var(--maxWidth) - 10vw);
+  background-color: var(--backgroundC);
   z-index: 1;
-  max-width: 500px;
-  left: 15em;
-  top: 10em;
+}
+.searchField img {
+  height: 100%;
+  width: 100%;
+}
+.searchField button {
+  width: 2.5em;
+  height: 2.5em;
+  background: transparent;
+  border: 0;
+}
+.searchField button img {
+  height: 100%;
+  width: 100%;
+}
+.searchField button:disabled {
+  display: none;
+}
+.searchField button {
+  border-radius: 0.3em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  height: 2.5em;
+  width: 2.5em;
+  margin-top: 0;
+}
+.searchField button:hover {
+  background-color: var(--backgroundShadeC);
+}
+.searchField button img {
+  height: 1.5em;
+  width: 1.5em;
+}
+.searchField input {
+  flex-grow: 1;
+  border: none;
+}
+.searchField input:focus {
+  outline-width: 0;
 }
 
 .filterField {

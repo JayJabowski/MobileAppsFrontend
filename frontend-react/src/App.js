@@ -8,7 +8,7 @@ import React, {useState, useEffect} from "react";
 //LOCAL
 import Login from "./pages/login";
 import GroupChat from "./pages/groupchat";
-import Menu from "./components/menu";
+import Title from "./pages/title";
 import Register from "./pages/register";
 import TitleBar from "./components/titlebar";
 
@@ -24,21 +24,24 @@ import { logoutPost } from "./api/Fetcher";
 
 //CSS
 import "./styles/main.css";
+import useActiveTheme from "./hooks/useActiveTheme";
 
 function App() {
 
   const storageHandler = LocalStorageHandler();
 
   const { auth, setAuth } = useAuth();
+  const { isLight, setIsLight } = useActiveTheme();
   const { activeState,setActiveState } = useActiveState();
-  const [ menuStatus, setMenuStatus ] = useState(false);
   const [ messageHistory, setmessageHistory ] = useState([]);
 
-  const toggleMenuStatus = () => {
-    setMenuStatus(!menuStatus);
-  }
+
   const updateAuth = (status) => {
     setAuth(status);
+  }
+
+  const updateTheme = (bool) => {
+    setIsLight(bool);
   }
   const updateActiveState = (status) => {
     const tmpStates= [ status, ...activeState];
@@ -51,9 +54,11 @@ function App() {
   }
 
   useEffect(() => {
+ 
     const tempAuth = storageHandler.getLoginFromStorage();
     if(tempAuth.token){
       updateAuth(tempAuth);
+      updateTheme(tempAuth.theme);
       updateActiveState("groupChat");
     }
   }, [])
@@ -64,7 +69,7 @@ function App() {
     const response = await logoutPost(auth.token);
 
     if(response.data.status === "ok"){
-      updateActiveState("loggedOut");
+      updateActiveState("login");
       updateAuth({});
       storageHandler.clearLocalStorage();
     }
@@ -74,17 +79,19 @@ function App() {
   
   const getTitle = () =>{
     switch (activeState[0]){
-      case "loggedOut":
-        return "Login";
+      case "login":
+        return "Sign In";
       case "register":
-        return "Register";
+        return "Sign Up";
       case "groupChat":
         return "Group Chat";
+      case "title":
+        return "Welcome";
     }
   }
 
   const generateBackButtonTexts = () => {
-    if(activeState[0] == "groupChat" && activeState[1] == "loggedOut"){
+    if(activeState[0] == "groupChat" && activeState[1] == "login"){
       return{
         gobackMsg: "This will log you out and take you to the login screen. Do you want to continue?",
         confirmMsg: "Log me Out!",
@@ -102,18 +109,14 @@ function App() {
     <div className="background">
       <div className="mainContainer">
       <TitleBar 
-        toggleMenuStatus={toggleMenuStatus} 
         title={getTitle()} 
         backButtonInfo={generateBackButtonTexts()}
-        messageHistory={messageHistory}
-      />
-      <Menu 
-        toggleMenuStatus={toggleMenuStatus} 
-        status={menuStatus} 
-        LogoutHandler={LogoutHandler} 
+        messageHistory={messageHistory} 
+        LogoutHandler={LogoutHandler}
       />
 
-      {activeState[0] == "loggedOut" ? (<Login />) : (<></>) }
+      {activeState[0] == "title" ? (<Title />) : (<></>) }
+      {activeState[0] == "login" ? (<Login />) : (<></>) }
       {activeState[0] == "register" ? (<Register />) : (<></>) }
       {activeState[0] == "groupChat" 
       ? 

@@ -33,7 +33,6 @@ function GroupChat({messageHistory, updateMessageHistory}) {
     //useEffect
     useEffect(() => {
         updateChat();
-        console.log("groupChat.js called useEffect")
     }, []);
     useEffect(() => {
         scrollDown();
@@ -77,12 +76,13 @@ function GroupChat({messageHistory, updateMessageHistory}) {
 
     const scrollDown = () => {
         const chatBottom = document.getElementById("chatBottom");
-        console.dir(chatBottom);
         chatBottom.scrollIntoView({behavior: "instant", block: "end"});
     }
 
     return (
         <>
+            <div className='chatBoxWrapper'>
+
             <div className="chatBox">
                 {messageHistory.map((msg, i) => {
                     return(
@@ -94,6 +94,7 @@ function GroupChat({messageHistory, updateMessageHistory}) {
                 <div id="chatBottom"></div>
             </div>
             <MessageInput updateChat={updateChat} />
+            </div>
         </>
       );
 }

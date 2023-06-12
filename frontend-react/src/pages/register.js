@@ -5,6 +5,8 @@ import useAuth from '../hooks/useAuth';
 import { register, registerPost } from '../api/Fetcher';
 
 import ErrorMessage from '../components/errMsg';
+import SignUpInput from '../components/SignUpInput';
+import SignUpPassword from '../components/SignUpPassword';
 
 function Register() {
     const { auth, setAuth }= useAuth();
@@ -102,6 +104,13 @@ function Register() {
     return ( 
         <div className="loginRegister">
         <form className='loginForm'>
+            <SignUpInput placeholder={"HSE-Credentials"} state={userForm.userid} callback={updateHseId} />
+            <SignUpInput placeholder={"Nickname"} state={userForm.nickname} callback={updateNickname} />
+            <SignUpInput placeholder={"Full Name"} state={userForm.fullname} callback={updateFullName} />
+
+            <SignUpPassword placeholder={"Enter Password"} callback={updatePassword} />
+            <SignUpPassword placeholder={"Repeat Your Password"} callback={updateRepeatedPassword} />
+
             <div>
                 {infomsg.map((msg,i) => {
                     setTimeout(() => { 
@@ -117,18 +126,8 @@ function Register() {
                 })
                 }
             </div>
-            <label>Enter Your HSE id (e.g. mamu00)</label>
-            <input type="text" onChange={updateHseId}></input>
-            <label>Nickname</label>
-            <input type="text" onChange={updateNickname}></input>
-            <label>Full Name</label>
-            <input type="text" onChange={updateFullName}></input>
-            <label>Password</label>
-            <input type="text"  onChange={updatePassword}></input>
-            <label>Repeat Password</label>
-            <input type="text"  onChange={updateRepeatedPassword}></input>
-            <button className="breakButton" onClick={RegisterHandler}>Register</button>
-            <button className="breakButton" onClick={() => updateActiveState("loggedOut")}>Login</button>
+            <button className="breakButton firstPrio" onClick={RegisterHandler}>Create Account</button>
+            <button className="breakButton secondPrio" onClick={() => updateActiveState("login")}>Sign In</button>
         </form>
         </div>
 

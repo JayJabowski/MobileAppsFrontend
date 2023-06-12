@@ -1,6 +1,6 @@
 const LocalStorageHandler = () =>{
 
-    const addLoginToLocalStorage = (Obj) =>{
+    const addToLocalStorage = (Obj) =>{
         const keys = Object.keys(Obj);
   
         keys.forEach((k) => {
@@ -17,14 +17,22 @@ const LocalStorageHandler = () =>{
         return {
             hash: localStorage.getItem("hash"),
             user: localStorage.getItem("user"),
-            token: localStorage.getItem("token")
+            token: localStorage.getItem("token"),
+            theme: localStorage.getItem("theme")
+        }
+    }
+
+    const getThemeFromStorage = () => {
+        return {
+            theme: localStorage.getItem("theme")
         }
     }
 
     return {
-        addLoginToLocalStorage,
+        addToLocalStorage,
         clearLocalStorage,
-        getLoginFromStorage
+        getLoginFromStorage,
+        getThemeFromStorage
     }
 
 }

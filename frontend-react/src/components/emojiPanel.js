@@ -1,10 +1,17 @@
 import React,  {useState, useEffect} from 'react';
 import { getAllEmojis } from '../api/emojiFetcher';
 
+import faceDark from "../icons/face_dark.svg"
+import faceLight from "../icons/face_light.svg"
+import useActiveTheme from '../hooks/useActiveTheme';
+
 function EmojiPanel({ callback }) {
+
+    const { isLight } = useActiveTheme();
     const [emojiList, setEmojiList] = useState([]);
     const [emojiSearchList, setEmojiSearchList] = useState([]);
     const [searchString, setSearchString] = useState("");
+    const [panelVisible, setPanelVisible] = useState(false);
 
     const updateEmojiList = (arr) => {
         setEmojiList(arr);
@@ -14,6 +21,9 @@ function EmojiPanel({ callback }) {
     }
     const updateSearchString = (e) => {
         setSearchString(e.target.value);
+    }
+    const updatePanelVisible = (bool) => {
+        setPanelVisible(bool);
     }
 
     useEffect(() => {
@@ -46,32 +56,28 @@ function EmojiPanel({ callback }) {
     }
 
 
-    return ( 
-        <>
-            <div className='emojiWrapper'>
-                <input type="text" onChange={updateSearchString} ></input>
-                <div className='emojiResultBox'>
-                    {
-                        emojiSearchList.length != emojiList.length && !emojiSearchList.length
-                        ?
-                        <>
-                        {
-                            emojiSearchList.map(renderEmoji)
-                        }
-                        </>
-                        :
-                        <>
-                        {
-                            emojiList.map(renderEmoji)
-                        }
-                        </>
-
-                    }
-                </div>
+    return (
+      <>
+        <button onClick={() => updatePanelVisible(!panelVisible)}>
+          <img alt="Emojis" src={isLight ? faceDark : faceLight} />
+        </button>
+        {panelVisible ? (
+          <div className="emojiWrapper">
+            <input type="text" onChange={updateSearchString}></input>
+            <div className="emojiResultBox">
+              {emojiSearchList.length != emojiList.length &&
+              !emojiSearchList.length ? (
+                <>{emojiSearchList.map(renderEmoji)}</>
+              ) : (
+                <>{emojiList.map(renderEmoji)}</>
+              )}
             </div>
-        
-        </>
-     );
+          </div>
+        ) : (
+          <></>
+        )}
+      </>
+    );
 }
 
 export default EmojiPanel;

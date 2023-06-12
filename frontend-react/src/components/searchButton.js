@@ -1,13 +1,28 @@
 import React, {useState, useEffect} from 'react';
+import useActiveTheme from '../hooks/useActiveTheme';
+import useAuth from '../hooks/useAuth';
+
+//Images
+import searchDark from "../icons/search_dark.svg"
+import searchLight from "../icons/search_light.svg"
+import upDark from "../icons/up_dark.svg"
+import upLight from "../icons/up_light.svg"
+import downDark from "../icons/down_dark.svg"
+import downLight from "../icons/down_light.svg"
+import filterDark from "../icons/filter_dark.svg"
+import filterLight from "../icons/filter_light.svg"
+
 
 function SearchButton({messageHistory}) {
+    const {isLight } = useActiveTheme();
+    const {auth} = useAuth();
+
     const [searchString, setSearchString ] = useState("");
     const [searchbarVisible, setSearchbarVisible] = useState(false);
     const [filterVisible, setFilterVisible] = useState(false);
     const [filter, setFilter] = useState({includeNames: true, includeText: true});
    
     const [resultFocus, setResultFocus] = useState(0);
-    const [resultFocusDirection, setResultFocusDirection] = useState(1);
     const [results, setResults] = useState([]);
 
     // useState-Setter
@@ -30,9 +45,6 @@ function SearchButton({messageHistory}) {
     }
     const updateFocusResult = (num) => {
         setResultFocus(num);
-    }
-    const updateFocusResultDirection = (num) => {
-        setResultFocusDirection(num);
     }
 
     useEffect(() => {
@@ -60,26 +72,6 @@ function SearchButton({messageHistory}) {
     }
 
     //Result-Handling
-
-    /*
-    const shiftResultBy = (num, resultArr) => {
-        const tmpFocus = resultFocus !== null ? (resultFocus + num) % resultArr.length : 0;
-        const prev = (resultArr.length + tmpFocus - num) % resultArr.length;
-
-        const resultID = `msg${resultArr[tmpFocus].id}`;
-        console.log(resultID);
-        const prevID = `msg${resultArr[prev].id}`;
-        console.log(prevID);
-        
-        const resultHTML = document.getElementById(resultID);
-        const prevResultHTML = document.getElementById(prevID);
-        
-        scrollToResult(resultHTML);
-        applyFocusStyling(resultHTML, prevResultHTML);
-
-        updateFocusResult(tmpFocus);
-    }
-    */
 
     const findFirstResult = (resultArr) => {
         if(!resultArr.length) return;
@@ -148,29 +140,37 @@ function SearchButton({messageHistory}) {
 
     return ( 
         <>
-        <button onClick={toggleSearchbarVisible} className="searchButton">Search</button>
+        { auth.token
+        ?
+            <button onClick={toggleSearchbarVisible} className="titleButton">
+            <img alt="Search" src={isLight ? searchDark : searchLight} />
+        </button>
+        :
+        <></>
+        }
         
         {
             searchbarVisible
             ?
             <div className="searchField">
-                <label>{`Showing search results for: ${searchString}`}</label>
-                <input type="text" onChange={updateSearchString}></input>
+                <button className="filterBtn" onClick={toggleFilterVisible}>
+                                <img alt="filter" src={isLight ? filterDark : filterLight} />
+                    </button>
+                <input type="text" placeholder="Search" onChange={updateSearchString}></input>
                 <button disabled={!results.length || results.length == messageHistory.length} 
                         className="prevResultBtn" 
                         onClick={() => {
                             shiftFocusByDirection(-1,results)
                         }}>
-                                Prev
+                               <img alt="previous" src={isLight ? upDark : upLight} />
                             </button>
                 <button disabled={!results.length || results.length == messageHistory.length} 
                         className="nextResultBtn" 
                         onClick={() => {
                             shiftFocusByDirection(1,results)
-                            }}>
-                                Next
+                        }}>
+                                <img alt="next" src={isLight ? downDark : downLight} />
                             </button>
-                <button className="filterBtn" onClick={toggleFilterVisible}>Filter</button>
             </div>
             :
             <> </>

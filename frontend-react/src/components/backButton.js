@@ -1,7 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import useActiveState from '../hooks/useActiveState';
+import useActiveTheme from '../hooks/useActiveTheme';
+
+//Images
+import backDark from "../icons/back_dark.svg"
+import backLight from "../icons/back_light.svg"
 
 function BackButton({gobackMsg, confirmMsg, abortMsg, callback}) {
+    const {isLight} = useActiveTheme();
+
     const {activeState, setActiveState} = useActiveState();
     const [isBackButtonActive, setBackButtonActive] = useState(activeState.length > 1);
     const [popupVisible, setPopupVisible] = useState(false);
@@ -30,12 +37,12 @@ function BackButton({gobackMsg, confirmMsg, abortMsg, callback}) {
 
     return ( 
         <div className='backButtonWrapper'>
-            <button disabled={!isBackButtonActive} onClick={gobackMsg ? 
+            <button className="titleButton" disabled={!isBackButtonActive} onClick={gobackMsg ? 
             () => updatePopUpVisible(true)
             :
             () => goBack()
             }>
-                Back
+                <img alt="back" src={ isLight ? backDark : backLight} />
             </button>
 
             {popupVisible 

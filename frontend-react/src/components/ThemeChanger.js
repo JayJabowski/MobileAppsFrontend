@@ -1,11 +1,16 @@
 import React, {useState} from 'react';
+import useActiveTheme from '../hooks/useActiveTheme';
+import LocalStorageHandler from '../tools/localstoragehandler';
 
 function ThemeChanger() {
+    const storageHandler = LocalStorageHandler();
+
     const [isLightMode, setIsLightMode] = useState(true);
+    const { isLight, setIsLight } = useActiveTheme();
     const root = document.querySelector(':root');
 
     const toggleIsLightMode = () => {
-        setIsLightMode(!isLightMode);
+        setIsLight(!isLight);
     }
 
     const LIGHTMODE = {
@@ -24,10 +29,11 @@ function ThemeChanger() {
         backgroundShadeC: "#181818",
         textC: "#e7e7e7",
         textShadeC: "#33383b"
+
     }
 
     const switchModes = () => {
-        if(isLightMode){
+        if(isLight){
             applyStyleObj(DARKMODE,root);
             
         }else{
