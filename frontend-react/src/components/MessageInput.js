@@ -3,6 +3,7 @@ import Picker from 'emoji-picker-react';
 
 import { sendMessagePost } from '../api/Fetcher';
 import useAuth from '../hooks/useAuth';
+import EmojiPanel from './emojiPanel';
 
 
 
@@ -32,6 +33,10 @@ function MessageInput({ updateChat }) {
         return message;
     }
 
+    const appendEmoji = (emoji) => {
+        setMessage(message+emoji);
+    }
+
     const updateNoOfRows = (rows) => {
         setNoOfRows(rows);
     }
@@ -52,7 +57,7 @@ function MessageInput({ updateChat }) {
         <div className="messageBox">
                 <textarea id="textInput" rows={noOfRows} value={message} onChange={updateTextInput}></textarea>
                 <button onClick={submitMessageHandler}>Send</button>
-        
+                <EmojiPanel callback={appendEmoji} />
             </div>
      );
 }
