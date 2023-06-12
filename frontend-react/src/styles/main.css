@@ -81,6 +81,7 @@ html {
   background-color: var(--backgroundShadeC);
   width: 100%;
   max-width: var(--maxWidth);
+  height: 100%;
   flex-grow: 1;
 }
 
@@ -89,6 +90,7 @@ html {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  flex-grow: 1;
   height: calc(100% - var(--heightTitlebar));
 }
 
@@ -190,6 +192,7 @@ html {
   align-items: stretch;
   justify-content: flex-start;
   background-color: var(--backgroundC);
+  width: 100%;
 }
 .footer .messageWrapper {
   display: flex;

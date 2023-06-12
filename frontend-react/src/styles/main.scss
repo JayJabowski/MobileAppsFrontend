@@ -220,12 +220,14 @@ html{
 
     width: 100%;
     max-width: var(--maxWidth);
+    height: 100%;
 
     flex-grow:1;
 }
 
 .chatBoxWrapper{
     @include flexOAJ(column, flex-start, flex-start);
+    flex-grow: 1;
     height: calc(100% - var(--heightTitlebar));
     
 }
@@ -298,12 +300,15 @@ html{
 
 .footer {
     @include dropShadow();
-    @include flexOAJ(column, stretch , flex-start );
+    @include flexOAJ(column, stretch ,flex-start );
     background-color: var(--backgroundC);
+    width: 100%;
 
     .messageWrapper {
         @include flexOAJ(row, center, space-between);
-        flex-grow: 1;
+
+        flex-grow:1;
+
         @include imageLimiter();
         @include lightIndent();
 
