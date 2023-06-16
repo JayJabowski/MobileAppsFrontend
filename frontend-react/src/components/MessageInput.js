@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Picker from 'emoji-picker-react';
 
-import { sendMessagePost } from '../api/Fetcher';
+import { sendMessage } from '../api/Fetcher';
 import useAuth from '../hooks/useAuth';
 import EmojiPanel from './emojiPanel';
 
@@ -45,9 +45,10 @@ function MessageInput({ updateChat }) {
     if (!message) return;
 
     e.preventDefault();
-    const response = await sendMessagePost(auth.token, message);
+    const response = await sendMessage(auth.token, message);
+    console.dir(response);
 
-    if (response.data.status === "ok") {
+    if (response.data.status === 200) {
       updateMessage({ target: { value: "" } });
       updateChat();
     }

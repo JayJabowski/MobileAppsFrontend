@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { fetchMessages, fetchMessagesPost, sendMessagePost } from '../api/Fetcher';
+import { fetchMessages } from '../api/Fetcher';
 import ChatMessage from '../components/chatmessage';
 import MessageInput from '../components/MessageInput';
 import useAuth from '../hooks/useAuth';
@@ -8,8 +8,6 @@ import useAuth from '../hooks/useAuth';
 import CameraHandler from '../tools/camerahandler';
 
 //MockData
-import { MockChat } from '../MockData';
-import PhotoButton from '../components/photobutton';
 import { parseTimeString } from '../tools/tools';
 
 //TODO: periodically update Chat.
@@ -41,9 +39,10 @@ function GroupChat({messageHistory, updateMessageHistory}) {
 
     //Fetches
     const updateChat = async () => {
-        const response = await fetchMessagesPost(auth.token);   
+        const response = await fetchMessages(auth.token);
+        console.dir(response);   
 
-        if (response.data.status === "ok"){
+        if (response.data.code == 200){
             updateMessageHistory(response.data.messages);
         }
 

@@ -2,14 +2,8 @@ import React, { useState } from "react";
 import useActiveState from "../hooks/useActiveState";
 import useAuth from "../hooks/useAuth";
 
-import LocalStorageHandler from "../tools/localstoragehandler";
-
-import { fetchLoginPost } from "../api/Fetcher";
-import RememberMe from "../components/rememberme";
-
 function Title({msg}) {
 
-  const { auth, setAuth } = useAuth();
   const { activeState, setActiveState } = useActiveState();
   
   //useState-Setter

@@ -10,35 +10,17 @@ self.addEventListener("install", (e) => {
 
 //Caching
 self.addEventListener('fetch', e => {
-    if(!navigator.onLine){
-        
-    }
-    e.respondWith(
-        getResource(e.request)
-    )
+      e.respondWith(
+          getResource(e.request)
+      )
 })
-
-//Push
-self.addEventListener("push", (e) => {
-  self.addEventListener("message", (e) => {
-    self.clients
-      .matchAll()
-      .then((clients) => clients.map((c) => c.postMessage(e)));
-  });
-});
 
 //Sync -- not working rn
 self.addEventListener("online", (e) => {
-    //or use online?
-    
-    console.dir(e);
-
-     while(offlineQueue.length){
-        const request = offlineQueue.pop();
-        const response = fetch(request);
-     }
-    }
-    )
+  //or use online?
+  console.log("back online!");
+  console.dir(e);
+});
 
 
 const addResourcesToCache = async (resources) => {
@@ -46,10 +28,17 @@ const addResourcesToCache = async (resources) => {
   await cache.addAll(resources);
 };
 
-const putInCache = async (request, response) => {
-  const cache = await caches.open("" + cacheVersion);
-  await cache.add(request);
+const putInCache = async (request) => {
+  try{
+    if(request.method == "GET"){
+      const cache = await caches.open("" + cacheVersion);
+      await cache.add(request);
+    }
+  }catch(err){
+    console.dir({request, err});
+  }
 };
+
 
 const addToOfflineQueue = (request) => {
   offlineQueue.push(request);
@@ -59,14 +48,15 @@ const getResource = async (request) => {
   try {
     const responseFromNetwork = await fetch(request);
 
-    putInCache(request, responseFromNetwork.clone());
-
+    putInCache(request);
+    
     return responseFromNetwork;
   } catch (err) {
+    console.dir(err);
     const responseFromCache = await caches.match(request.url);
 
-    evaluateRequestForOfflineQueue(request);
-    
+    //evaluateRequestForOfflineQueue(request);
+    console.log("Getting From Cache because: "+err);
     return responseFromCache || new Response("Network Error", {
         status: 408,
         headers: { "Content-Type": "text/plain" }

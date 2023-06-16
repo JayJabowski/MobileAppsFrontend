@@ -5,7 +5,7 @@ import useActiveTheme from "../hooks/useActiveTheme";
 
 import LocalStorageHandler from "../tools/localstoragehandler";
 
-import { fetchLoginPost } from "../api/Fetcher";
+import { login } from "../api/Fetcher";
 import RememberMe from "../components/rememberme";
 import SignUpInput from "../components/SignUpInput";
 import SignUpPassword from "../components/SignUpPassword";
@@ -17,8 +17,8 @@ function Login({msg}) {
   const { auth, setAuth } = useAuth();
 
   const { activeState, setActiveState } = useActiveState();
-  const [user, setUser] = useState();
-  const [password, setPassword] = useState();
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const [rememberLoginCheck, setRememberLoginCheck] = useState(false);
   const [ infomsg, setInfomsg ] = useState(msg ? [msg] : []);
@@ -57,8 +57,7 @@ function Login({msg}) {
   const LoginHandler = async (e) => {
     e.preventDefault();
 
-    const response = await fetchLoginPost(user, password);
-    console.log(response.data);
+    const response = await login(user, password);
 
     switch(response.data.code){
       case 200:
@@ -80,8 +79,6 @@ function Login({msg}) {
       storageHandler.addToLocalStorage({hash: response.data.hash, token: response.data.token, user});
     }
   };
-
-  console.dir(infomsg);
 
   return (
     <div className="loginRegister">

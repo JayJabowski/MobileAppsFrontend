@@ -20,7 +20,7 @@ import useActiveState from "./hooks/useActiveState";
 import useAuth from "./hooks/useAuth";
 
 //FETCHES
-import { logoutPost } from "./api/Fetcher";
+import { logout } from "./api/Fetcher";
 
 //CSS
 import "./styles/main.css";
@@ -66,7 +66,7 @@ function App() {
   //Fetches
 
   const LogoutHandler = async () => {
-    const response = await logoutPost(auth.token);
+    const response = await logout(auth.token);
 
     if(response.data.status === "ok"){
       updateActiveState("login");
