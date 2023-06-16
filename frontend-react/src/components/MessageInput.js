@@ -48,7 +48,7 @@ function MessageInput({ updateChat }) {
     const response = await sendMessage(auth.token, message);
     console.dir(response);
 
-    if (response.data.status === 200) {
+    if (response.data.code === 200) {
       updateMessage({ target: { value: "" } });
       updateChat();
     }

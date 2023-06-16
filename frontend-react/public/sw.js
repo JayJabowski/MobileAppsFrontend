@@ -4,16 +4,14 @@ let cacheVersion = 0;
 let offlineQueue = []
 
 //SW installation
-self.addEventListener("install", (e) => {
-  e.waitUntil(addResourcesToCache(["/", "/index.html"]));
-});
-
-//Caching
-self.addEventListener('fetch', e => {
-      e.respondWith(
-          getResource(e.request)
-      )
-})
+self.addEventListener('install', e =>
+  e.waitUntil(
+    caches.open(cacheVersion)
+    .then(cache => {
+      return cache.addAll([ '/', 'index.html']);
+    })
+  )
+);
 
 //Sync -- not working rn
 self.addEventListener("online", (e) => {
@@ -22,58 +20,47 @@ self.addEventListener("online", (e) => {
   console.dir(e);
 });
 
+// fetch from network
+const getFromNetwork = (request, timeout) =>
 
-const addResourcesToCache = async (resources) => {
-  const cache = await caches.open("" + cacheVersion);
-  await cache.addAll(resources);
-};
+  new Promise((resolve, reject) => {
 
-const putInCache = async (request) => {
-  try{
-    if(request.method == "GET"){
-      const cache = await caches.open("" + cacheVersion);
-      await cache.add(request);
-    }
-  }catch(err){
-    console.dir({request, err});
-  }
-};
+    //save id of timeout
+    const timeoutId = setTimeout(reject, timeout);
+    fetch(request, {cache: "no-store"}).then(response => {
+
+      //remove timeout if request was successful
+      clearTimeout(timeoutId);
+
+      resolve(response);
+      addToCache(request);
+    }, reject);
+  });
+
+// fetch the resource from the browser cache
+const getLocally = (request) =>
+  caches
+    .open(cacheVersion)
+    .then(cache =>
+      cache
+        .match(request)
+    );
+
+const addToCache = (request) =>
+  caches
+    .open(cacheVersion)
+    .then(cache =>
+      fetch(request).then(response => cache.put(request, response))
+    );
+
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    getFromNetwork(e.request, 10000).catch((err) => {
+      console.dir(err);
+      getLocally(e.request);
+    })
+  );
+  e.waitUntil(addToCache(e.request));
+});
 
 
-const addToOfflineQueue = (request) => {
-  offlineQueue.push(request);
-};
-
-const getResource = async (request) => {
-  try {
-    const responseFromNetwork = await fetch(request);
-
-    putInCache(request);
-    
-    return responseFromNetwork;
-  } catch (err) {
-    console.dir(err);
-    const responseFromCache = await caches.match(request.url);
-
-    //evaluateRequestForOfflineQueue(request);
-    console.log("Getting From Cache because: "+err);
-    return responseFromCache || new Response("Network Error", {
-        status: 408,
-        headers: { "Content-Type": "text/plain" }
-      });
-  }
-};
-
-const evaluateRequestForOfflineQueue = (request) => {
-  if (verifySendMessageRequest(request.url)) {
-    addToOfflineQueue(request); 
-  }
-};
-
-const verifySendMessageRequest = (url) => {
-  let urlArray = url.split("?");
-  let requestPairArray = urlArray[1].split("&");
-  let requestType = requestPairArray[0];
-
-  return requestType === "request=sendmessage";
-};
