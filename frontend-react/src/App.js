@@ -20,7 +20,7 @@ import useActiveState from "./hooks/useActiveState";
 import useAuth from "./hooks/useAuth";
 
 //FETCHES
-import { logout } from "./api/Fetcher";
+import { deregister, logout } from "./api/Fetcher";
 
 //CSS
 import "./styles/main.css";
@@ -68,8 +68,18 @@ function App() {
   const LogoutHandler = async () => {
     const response = await logout(auth.token);
 
-    if(response.data.status === "ok"){
-      updateActiveState("login");
+    if(response.data.code === 200){
+      updateActiveState("title");
+      updateAuth({});
+      storageHandler.clearLocalStorage();
+    }
+  }
+
+  const DeregisterHandler = async () => {
+    const response = await deregister(auth.token);
+
+    if(response.data.code === 200){
+      updateActiveState("title");
       updateAuth({});
       storageHandler.clearLocalStorage();
     }
@@ -113,16 +123,16 @@ function App() {
         backButtonInfo={generateBackButtonTexts()}
         messageHistory={messageHistory} 
         LogoutHandler={LogoutHandler}
+        DeregisterHandler={DeregisterHandler}
       />
 
       {activeState[0] == "title" ? (<Title />) : (<></>) }
       {activeState[0] == "login" ? (<Login />) : (<></>) }
       {activeState[0] == "register" ? (<Register />) : (<></>) }
-      {activeState[0] == "groupChat" 
-      ? 
-      (<GroupChat messageHistory={messageHistory} updateMessageHistory={updateMessageHistory} />) 
-      : 
-      (<></>) }
+      {activeState[0] == "groupChat" ? (<GroupChat 
+                    messageHistory={messageHistory} 
+                    updateMessageHistory={updateMessageHistory} 
+                    />) : (<></>) }
         </div>
     </div>
     </>

@@ -62,10 +62,11 @@ function Login({msg}) {
     switch(response.data.code){
       case 200:
         break;
+      case 455:
       case 456:
         updateInfoMsg(response.data.message);
         storageHandler.clearLocalStorage();
-        break;
+        return;
         default:
         updateInfoMsg(response.data.message);
         return;

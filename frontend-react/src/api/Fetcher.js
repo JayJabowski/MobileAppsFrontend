@@ -19,73 +19,101 @@ const getDateInFuture = (MonthsInAdvance) => {
 //------------------------
 
 const loginGET = async (user, pass) => {
-  //returns token in response.data
-  const lazyFix = pass || "WeakArmsStrongPasswords";
+  try {
+    //returns token in response.data
+    const lazyFix = pass || "WeakArmsStrongPasswords";
 
-  const response = await axios.get(
-    `?request=login&userid=${user}&password=${lazyFix}`
-  );
+    const response = await axios.get(
+      `?request=login&userid=${user}&password=${lazyFix}`
+    );
 
-  return response;
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 const registerGET = async ({ userid, fullname, nickname, password }) => {
-  const response = await axios.get(
-    `?request=register&userid=${userid}&fullname=${fullname}&nickname=${nickname}&password=${password}`,
-    { headers: { "Content-Type": "application/json" } }
-  );
+  try {
+    const response = await axios.get(
+      `?request=register&userid=${userid}&fullname=${fullname}&nickname=${nickname}&password=${password}`,
+      { headers: { "Content-Type": "application/json" } }
+    );
 
-  return response;
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 const fetchMessagesGET = async (token) => {
-  const response = await axios.get(`?request=fetchmessages&token=${token}`, {
-    headers: { "Content-Type": "application/json" }
-  });
+  try {
+    const response = await axios.get(`?request=fetchmessages&token=${token}`, {
+      headers: { "Content-Type": "application/json" }
+    });
 
-  return response;
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 const logoutGET = async (token) => {
-  const response = await axios.get(`?request=logout&token=${token}`, {
-    headers: { "Content-Type": "application/json" }
-  });
+  try {
+    const response = await axios.get(`?request=logout&token=${token}`, {
+      headers: { "Content-Type": "application/json" }
+    });
 
-  return response;
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 const deregisterGET = async (token) => {
-  const response = await axios.get(`?request=deregister&token=${token}`, {
-    headers: { "Content-Type": "application/json" }
-  });
+  try {
+    const response = await axios.get(`?request=deregister&token=${token}`, {
+      headers: { "Content-Type": "application/json" }
+    });
 
-  return response;
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 const fetchPhotoGET = async (token, photoid) => {
-  const response = await axios.get(
-    `?request=fetchphoto&photoid=${photoid}&token=${token}`,
-    {
-      headers: { "Content-Type": "application/json" },
-      responseType: "blob"
-    }
-  );
+  try {
+    const response = await axios.get(
+      `?request=fetchphoto&photoid=${photoid}&token=${token}`,
+      {
+        headers: { "Content-Type": "application/json" },
+        responseType: "blob"
+      }
+    );
 
-  return response;
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 const sendMessagePost = async (token, message) => {
-  const request = {
-    token,
-    request: "sendmessage",
-    text: message
-  };
+  try {
+    const request = {
+      token,
+      request: "sendmessage",
+      text: message
+    };
 
-  const response = await axios.post("", request, {
-    headers: { "Content-Type": "application/json" }
-  });
+    const response = await axios.post("", request, {
+      headers: { "Content-Type": "application/json" }
+    });
 
-  return response;
+    return response;
+  } catch (err) {
+    return err.reponse;
+  }
 };
 
 //------------------------

@@ -15,7 +15,7 @@ import userLight from "../icons/user_light.svg";
 
 
 
-function Menu({ LogoutHandler }) {
+function Menu({ LogoutHandler, DeregisterHandler }) {
   const {isLight} = useActiveTheme();
   const {auth} = useAuth();
 
@@ -74,6 +74,15 @@ function Menu({ LogoutHandler }) {
             }}
             >
             Logout
+          </div>
+          <div
+             className="menuItem"
+             onClick={ (e) => {
+                DeregisterHandler();
+                updateMenuVisible(false);
+             }}
+             >
+              Delete Account
           </div>
           <div
             className="menuItem"

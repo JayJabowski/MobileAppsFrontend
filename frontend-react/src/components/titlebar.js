@@ -11,7 +11,7 @@ import Menu from './menu';
 import useActiveTheme from '../hooks/useActiveTheme';
 
 
-function TitleBar({ title, backButtonInfo, messageHistory, LogoutHandler}) {
+function TitleBar({ title, backButtonInfo, messageHistory, LogoutHandler, DeregisterHandler}) {
     const { auth, setAuth } = useAuth();
     const { isLight } = useActiveTheme();
 
@@ -34,7 +34,8 @@ function TitleBar({ title, backButtonInfo, messageHistory, LogoutHandler}) {
                     messageHistory={messageHistory}
                 />
                 <Menu 
-                    LogoutHandler={LogoutHandler} 
+                    LogoutHandler={LogoutHandler}
+                    DeregisterHandler={DeregisterHandler} 
                 />
             </div> 
         </div>
