@@ -4,8 +4,6 @@ import ChatMessage from '../components/chatmessage';
 import MessageInput from '../components/MessageInput';
 import useAuth from '../hooks/useAuth';
 
-//Tools
-import CameraHandler from '../tools/camerahandler';
 
 //MockData
 import { parseTimeString } from '../tools/tools';
@@ -22,11 +20,6 @@ function GroupChat({messageHistory, updateMessageHistory}) {
         const newString = string.replaceAll("&#34;", "\"");
         return newString;
     }
-
-    //Taking Photos
-    const camera = CameraHandler();
-    camera.switchOn();
-
 
     //useEffect
     useEffect(() => {

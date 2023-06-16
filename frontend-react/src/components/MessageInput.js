@@ -8,6 +8,7 @@ import EmojiPanel from './emojiPanel';
 import sendDark from "../icons/send_dark.svg";
 import sendLight from "../icons/send_light.svg";
 import useActiveTheme from '../hooks/useActiveTheme';
+import PhotoButton from './photobutton';
 
 
 
@@ -67,6 +68,7 @@ function MessageInput({ updateChat }) {
         <button onClick={submitMessageHandler}>
           <img alt="Send" src={isLight ? sendDark : sendLight} />
         </button>
+        <PhotoButton updateChat={updateChat}/>
       </div>
     </div>
   );

@@ -115,6 +115,23 @@ const sendMessagePost = async (token, message) => {
     return err.reponse;
   }
 };
+const sendPhotoPost = async (token, photoURL) => {
+  try {
+    const request = {
+      token,
+      request: "sendmessage",
+      photo : photoURL.slice(22)
+    };
+
+    const response = await axios.post("", request, {
+      headers: { "Content-Type": "application/json" }
+    });
+
+    return response;
+  } catch (err) {
+    return err.reponse;
+  }
+};
 
 //------------------------
 // Deprecated
@@ -198,5 +215,6 @@ export {
   deregisterGET as deregister,
   fetchMessagesGET as fetchMessages,
   sendMessagePost as sendMessage,
-  fetchPhotoGET as fetchPhoto
+  fetchPhotoGET as fetchPhoto,
+  sendPhotoPost as sendPhoto
 };
