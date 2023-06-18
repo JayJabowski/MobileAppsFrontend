@@ -7,6 +7,9 @@ import redoDark from "../icons/redo_dark.svg";
 import redoLight from "../icons/redo_light.svg";
 import cameraDark from "../icons/camera_dark.svg";
 import cameraLight from "../icons/camera_light.svg";
+import closeDark from "../icons/close_big_dark.svg"
+import closeLight from "../icons/close_big_light.svg"
+
 
 import useAuth from "../hooks/useAuth";
 import useActiveTheme from "../hooks/useActiveTheme";
@@ -21,6 +24,8 @@ function PhotoButton({ updateChat }) {
   const [photoURL, setPhotoURL] = useState("");
   const [photoOverlayVisible, setOverlayVisible] = useState(false);
   const [cameraSupported, setCameraSupported] = useState(false);
+  const [cameraActive, setCameraActive] = useState(false);
+
 
   const updatePhotoURL = (url) => {
     setPhotoURL(url);
@@ -33,6 +38,11 @@ function PhotoButton({ updateChat }) {
   const updateCameraSupported = (bool) => {
     setCameraSupported(bool);
   };
+  const updateCameraActive = (bool) => {
+    setCameraActive(bool);
+  };
+
+
 
   useEffect(() => {
     updateCameraSupported("mediaDevices" in navigator);
@@ -44,7 +54,7 @@ function PhotoButton({ updateChat }) {
     } else {
       switchOff();
     }
-  }, [photoOverlayVisible]);
+  }, [photoOverlayVisible, photoURL]);
 
   const photoHandler = async (evt) => {
     evt.preventDefault();
@@ -144,35 +154,42 @@ function PhotoButton({ updateChat }) {
             ) : (
               <video id="captureStream" autoPlay></video>
             )}
-            {photoURL ? (
               <div className="breakButtonWrapper">
+                {photoURL ? (
+                <>
                 <button
                   className="sendPhotoButton"
                   onClick={submitPhotoHandler}
-                >
+                  >
                   <img alt="Send" src={isLight ? sendDark : sendLight} />
                 </button>
+
                 <button
                   className="retakePhotoButton"
                   onClick={() => updatePhotoURL("")}
-                >
+                  >
                   <img alt="retake" src={isLight ? redoDark : redoLight} />
                 </button>
-              </div>
+
+                  </>
             ) : (
+              <>
+              <div className="placeholder"></div>
               <button className="breakButton secondPrio" onClick={photoHandler}>
                 <img
                   alt="Take Photo"
                   src={isLight ? cameraDark : cameraLight}
-                />
+                  />
               </button>
+                  </>
+
             )}
             <button
-              className="breakButton firstPrio"
               onClick={() => updateOverlayVisible(!photoOverlayVisible)}
-            >
-              close
+              >
+              <img alt="close" src={isLight ? closeDark: closeDark} />
             </button>
+              </div>
           </div>
         </div>
       ) : (

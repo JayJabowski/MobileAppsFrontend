@@ -816,12 +816,42 @@ html {
     width: 100vw;
     z-index: 2;
 
+    backdrop-filter: brightness(var(--toneDown));
+
     .photoOverlay {
-        @include flexOAJ(column, center, center);
+        position:relative;
+        @include flexOAJ(column, center, flex-end);
         @include roundedCorners(false);
+        @include dropShadow(false);
         max-width: var(--maxWidth);
 
         background-color: var(--backgroundShadeC);
+
+        .breakButtonWrapper{
+            position:absolute;
+            @include flexOAJ(row, center, space-between);
+
+            width:100%;
+            max-width: var(--maxWidth);
+        }
+
+        button{
+            background-color: var(--backgroundC);
+            opacity: 70%;
+            margin: 1em;
+
+            height: 2.5em;
+            width: 2.5em;
+
+            border-radius: 50%;
+
+        }
+    }
+
+    .placeholder{
+        width:2em;
+        height:2em;
+        margin: 1em;
     }
 
     video {
@@ -829,5 +859,9 @@ html {
         position: relative;
         height: 100%;
         width: 100%;
+    }
+
+    img {
+        @include roundedCorners(false);
     }
 }

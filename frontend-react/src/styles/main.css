@@ -754,19 +754,47 @@ html {
   height: 100vh;
   width: 100vw;
   z-index: 2;
+  -webkit-backdrop-filter: brightness(var(--toneDown));
+          backdrop-filter: brightness(var(--toneDown));
 }
 .photoOverlayWrapper .photoOverlay {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   border-radius: 0.3em;
   max-width: var(--maxWidth);
   background-color: var(--backgroundShadeC);
+}
+.photoOverlayWrapper .photoOverlay .breakButtonWrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--maxWidth);
+}
+.photoOverlayWrapper .photoOverlay button {
+  background-color: var(--backgroundC);
+  opacity: 70%;
+  margin: 1em;
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 50%;
+}
+.photoOverlayWrapper .placeholder {
+  width: 2em;
+  height: 2em;
+  margin: 1em;
 }
 .photoOverlayWrapper video {
   border-radius: 0.3em;
   position: relative;
   height: 100%;
   width: 100%;
+}
+.photoOverlayWrapper img {
+  border-radius: 0.3em;
 }/*# sourceMappingURL=main.css.map */
