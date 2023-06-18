@@ -2,15 +2,19 @@ import React, {useState} from 'react';
 import useActiveTheme from '../hooks/useActiveTheme';
 import LocalStorageHandler from '../tools/localstoragehandler';
 
+//images
+import moonLight from "../icons/moon_light.svg"
+import sunDark from "../icons/sun_dark.svg"
+
 function ThemeChanger() {
     const storageHandler = LocalStorageHandler();
 
-    const [isLightMode, setIsLightMode] = useState(true);
     const { isLight, setIsLight } = useActiveTheme();
     const root = document.querySelector(':root');
 
     const toggleIsLightMode = () => {
         setIsLight(!isLight);
+        storageHandler.addToLocalStorage({isLight : !isLight});
     }
 
     const LIGHTMODE = {
@@ -19,7 +23,9 @@ function ThemeChanger() {
         backgroundC: "#ffffff",
         backgroundShadeC: "#fafafa",
         textC: "#090909",
-        textShadeC: "#c3c8cb"
+        textShadeC: "#c3c8cb",
+        toneDown: "90%",
+        frameVisible: "0"
     }
 
     const DARKMODE = {
@@ -28,7 +34,9 @@ function ThemeChanger() {
         backgroundC: "#000000",
         backgroundShadeC: "#181818",
         textC: "#e7e7e7",
-        textShadeC: "#33383b"
+        textShadeC: "#33383b",
+        toneDown: "70%",
+        frameVisible: "0.1em"
 
     }
 
@@ -46,13 +54,14 @@ function ThemeChanger() {
         for (let key in Obj){
             htmlElement.style.setProperty(`--${key}`, `${Obj[key]}`);
         }
-        console.dir(htmlElement.style.cssText);
     }
 
     return ( 
-        <div className='wrapper'>
+        <div className='menuItem'>
             <label>Change Themes</label>
-            <button onClick={() =>switchModes()}>Change</button>
+            <button onClick={() =>switchModes()}>
+                <img alt="change theme" src={isLight ? sunDark : moonLight} />
+            </button>
         </div>
      );
 }

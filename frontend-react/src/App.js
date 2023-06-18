@@ -112,7 +112,7 @@ function App() {
     return null;
   }
 
-  //keep state here, initialize in groupChat
+  console.log("isLight: "+isLight)
 
   return (
     <>

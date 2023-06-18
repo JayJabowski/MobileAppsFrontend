@@ -18,13 +18,13 @@ const LocalStorageHandler = () =>{
             hash: localStorage.getItem("hash"),
             user: localStorage.getItem("user"),
             token: localStorage.getItem("token"),
-            theme: localStorage.getItem("theme")
+            theme: localStorage.getItem("isLight")
         }
     }
 
     const getThemeFromStorage = () => {
         return {
-            theme: localStorage.getItem("theme")
+            theme: localStorage.getItem("isLight")
         }
     }
 

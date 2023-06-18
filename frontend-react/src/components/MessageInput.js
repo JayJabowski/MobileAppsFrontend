@@ -7,6 +7,11 @@ import EmojiPanel from './emojiPanel';
 
 import sendDark from "../icons/send_dark.svg";
 import sendLight from "../icons/send_light.svg";
+import faceDark from "../icons/face_dark.svg"
+import faceLight from "../icons/face_light.svg"
+import downDark from "../icons/down_dark.svg"
+import downLight from "../icons/down_light.svg"
+
 import useActiveTheme from '../hooks/useActiveTheme';
 import PhotoButton from './photobutton';
 
@@ -18,11 +23,11 @@ function MessageInput({ updateChat }) {
 
   const [message, setMessage] = useState("");
   const [noOfRows, setNoOfRows] = useState(1);
+  const [emojiPanelVisible, setEmojiPanelVisible] = useState(false);
 
   const updateTextInput = (e) => {
     updateMessage(e);
-    console.dir(e.target);
-    console.log(e.target.scrollHeight, e.target.clientHeight);
+
     if (e.target.scrollHeight > e.target.clientHeight) {
       updateNoOfRows(noOfRows + 1);
     }
@@ -30,13 +35,15 @@ function MessageInput({ updateChat }) {
 
   const updateMessage = (e) => {
     setMessage(e?.target.value);
-
-    return message;
   };
 
   const appendEmoji = (emoji) => {
     setMessage(message + emoji);
   };
+
+  const updateEmojiPanelVisible = (bool) => {
+    setEmojiPanelVisible(bool);
+  }
 
   const updateNoOfRows = (rows) => {
     setNoOfRows(rows);
@@ -47,7 +54,6 @@ function MessageInput({ updateChat }) {
 
     e.preventDefault();
     const response = await sendMessage(auth.token, message);
-    console.dir(response);
 
     if (response.data.code === 200) {
       updateMessage({ target: { value: "" } });
@@ -57,8 +63,15 @@ function MessageInput({ updateChat }) {
 
   return (
     <div className="footer">
+        <EmojiPanel callback={appendEmoji} visible={emojiPanelVisible} updateVisible={updateEmojiPanelVisible} />
       <div className="messageWrapper">
-        <EmojiPanel callback={appendEmoji} />
+        <button onClick={() => updateEmojiPanelVisible(!emojiPanelVisible)}>
+          <img alt="Emojis" src={isLight 
+            ? 
+            emojiPanelVisible ? downDark : faceDark 
+            : 
+            emojiPanelVisible ? downLight : faceLight} />
+        </button>
         <PhotoButton updateChat={updateChat}/>
         <textarea
           placeholder="Type a message"

@@ -105,8 +105,6 @@ function PhotoButton({ updateChat }) {
   const submitPhotoHandler = async (e) => {
     const response = await sendPhoto(auth.token, photoURL);
 
-    console.dir(response);
-
     if (response.data.code == 200) {
       updateChat();
       updateOverlayVisible(false);

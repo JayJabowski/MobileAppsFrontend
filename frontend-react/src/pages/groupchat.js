@@ -32,8 +32,7 @@ function GroupChat({messageHistory, updateMessageHistory}) {
 
     //Fetches
     const updateChat = async () => {
-        const response = await fetchMessages(auth.token);
-        console.dir(response);   
+        const response = await fetchMessages(auth.token);  
 
         if (response.data.code == 200){
             updateMessageHistory(response.data.messages);

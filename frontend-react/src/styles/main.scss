@@ -22,46 +22,53 @@ Old Colors:
 
 */
 
-*{
-    margin:0;
-    padding:0;
+* {
+    margin: 0;
+    padding: 0;
 }
-:root{
 
-    --fontFactor : 1;
+:root {
+
+    --fontFactor: 1;
 
     //FONT-SIZES
 
-    --listItemSize : calc(16px * var(--fontFactor));
-    --inputSize : calc(14px * var(--fontFactor));
-    --textSize : calc(14px * var(--fontFactor));
-    --titleSize : calc(20px * var(--fontFactor));
-    --titleSizeBig : calc(40px * var(--fontFactor));
-    --smallSize : calc(10px * var(--fontFactor));
+    --listItemSize: calc(16px * var(--fontFactor));
+    --inputSize: calc(14px * var(--fontFactor));
+    --textSize: calc(14px * var(--fontFactor));
+    --titleSize: calc(20px * var(--fontFactor));
+    --titleSizeBig: calc(40px * var(--fontFactor));
+    --smallSize: calc(10px * var(--fontFactor));
 
     //COLORS (LightMode initial)
 
-    --primaryC : #5bc9bb;
-    --primaryShadeC : #e9ebea;
+    --primaryC: #5bc9bb;
+    --primaryShadeC: #e9ebea;
 
-    --backgroundC : #FFFFFF;
-    --backgroundShadeC : #fafafa;
+    --backgroundC: #FFFFFF;
+    --backgroundShadeC: #fafafa;
 
-    --textC :  #090909;
-    --textShadeC : #c3c8cb;
+    --textC: #090909;
+    --textShadeC: #c3c8cb;
 
     --lightIndent: 4%;
     --lightIndentRemainder: calc(100% - 2* var(--lightIndent));
 
     //Dimensions
     --maxWidth: 400px;
-    --menuWidth : 40%;
-    --heightTitlebar : 5em;
+    --menuWidth: 40%;
+    --heightTitlebar: 5em;
+
+    //Effects
+    --toneDown: 90%;
+
+    //borders
+    --frameVisible: "0.1em"; 
 
 }
 
 
-@font-face{
+@font-face {
     font-family: Outfit;
     src: url(../../font/Outfit-VariableFont_wght.ttf);
 }
@@ -77,35 +84,37 @@ $thin: 300;
 //ABSOLUTE LAYOUT
 
 
-@mixin baseFont($weight, $size){
+@mixin baseFont($weight, $size) {
     font-family: Outfit;
     font-weight: $weight;
     font-size: $size;
     color: var(--textC);
 }
 
-@mixin roundedCorners($radius){
-    @if $radius{
+@mixin roundedCorners($radius) {
+    @if $radius {
         border-radius: $radius;
     }
-    @else{
+
+    @else {
         border-radius: 0.3em;
     }
 }
-@mixin dropShadow(){
+
+@mixin dropShadow() {
     $size : 0.5em;
 
     box-shadow: 0 0 $size var(--backgroundShadeC);
 }
 
-@mixin flexOAJ($orientation, $align, $justify){
+@mixin flexOAJ($orientation, $align, $justify) {
     display: flex;
     flex-direction: $orientation;
     align-items: $align;
     justify-content: $justify;
 }
 
-@mixin insertSpacing(){
+@mixin insertSpacing() {
     padding: 0.4em;
     padding-left: 1em;
     padding-right: 1em;
@@ -114,44 +123,47 @@ $thin: 300;
     margin-right: 0.8em;
 }
 
-@mixin lightIndent(){
+@mixin lightIndent() {
     margin-left: var(--lightIndent);
     margin-right: var(--lightIndent);
     width: var(--lightIndentRemainder);
 }
 
-@mixin hideScrollbar(){
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */ 
-    
-    
+@mixin hideScrollbar() {
+    -ms-overflow-style: none;
+    /* for Internet Explorer, Edge */
+    scrollbar-width: none;
+    /* for Firefox */
+
+
     &::-webkit-scrollbar {
-        display: none; /* for Chrome, Safari, and Opera */
+        display: none;
+        /* for Chrome, Safari, and Opera */
     }
 }
 
-@mixin defaultButton(){
+@mixin defaultButton() {
 
     @include roundedCorners(false);
-    @include baseFont($semibold,var(--textSize));
+    @include baseFont($semibold, var(--textSize));
 
-    color:var(--backgroundC);
+    color: var(--backgroundC);
     background-color: var(--primaryC);
     padding: 1em;
     margin-top: 1em;
     margin-bottom: em;
     border-width: 0;
 
-    &:hover{
+    &:hover {
         background-color: var(--backgroundC);
         color: var(--textC);
     }
 }
 
-@mixin inlineButton(){
+@mixin inlineButton() {
     button {
         @include roundedCorners(false);
-        @include flexOAJ(row, center , center);
+        @include flexOAJ(row, center, center);
         background: transparent;
         border: 0;
 
@@ -160,38 +172,39 @@ $thin: 300;
 
         margin-top: 0;
 
-        &:hover{
+        &:hover {
             background-color: var(--backgroundShadeC);
- 
+
         }
-        img{
+
+        img {
             height: 1.5em;
             width: 1.5em;
-            
+
         }
     }
 }
 
-@mixin titleButton(){
+@mixin titleButton() {
     background: transparent;
     border: 0;
 
     padding: 0;
 
-    &:hover{
+    &:hover {
         cursor: pointer;
         background-color: var(--backgroundShadeC);
     }
 }
 
-@mixin imageLimiter(){
-    img{
+@mixin imageLimiter() {
+    img {
         height: 100%;
         width: 100%;
     }
 }
 
-html{
+html {
     margin: 0;
     padding: 0;
     border: 0;
@@ -199,10 +212,10 @@ html{
     overflow-y: hidden;
 }
 
-.background{
+.background {
     @include flexOAJ(column, center, center);
     background-color: var(--backgroundC);
-    
+
     width: 100vw;
     height: 100vh;
 
@@ -211,7 +224,7 @@ html{
     padding: 0;
 }
 
-.mainContainer{
+.mainContainer {
     @include dropShadow();
     @include flexOAJ(column, stretch, space-between);
     position: relative;
@@ -222,17 +235,17 @@ html{
     max-width: var(--maxWidth);
     height: 100%;
 
-    flex-grow:1;
+    flex-grow: 1;
 }
 
-.chatBoxWrapper{
+.chatBoxWrapper {
     @include flexOAJ(column, flex-start, flex-start);
     flex-grow: 1;
     height: calc(100% - var(--heightTitlebar));
-    
+
 }
 
-.chatBox{
+.chatBox {
     @include flexOAJ(column, flex-start, flex-start);
     flex-grow: 1;
 
@@ -240,54 +253,58 @@ html{
     overflow-y: scroll;
     overflow-x: hidden;
 
-    .wrapper{
+    .wrapper {
         @include flexOAJ(column, flex-start, flex-start);
-        width:100%;
-        
+        width: 100%;
+
     }
-    .self{
+
+    .self {
         align-items: flex-end;
     }
 
-    .self .time{
+    .self .time {
         align-items: flex-end;
     }
 
-    .messageCard{
+    .messageCard {
         background-color: var(--backgroundC);
-        
+
         @include roundedCorners(false);
         @include flexOAJ(column, flex-start, flex-start);
         @include insertSpacing();
 
         max-width: 90%;
-      
 
-        .name{
+
+        .name {
             @include baseFont($bold, var(--textSize));
         }
-        .text{
+
+        .text {
             @include baseFont(Light, var(--textSize));
             word-break: break-word;
-            
+
         }
-        .time{
+
+        .time {
             @include baseFont($bold, var(--smallSize));
             color: var(--primaryShadeC);
         }
-        img{
+
+        img {
             @include roundedCorners(false);
         }
-        
+
     }
 
-    .timeWrapper{
+    .timeWrapper {
         @include flexOAJ(column, center, center);
-        width:100%;
+        width: 100%;
 
     }
 
-    .timecard{
+    .timecard {
         @include baseFont($thin, var(--textSize));
         @include roundedCorners(false);
         @include flexOAJ(row, stretch, center);
@@ -295,26 +312,54 @@ html{
 
         background-color: var(--backgroundC);
     }
-    
+
 }
 
 .footer {
     @include dropShadow();
-    @include flexOAJ(column, stretch ,flex-start );
+    @include flexOAJ(column, stretch, flex-start);
+    @include baseFont($regular, var(--inputSize) );
+
     background-color: var(--backgroundC);
     width: 100%;
+
+    .emojiWrapper{
+        
+        .emojiContainer{
+            @include hideScrollbar();
+            height: 8em;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        
+        margin: 0;
+        padding-bottom: 0;
+        padding-top: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+        
+        border-bottom: 0.1em var(--backgroundShadeC) solid;
+
+        label{
+            padding: 0.2em;
+
+            &:hover{
+                background-color: var(--backgroundShadeC);
+                border-radius: 50%;
+            }
+        }
+    }
 
     .messageWrapper {
         @include flexOAJ(row, center, space-between);
 
-        flex-grow:1;
+        flex-grow: 1;
 
         @include imageLimiter();
         @include lightIndent();
 
-
         border-bottom: 0.05em var(--primaryShadeC) solid;
-        
+
         margin-bottom: 2em;
 
         min-height: 3em;
@@ -342,7 +387,7 @@ html{
     }
 }
 
-.titleBar{
+.titleBar {
     @include flexOAJ(row, center, flex-start);
     @include baseFont($bold, var(--titleSize));
     //height: var(--heightTitlebar);
@@ -350,124 +395,179 @@ html{
     background-color: var(--backgroundC);
 
 
-    .titleLeft{
+    .titleLeft {
         margin-left: 0.5em;
         width: 2.5em;
     }
-    .title{
+
+    .title {
         @include flexOAJ(row, center, center);
         flex-grow: 1;
 
         height: 2.6em;
     }
-    .titleRight{
-        margin-right:0.5em;
+
+    .titleRight {
+        margin-right: 0.5em;
         width: 2.5em;
         @include flexOAJ(row, center, flex-end);
     }
-    
+
 }
 
-.menu{
-    position: fixed;
-    
-    top: calc(var(--heightTitlebar) *1.4);
-    height: 15em;
-    
-    width:  var(--menuWidth);
-    left: var(--menuWidth);
-    transition: left 0.2s linear;
+.menuWrapper {
+    @include flexOAJ(row, flex-start, center);
+    backdrop-filter: brightness(var(--toneDown));
+    position:fixed;
+    top:0;
+    left:0;
 
-    @include baseFont($semibold, var(--textSize));
-    @include flexOAJ(column, center , flex-start);
-    @include dropShadow();
-    @include roundedCorners(false);
+    height: 100vh;
+    width: 100vw;
 
+    .menu {
+        $marginSides: 1em;
+        $buttonSize: 2.2em;
 
-    background-color: var(--backgroundC);
-    
-
-    
-    .menuItem{
         @include roundedCorners(false);
+        @include lightIndent();
+        @include baseFont($regular,var(--inputSize));
+        @include flexOAJ(column, stretch , flex-start );
+        @include dropShadow();
 
+        max-width: calc(var(--maxWidth) - 2* $marginSides);
 
-        color: var(--textC);
+        position: relative;
+        z-index: 3;
+        margin-top: calc(var(--titleSize)*3);
+        border: var(--frameVisible) var(--textShadeC) solid;
 
-        font-size: var(--listItemSize);
-        padding: 1em;
+        
 
-        &:hover{
-            cursor: pointer;
+        .menuItem{
+            @include flexOAJ(row, center, center);
+            height: 3em;
+            margin-left: 1em;
+            margin-right: 1em;
+            border-bottom: 0.1em var(--backgroundShadeC) solid;
+
+            label{
+                flex-grow: 1;
+            }
+            button{
+                @include flexOAJ(row,center ,center );
+                @include imageLimiter();
+                @include roundedCorners(false);
+                height: $buttonSize;
+                width: $buttonSize;
+                margin-right: 0.2em;
+                border-width: 0;
+                background-color: var(--backgroundC);
+                color: var(--textC);
+
+                &:hover{
+                    background-color: var(--backgroundShadeC);
+                }
+
+            }
         }
+
+        background-color: var(--backgroundC);
+
+        .menuDivider{
+            @include flexOAJ(row, center , center);
+            
+            border-bottom: 0.1em var(--textShadeC) solid;
+            margin-left: $marginSides;
+            margin-right: $marginSides;
+            width: calc(100% - 2* $marginSides);
+
+            img{
+                width: 1em;
+                height: 1em;
+            }
+
+            label{
+                @include baseFont($regular, var(--smallSize));
+                color: var(--textC);
+                flex-grow:1;
+                margin-left: 1em;
+            }
+
+            
+        }
+        
+        .buttonWrapper{
+            @include flexOAJ(row,flex-end , center);
+
+            .reset{
+                font-size: var(--textSize);
+            }
+        }
+
+
+        
     }
+
 }
 
-.menuNew{
-    position: fixed;
-    top: 6em;
-    left: 6em;
-    width: 6em;
-    height: 6em;
-}
-
-.breakButton{
+.breakButton {
     @include defaultButton();
     @include lightIndent();
- }
+}
 
- .firstPrio{
+.firstPrio {
     background-color: var(--primaryC);
- }
+}
 
- .secondPrio{
+.secondPrio {
     background-color: var(--backgroundC);
     color: var(--textShadeC);
- }
+}
 
 
 
-.loginRegister{
+.loginRegister {
     @include flexOAJ(column, stretch, flex-start);
-    @include baseFont($regular,var(--inputSize));
+    @include baseFont($regular, var(--inputSize));
 
     height: calc(100% - var(--heightTitlebar));
 
-    form{
-        @include flexOAJ(column,stretch, center);
+    form {
+        @include flexOAJ(column, stretch, center);
 
         margin-top: 1em;
 
-        input{
-               border: 0;
-               border-radius: 0;
-               color: var(--textC);
-               background-color: var(--backgroundC);
+        input {
+            border: 0;
+            border-radius: 0;
+            color: var(--textC);
+            background-color: var(--backgroundC);
         }
 
-        .inputWrapper{
+        .inputWrapper {
             background-color: var(--backgroundC);
 
             @include flexOAJ(row, center, space-between);
             @include baseFont($regular, var(--inputSize));
 
-            .defaultInput{
+            .defaultInput {
                 @include lightIndent();
                 @include flexOAJ(row, center, flex-start);
                 flex-grow: 1;
 
-                input{
+                input {
                     flex-grow: 1;
                     margin-bottom: 0.7em;
                     margin-top: 0.7em;
 
-                    &:focus{
+                    &:focus {
                         outline-width: 0;
                     }
                 }
 
-                button{
-                    &:disabled{
+                button {
+                    &:disabled {
                         display: none;
                     }
                 }
@@ -479,80 +579,86 @@ html{
                 border-bottom: 0.05em var(--textShadeC) solid;
             }
 
-            
-        
 
-        
+
+
+
         }
 
-        label{
+        label {
             color: var(--primaryC);
         }
-        .passwordWrapper{
-            @include flexOAJ(row,stretch, center);
+
+        .passwordWrapper {
+            @include flexOAJ(row, stretch, center);
 
             margin-bottom: 1em;
             margin-top: 0.2em;
 
-            input{
-                &[type="text"], &[type="password"]{
+            input {
+
+                &[type="text"],
+                &[type="password"] {
                     flex-grow: 1;
-                    margin:0;
+                    margin: 0;
                 }
             }
-            
-            .inlineButton{
+
+            .inlineButton {
                 @include roundedCorners(false);
-                @include baseFont($semibold,var(--textSize));
-                
-                color:var(--backgroundC);
-               
+                @include baseFont($semibold, var(--textSize));
+
+                color: var(--backgroundC);
+
                 background-size: 1.8em 1.8em;
                 background-repeat: no-repeat;
                 background-position: center;
                 color: var(--textC);
                 background-color: var(--backgroundC);
-                
-                
+
+
                 padding: 1em;
                 width: 2.8em;
                 border-width: 0;
-                margin:0;
+                margin: 0;
                 margin-left: 0.6em;
-                
-                cursor: pointer;                
-                
-                
-                &:hover{
+
+                cursor: pointer;
+
+
+                &:hover {
                     background-color: var(--primaryC);
                 }
             }
         }
 
     }
-    .breakinglabeledCheckbox{
-        @include flexOAJ(row, center , flex-start);
+
+    .breakinglabeledCheckbox {
+        @include flexOAJ(row, center, flex-start);
         @include lightIndent();
         margin-top: 0.4em;
 
-        label{
+        label {
             margin-left: 0.5em;
         }
     }
-    p{
+
+    p {
         color: var(--textShadeC);
         @include lightIndent();
 
         margin-top: 2em;
         margin-bottom: 2em;
 
-        span{
+        span {
             color: var(--textC);
             font-weight: $bold;
         }
 
     }
-    h1{
+
+    h1 {
         @include lightIndent();
 
         font-size: var(--titleSizeBig);
@@ -561,14 +667,14 @@ html{
         margin-top: 3em;
     }
 
-  
+
 }
 
-.errMsgWrapper{
+.errMsgWrapper {
 
-    .errMsg{
+    .errMsg {
         @include roundedCorners(false);
-        @include baseFont($regular, var(--inputSize) );
+        @include baseFont($regular, var(--inputSize));
         color: var(--backgroundC);
         background-color: var(--textC);
         margin-bottom: 0.4em;
@@ -576,18 +682,19 @@ html{
         padding: 1em;
     }
 
-    button{
+    button {
         cursor: pointer;
     }
 }
 
-.backButtonWrapper{
+.backButtonWrapper {
     position: relative;
 
 
-    .backPopup{
+    .backPopup {
         position: fixed;
-    z-index: 1; /*stay on top*/
+        z-index: 1;
+        /*stay on top*/
         height: 8em;
         width: 20em;
         top: 10em;
@@ -595,78 +702,113 @@ html{
     }
 }
 
-.titleButton{
+.titleButton {
     @include titleButton();
 
     height: calc(var(--titleSize) * 1.2);
     width: calc(var(--titleSize) * 1.2);
 
     @include imageLimiter();
-    
-    &:disabled{
-        display:none;
-    }
-    
-}
 
-.searchField{
-    @include roundedCorners(false);
-    @include dropShadow();
-    @include flexOAJ(row, center, center);
-    @include baseFont($regular, var(--inputSize));
+    &:disabled {
+        display: none;
+    }
+
+}
+.searchOverlay {
     position:fixed;
-    height: 2em;
-    left: calc(50vw - (var(--maxWidth) /2) + 5vw);
-    top:calc(var(--heightTitlebar) + 1em);
-    width: calc(var(--maxWidth) - 10vw);
+    top: 0;
+    left: 0;
+    z-index:1;
+    height: 15vh;
+    width: 100vw;
 
-    @include imageLimiter();
+    @include flexOAJ(column, flex-start, center);
 
-    button{
-        width:  2.5em;
-        height: 2.5em;
+    .searchWrapper {
+        $top: 3.5em;
+        $margin: 10%;
 
-        @include imageLimiter();
-
-        background: transparent;
-        border: 0;
-
-        &:disabled{
-            display: none;
+        @mixin margins(){
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
         }
-    }
 
-    @include inlineButton();
+        @include baseFont($regular, var(--inputSize));
+        @include flexOAJ(column,flex-start ,center );
+        @include roundedCorners(false);
+        @include dropShadow();
 
-    input{
-        flex-grow: 1;
-        border:none;
+        position: fixed;
+        z-index: 1;
+        left: calc(50vw - (var(--maxWidth) /2) + 5vw);
+        top: $top;
+        width: 90%;
+        max-width: calc(var(--maxWidth) - 10vw);
 
-        &:focus{
-            outline-width: 0;
+        background-color: var(--backgroundC);
+
+
+        .searchField {
+
+            @include flexOAJ(row, center, center);
+            @include imageLimiter();
+            
+            height: 2em;
+            width: 100%;
+
+            button {
+                width: 2.5em;
+                height: 2.5em;
+
+                @include imageLimiter();
+
+                background: transparent;
+                border: 0;
+
+                &:disabled {
+                    display: none;
+                }
+            }
+
+            @include inlineButton();
+
+            input {
+                flex-grow: 1;
+                border: none;
+
+                &:focus {
+                    outline-width: 0;
+                }
+            }
+
+            
+
         }
+        .filterField {
+            @include flexOAJ(row, center ,flex-start);
+            height: 2em;
+            width: 100%;
+
+            margin-left: 0.8em;
+            margin-right: 0.8em;
+
+            border-top: 0.1em var(--backgroundShadeC) solid;
+
+            label{
+                margin-right: 0.5em;
+            }
+        }
+
     }
-
-    background-color: var(--backgroundC);
-    z-index: 1;
-
 }
 
-.filterField{
-    position:fixed;
-    z-index: 1;
-    max-width: 500px;
-    left: 15em;
-    top: 20em;
-
-}
-
-.searchFocus{
+.searchFocus {
     background-color: var(--primaryC);
 }
 
-.photoOverlayWrapper{
-    @include flexOAJ(column, center , center);
+.photoOverlayWrapper {
+    @include flexOAJ(column, center, center);
     position: fixed;
     top: 0;
     left: 0;
@@ -674,17 +816,17 @@ html{
     width: 100vw;
     z-index: 2;
 
-    .photoOverlay{ 
+    .photoOverlay {
         @include flexOAJ(column, center, center);
         @include roundedCorners(false);
         max-width: var(--maxWidth);
-        
+
         background-color: var(--backgroundShadeC);
     }
-    
-    video{
+
+    video {
         @include roundedCorners(false);
-        position:relative;
+        position: relative;
         height: 100%;
         width: 100%;
     }

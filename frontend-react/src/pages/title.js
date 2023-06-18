@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useActiveState from "../hooks/useActiveState";
 import useAuth from "../hooks/useAuth";
+import LocalStorageHandler from "../tools/localstoragehandler";
+import useActiveTheme from "../hooks/useActiveTheme";
 
 function Title({msg}) {
+  const storageHandler = LocalStorageHandler()
 
   const { activeState, setActiveState } = useActiveState();
+  const { isLight, setIsLight, initializeTheme } = useActiveTheme();
   
   //useState-Setter
   const updateActiveState = (status) => {
     const tmpStates= [ status, ...activeState];
     
     setActiveState(tmpStates);
+  }
+  const updateActiveTheme = (bool) => {
+    setIsLight(bool);
   }
   
   return (

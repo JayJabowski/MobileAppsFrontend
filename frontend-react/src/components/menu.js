@@ -9,6 +9,8 @@ import useAuth from "../hooks/useAuth";
 //Pictures
 import closeDark from "../icons/close_big_dark.svg";
 import closeLight from "../icons/close_big_light.svg";
+import gearLight from "../icons/gear_light.svg";
+import gearDark from "../icons/gear_dark.svg";
 
 import userDark from "../icons/user_dark.svg";
 import userLight from "../icons/user_light.svg";
@@ -25,83 +27,67 @@ function Menu({ LogoutHandler, DeregisterHandler }) {
     setmenuVisible(bool);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        updateMenuVisible(false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [updateMenuVisible]);
-
   return (
     <>
-      {auth.token ? (
-        <>
-          {!menuVisible ? (
-            <div
-              className="titleButton"
-              onClick={() => updateMenuVisible(!menuVisible)}
-            >
-              <img alt="menu" src={isLight ? userDark : userLight} />
-            </div>
-          ) : (
-            <div
-              className="titleButton"
-              onClick={() => updateMenuVisible(!menuVisible)}
-            >
-              <img alt="menu" src={isLight ? closeDark : closeLight} />
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
+      <div
+        className="titleButton"
+        onClick={() => updateMenuVisible(!menuVisible)}
+      >
+        <img alt="menu" src={isLight ? userDark : userLight} />
+      </div>
 
       {menuVisible ? (
         <>
-          <div 
+          <div
             onClick={(e) => {
               e.stopPropagation();
               updateMenuVisible(false);
             }}
-          className="menuWrapper">
-            <div 
+            className="menuWrapper"
+          >
+            <div
               onClick={(e) => {
                 e.stopPropagation();
               }}
-            className="menuNew" ref={ref}>
-              <div
-                className="menuItem"
-                onClick={(e) => {
-                  LogoutHandler();
-                  updateMenuVisible(false);
-                }}
-              >
-                Logout
-              </div>
-              <div
-                className="menuItem"
-                onClick={(e) => {
-                  DeregisterHandler();
-                  updateMenuVisible(false);
-                }}
-              >
-                Delete Account
-              </div>
-              <div
-                className="menuItem"
-                onClick={(e) => {
-                  updateMenuVisible(false);
-                }}
-              >
-                Close Menu
+              className="menu"
+              ref={ref}
+            >
+              <div className="menuDivider menuItem">
+                <img alt="account" src={isLight ? gearDark : gearLight} />
+                <label>Preferences</label>
               </div>
               <FontSizeChanger />
               <ThemeChanger />
+              {auth.token ? (
+                <>
+                  <div className="menuDivider menuItem">
+                    <img alt="account" src={isLight ? userDark : userLight} />
+                    <label>Account</label>
+                  </div>
+                  <div
+                    className="menuItem"
+                    onClick={(e) => {
+                      LogoutHandler();
+                      updateMenuVisible(false);
+                    }}
+                  >
+                    <label>Logout</label>
+                    <div className="placeholder"></div>
+                  </div>
+                  <div
+                    className="menuItem"
+                    onClick={(e) => {
+                      DeregisterHandler();
+                      updateMenuVisible(false);
+                    }}
+                  >
+                    <label>Delete Account</label>
+                    <div className="placeholder"></div>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </>

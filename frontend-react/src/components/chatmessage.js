@@ -19,7 +19,6 @@ function ChatMessage({userhash, usernickname, user, text, time, photoid, id}) {
 
     const photoLoader = async () =>{
         const response = await fetchPhoto(auth.token,photoid);
-        console.dir(response);
         updateImage(new Blob([response.data]));
     }
 
