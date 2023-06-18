@@ -4,6 +4,75 @@ let cacheVersion = 0;
 let offlineQueue = []
 
 //SW installation
+self.addEventListener("install", (e) => {
+  e.waitUntil(addResourcesToCache(["/", "/index.html"]));
+});
+
+//Caching
+self.addEventListener('fetch', e => {
+    if(!navigator.onLine){
+        
+    }
+    e.respondWith(
+        getResource(e.request)
+    )
+})
+
+//Sync -- not working rn
+self.addEventListener("online", (e) => {
+    //or use online?
+    
+    console.dir(e);
+
+     while(offlineQueue.length){
+        const request = offlineQueue.pop();
+        const response = fetch(request);
+     }
+    }
+    )
+
+
+const addResourcesToCache = async (resources) => {
+  const cache = await caches.open("" + cacheVersion);
+  await cache.addAll(resources);
+};
+
+const putInCache = async (request, response) => {
+  const cache = await caches.open("" + cacheVersion);
+  await cache.add(request);
+};
+
+const addToOfflineQueue = (request) => {
+  offlineQueue.push(request);
+};
+
+const getResource = async (request) => {
+  try {
+    const responseFromNetwork = await fetch(request, {cache: "reload"});
+
+    if(request.method != "POST"){
+      putInCache(request, responseFromNetwork.clone());
+    }
+
+    return responseFromNetwork;
+  } catch (err) {
+    const responseFromCache = await caches.match(request.url);
+    
+    return responseFromCache || new Response("Network Error", {
+        status: 408,
+        headers: { "Content-Type": "text/plain" }
+      });
+  }
+};
+
+
+/*
+console.log("service worker read");
+
+let cacheVersion = 0;
+let offlineQueue = []
+
+//SW installation
 self.addEventListener('install', e =>
   e.waitUntil(
     caches.open(cacheVersion)
@@ -27,7 +96,7 @@ const getFromNetwork = (request, timeout) =>
 
     //save id of timeout
     const timeoutId = setTimeout(reject, timeout);
-    fetch(request, {cache: "no-store"}).then(response => {
+    fetch(request, {cache: "reload"}).then(response => {
 
       //remove timeout if request was successful
       clearTimeout(timeoutId);
@@ -44,13 +113,14 @@ const getLocally = (request) =>
     .then(cache =>
       cache
         .match(request)
+        .then(matching => matching)
     );
 
 const addToCache = (request) =>
   caches
     .open(cacheVersion)
     .then(cache =>
-      fetch(request).then(response => cache.put(request, response))
+      cache.add(request)
     );
 
 self.addEventListener('fetch', e => {
@@ -63,4 +133,4 @@ self.addEventListener('fetch', e => {
   e.waitUntil(addToCache(e.request));
 });
 
-
+*/

@@ -59,6 +59,7 @@ function MessageInput({ updateChat }) {
     <div className="footer">
       <div className="messageWrapper">
         <EmojiPanel callback={appendEmoji} />
+        <PhotoButton updateChat={updateChat}/>
         <textarea
           placeholder="Type a message"
           id="textInput"
@@ -68,7 +69,6 @@ function MessageInput({ updateChat }) {
         <button onClick={submitMessageHandler}>
           <img alt="Send" src={isLight ? sendDark : sendLight} />
         </button>
-        <PhotoButton updateChat={updateChat}/>
       </div>
     </div>
   );
