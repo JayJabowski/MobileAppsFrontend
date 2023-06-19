@@ -59,6 +59,8 @@ function App() {
     if(tempAuth.token){
       updateAuth(tempAuth);
       updateTheme(tempAuth.theme);
+      //work-around to get logout msg at back button in group chat
+      updateActiveState("login");
       updateActiveState("groupChat");
     }
   }, [])
@@ -101,7 +103,7 @@ function App() {
   }
 
   const generateBackButtonTexts = () => {
-    if(activeState[0] == "groupChat" && activeState[1] == "login"){
+    if(activeState[0] == "groupChat"){
       return{
         gobackMsg: "This will log you out and take you to the login screen. Do you want to continue?",
         confirmMsg: "Log me Out!",
@@ -111,8 +113,6 @@ function App() {
     }
     return null;
   }
-
-  console.log("isLight: "+isLight)
 
   return (
     <>

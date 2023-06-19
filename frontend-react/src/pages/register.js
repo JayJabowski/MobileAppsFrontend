@@ -39,8 +39,13 @@ function Register() {
             {...userForm, repeatedPassword: e.target.value}
             );
     }
+
     const updateInfoMsg = (arr) =>{
         setInfomsg( arr);
+    }
+
+    const setInfoMsProperty = (name, msg) => {
+        setInfomsg({...infomsg, [name]:msg});
     }
     
     const updateActiveState = (status) => {
@@ -76,25 +81,25 @@ function Register() {
     }
 
     const generateUserMessages = () => {
-        let tmpmsgs = [];
+        const tmpmsgs = {};
 
         if(userForm.repeatedPassword != userForm.password){
-            tmpmsgs.push("Passwords do not match");
+            tmpmsgs.password = "Passwords do not match";
         }
         if(userForm.userid?.length != 8){
-            tmpmsgs.push("HSE-Tag in wrong format");
+            tmpmsgs.userid = "HSE-Tag in wrong format";
         }
         if(!userForm.nickname){
-            tmpmsgs.push("Please specify a nickname");
+            tmpmsgs.nickname = "Please specify a nickname";
         }
         if(!userForm.fullname){
-            tmpmsgs.push("Please specify a full name");
+            tmpmsgs.fullname = "Please specify a full name";
         }
         if(!userForm.password || !userForm.repeatedPassword){
-            tmpmsgs.push("Please enter and repeat a password");
+            tmpmsgs.repeatedPassword = "Please enter and repeat a password";
         }
         
-        updateInfoMsg([...tmpmsgs]);
+        updateInfoMsg({...tmpmsgs});
     }
 
     const deleteUserMessages = () => {
@@ -105,27 +110,17 @@ function Register() {
         <div className="loginRegister">
         <form className='loginForm'>
             <SignUpInput placeholder={"HSE-Credentials"} state={userForm.userid} callback={updateHseId} />
+            {infomsg.userid ? <ErrorMessage text = {infomsg.userid} callback = {() => setInfoMsProperty("userid", null)}/> : <></>}
             <SignUpInput placeholder={"Nickname"} state={userForm.nickname} callback={updateNickname} />
+            {infomsg.nickname ? <ErrorMessage text = {infomsg.nickname} callback = {() => setInfoMsProperty("nickname", null)}/> : <></>}
             <SignUpInput placeholder={"Full Name"} state={userForm.fullname} callback={updateFullName} />
+            {infomsg.fullname ? <ErrorMessage text = {infomsg.fullname} callback = {() => setInfoMsProperty("fullname", null)}/> : <></>}
 
             <SignUpPassword placeholder={"Enter Password"} callback={updatePassword} />
+            {infomsg.password ? <ErrorMessage text = {infomsg.password} callback = {() => setInfoMsProperty("password", null)}/> : <></>}
             <SignUpPassword placeholder={"Repeat Your Password"} callback={updateRepeatedPassword} />
+            {infomsg.repeatedPassword ? <ErrorMessage text = {infomsg.repeatedPassword} callback = {() => setInfoMsProperty("repeatedPassword", null)}/> : <></>}
 
-            <div>
-                {infomsg.map((msg,i) => {
-                    setTimeout(() => { 
-                        const tmpArr = [...infomsg];
-                        tmpArr.splice(i,1);
-          
-                        setInfomsg(tmpArr);
-                       },3000);
-
-                    return (
-                        <ErrorMessage key={Math.random()} text={msg} />
-                    )
-                })
-                }
-            </div>
             <button className="breakButton firstPrio" onClick={RegisterHandler}>Create Account</button>
             <button className="breakButton secondPrio" onClick={() => updateActiveState("login")}>Sign In</button>
         </form>

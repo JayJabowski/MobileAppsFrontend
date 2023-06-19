@@ -9,19 +9,6 @@ light text: #c3c8cb
 
 */
 
-/*
-Old Colors:
-
-    primaryColor : #159A9C;
-    secondaryColor : #B4BEC9;
-
-    primaryLight : #FFFFFF;
-    secondaryLight : #DEEFE7;
-
-    primaryDark :  #002333;
-
-*/
-
 * {
     margin: 0;
     padding: 0;
@@ -46,10 +33,10 @@ Old Colors:
     --primaryShadeC: #e9ebea;
 
     --backgroundC: #FFFFFF;
-    --backgroundShadeC: #fafafa;
+    --backgroundShadeC: #f5f5f5;
 
     --textC: #090909;
-    --textShadeC: #c3c8cb;
+    --textShadeC: #848e94;
 
     --lightIndent: 4%;
     --lightIndentRemainder: calc(100% - 2* var(--lightIndent));
@@ -102,7 +89,7 @@ $thin: 300;
 }
 
 @mixin dropShadow() {
-    $size : 0.5em;
+    $size : 0.7em;
 
     box-shadow: 0 0 $size var(--backgroundShadeC);
 }
@@ -261,6 +248,25 @@ html {
 
     .self {
         align-items: flex-end;
+        
+        div{
+            @include dropShadow();
+            background-color: var(--primaryC);
+
+            .text{
+                color: var(--backgroundC);
+            }
+            
+            .name{
+                color: var(--backgroundC);
+
+            }
+
+            .time{
+                color: var(--backgroundShadeC);
+            }
+        }
+        color: var(--backgroundC);
     }
 
     .self .time {
@@ -288,8 +294,8 @@ html {
         }
 
         .time {
-            @include baseFont($bold, var(--smallSize));
-            color: var(--primaryShadeC);
+            @include baseFont($regular, var(--smallSize));
+            color: var(--textShadeC);
         }
 
         img {
@@ -367,6 +373,9 @@ html {
         textarea {
             @include baseFont($regular, var(--inputSize));
 
+            background-color: var(--backgroundC);
+            color: var(--textC);
+
             flex-grow: 1;
             overflow-y: hidden;
             resize: none;
@@ -442,6 +451,7 @@ html {
         margin-top: calc(var(--titleSize)*3);
         border: var(--frameVisible) var(--textShadeC) solid;
 
+        background-color: var(--backgroundC);
         
 
         .menuItem{
@@ -470,9 +480,12 @@ html {
                 }
 
             }
+
+            &:last-child{
+                border:0;
+            }
         }
 
-        background-color: var(--backgroundC);
 
         .menuDivider{
             @include flexOAJ(row, center , center);
@@ -514,6 +527,10 @@ html {
 .breakButton {
     @include defaultButton();
     @include lightIndent();
+
+    &:hover{
+        @include dropShadow();
+    }
 }
 
 .firstPrio {
@@ -671,15 +688,43 @@ html {
 }
 
 .errMsgWrapper {
+    @include flexOAJ(column, center ,center );
+    width:100%;
 
+    background-color: var(--backgroundC);
+    
     .errMsg {
+        @include flexOAJ(row, center , space-between);
         @include roundedCorners(false);
-        @include baseFont($regular, var(--inputSize));
-        color: var(--backgroundC);
         background-color: var(--textC);
-        margin-bottom: 0.4em;
+        width: 70%;
+        padding:0.2em;
+        padding-left: 1em;
+        padding-right:1em;
 
-        padding: 1em;
+        label{
+
+            @include baseFont($regular, var(--inputSize));
+            color: var(--backgroundC);
+        }
+        button{
+            background: transparent;
+            border-width: 0;
+
+            height:1.8em;
+            width:1.8em;
+
+            &:hover{
+                cursor: pointer;
+            }
+
+            img{
+                height:100%;
+                width:100%;
+            }
+            
+        }
+            
     }
 
     button {
@@ -687,20 +732,41 @@ html {
     }
 }
 
-.backButtonWrapper {
-    position: relative;
 
-
-    .backPopup {
+    .backButtonPopupWrapper{
         position: fixed;
-        z-index: 1;
-        /*stay on top*/
-        height: 8em;
-        width: 20em;
-        top: 10em;
-        left: 10em;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+
+        @include flexOAJ(column,center ,center );
+
+        backdrop-filter: brightness(var(--toneDown));
+        
+        .backPopup {
+            $marginSides: 1em;
+
+            @include baseFont($regular, var(--textSize));
+            @include flexOAJ(column, stretch ,center );
+            @include roundedCorners(false);
+            @include lightIndent();
+            @include dropShadow();
+            
+            max-width: calc(var(--maxWidth) - 4* $marginSides);
+
+            position: relative;
+            z-index: 3;
+            border: var(--frameVisible) var(--textShadeC) solid;
+
+            margin: 1em;
+            padding: 1em;
+
+            background-color: var(--backgroundC);
+
+        }
     }
-}
+
 
 .titleButton {
     @include titleButton();
@@ -822,17 +888,57 @@ html {
         position:relative;
         @include flexOAJ(column, center, flex-end);
         @include roundedCorners(false);
-        @include dropShadow(false);
+        @include dropShadow();
         max-width: var(--maxWidth);
 
         background-color: var(--backgroundShadeC);
 
         .breakButtonWrapper{
             position:absolute;
-            @include flexOAJ(row, center, space-between);
-
+            @include flexOAJ(column, center, space-between);
+            
             width:100%;
-            max-width: var(--maxWidth);
+            height:100%;
+            
+            .photoHeader{
+                @include flexOAJ(row, center, space-between);
+                width: 100%;
+                
+            }
+            .photoFooter{
+                @include flexOAJ(row, center, space-between);
+                width: 100%;
+
+                .shutter{
+                    @include flexOAJ(row, stretch , center);
+                    opacity: 70%;
+                    margin: 2em;
+                    border-radius: 50%;
+                    border: 0.1em var(--backgroundC) solid;
+
+                    width: 3em;
+                    height:3em;
+
+                    .innerShutter{
+                        background-color: var(--backgroundC);
+                        flex-grow: 1;
+                        border-radius: 50%;
+
+                        margin: 0.2em;
+
+                        &:hover{
+                            background-color: var(--primaryC);
+                        }
+                        
+                    }
+                }
+
+                .sendPhotoButton{
+                    opacity: 100%;
+                    background-color: var(--primaryC);
+                }
+
+            }
         }
 
         button{

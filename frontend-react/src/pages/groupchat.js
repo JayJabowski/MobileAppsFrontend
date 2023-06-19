@@ -42,7 +42,7 @@ function GroupChat({messageHistory, updateMessageHistory}) {
 
     //Date-Formatting
     const isNewDay = (current, prev) => {
-        return (current?.time.substring(0,9) !== prev?.time.substring(0,9));
+        return (current?.time.substring(0,10) !== prev?.time.substring(0,10));
     }
 
     const createDatecard = (timeString) => {

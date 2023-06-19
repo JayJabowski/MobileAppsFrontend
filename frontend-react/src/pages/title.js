@@ -31,8 +31,8 @@ function Title({msg}) {
 
       </div>
 
-        <button className="breakButton firstPrio" onClick={() => updateActiveState("login")}>Login</button>
-        <button className="breakButton secondPrio" onClick={() => updateActiveState("register")}>Sign Up</button>
+        <button className="breakButton" onClick={() => updateActiveState("login")}>Login</button>
+        <button className="breakButton" onClick={() => updateActiveState("register")}>Sign Up</button>
       
         <p>
             &copy; 2023

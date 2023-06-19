@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Picker from 'emoji-picker-react';
 
 import { sendMessage } from '../api/Fetcher';
@@ -21,20 +21,14 @@ function MessageInput({ updateChat }) {
   const { auth, setAuth } = useAuth();
   const { isLight } = useActiveTheme();
 
-  const [message, setMessage] = useState("");
-  const [noOfRows, setNoOfRows] = useState(1);
+  const [message, setMessage] = useState();
   const [emojiPanelVisible, setEmojiPanelVisible] = useState(false);
-
-  const updateTextInput = (e) => {
-    updateMessage(e);
-
-    if (e.target.scrollHeight > e.target.clientHeight) {
-      updateNoOfRows(noOfRows + 1);
-    }
-  };
 
   const updateMessage = (e) => {
     setMessage(e?.target.value);
+
+    e.target.style.height = "0";
+    e.target.style.height = e.target.scrollHeight+"px";
   };
 
   const appendEmoji = (emoji) => {
@@ -44,10 +38,6 @@ function MessageInput({ updateChat }) {
   const updateEmojiPanelVisible = (bool) => {
     setEmojiPanelVisible(bool);
   }
-
-  const updateNoOfRows = (rows) => {
-    setNoOfRows(rows);
-  };
 
   const submitMessageHandler = async (e) => {
     if (!message) return;
@@ -75,9 +65,8 @@ function MessageInput({ updateChat }) {
         <PhotoButton updateChat={updateChat}/>
         <textarea
           placeholder="Type a message"
-          id="textInput"
           value={message}
-          onChange={updateTextInput}
+          onChange={updateMessage}
         ></textarea>
         <button onClick={submitMessageHandler}>
           <img alt="Send" src={isLight ? sendDark : sendLight} />

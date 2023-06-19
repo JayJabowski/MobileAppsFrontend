@@ -21,9 +21,9 @@ function ThemeChanger() {
         primaryC : "#5bc9bb",
         primaryShadeC : "#e9ebea",
         backgroundC: "#ffffff",
-        backgroundShadeC: "#fafafa",
+        backgroundShadeC: "#f5f5f5",
         textC: "#090909",
-        textShadeC: "#c3c8cb",
+        textShadeC: "#848e94",
         toneDown: "90%",
         frameVisible: "0"
     }
@@ -32,9 +32,9 @@ function ThemeChanger() {
         primaryC : "#5bc9bb",
         primaryShadeC : "#e9ebea",
         backgroundC: "#000000",
-        backgroundShadeC: "#181818",
+        backgroundShadeC: "#313131",
         textC: "#e7e7e7",
-        textShadeC: "#33383b",
+        textShadeC: "#848e94",
         toneDown: "70%",
         frameVisible: "0.1em"
 

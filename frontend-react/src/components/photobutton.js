@@ -14,6 +14,7 @@ import closeLight from "../icons/close_big_light.svg"
 import useAuth from "../hooks/useAuth";
 import useActiveTheme from "../hooks/useActiveTheme";
 import { sendPhoto } from "../api/Fetcher";
+import MessageInput from "./MessageInput";
 
 //https://blog.logrocket.com/using-react-webcam-capture-display-images/
 
@@ -33,6 +34,7 @@ function PhotoButton({ updateChat }) {
 
   const updateOverlayVisible = (bool) => {
     setOverlayVisible(bool);
+    bool  || updatePhotoURL("");
   };
 
   const updateCameraSupported = (bool) => {
@@ -136,7 +138,9 @@ function PhotoButton({ updateChat }) {
                 />
         </button>
       </div>
+
       {photoOverlayVisible ? (
+
         <div
           className="photoOverlayWrapper"
           onClick={(e) => {
@@ -144,52 +148,62 @@ function PhotoButton({ updateChat }) {
             updateOverlayVisible(false);
           }}
         >
+
           <div onClick={(e) => e.stopPropagation()} className="photoOverlay">
-            {photoURL ? (
-              <img
-                className="takenPhoto"
-                src={photoURL}
-                alt="no photo taken or none displayed"
-              />
-            ) : (
-              <video id="captureStream" autoPlay></video>
-            )}
-              <div className="breakButtonWrapper">
-                {photoURL ? (
-                <>
-                <button
-                  className="sendPhotoButton"
-                  onClick={submitPhotoHandler}
-                  >
-                  <img alt="Send" src={isLight ? sendDark : sendLight} />
-                </button>
-
-                <button
-                  className="retakePhotoButton"
-                  onClick={() => updatePhotoURL("")}
-                  >
-                  <img alt="retake" src={isLight ? redoDark : redoLight} />
-                </button>
-
-                  </>
-            ) : (
-              <>
-              <div className="placeholder"></div>
-              <button className="breakButton secondPrio" onClick={photoHandler}>
+              {photoURL ? (
                 <img
-                  alt="Take Photo"
-                  src={isLight ? cameraDark : cameraLight}
-                  />
-              </button>
+                  className="takenPhoto"
+                  src={photoURL}
+                  alt="no photo taken or none displayed"
+                />
+              ) : (
+                <video id="captureStream" autoPlay></video>
+              )}
+
+                <div className="breakButtonWrapper">
+                  
+                  <div className="photoHeader">
+                    <div className="placeholder"></div>
+                    <button
+                      onClick={() => updateOverlayVisible(!photoOverlayVisible)}
+                      >
+                      <img alt="close" src={isLight ? closeDark: closeLight} />
+                    </button>
+                  </div>
+
+                  <div className="photoFooter">
+                    {photoURL ? (
+                    <>
+
+                    <button
+                      className="retakePhotoButton"
+                      onClick={() => updatePhotoURL("")}
+                      >
+                      <img alt="retake" src={isLight ? redoDark : redoLight} />
+                    </button>
+
+                    <button
+                      className="sendPhotoButton"
+                      onClick={submitPhotoHandler}
+                      >
+                      <img alt="Send" src={isLight ? sendDark : sendLight} />
+                    </button>
+
+                    <MessageInput />
+
+                      </>
+                ) : (
+                  <>
+                    <div className="placeholder"></div>
+                    <div className="shutter" onClick={photoHandler}>
+                      <div className="innerShutter"></div>
+                    </div>
+                    <div className="placeholder"></div>
                   </>
 
-            )}
-            <button
-              onClick={() => updateOverlayVisible(!photoOverlayVisible)}
-              >
-              <img alt="close" src={isLight ? closeDark: closeDark} />
-            </button>
+                  )}
               </div>
+            </div>
           </div>
         </div>
       ) : (

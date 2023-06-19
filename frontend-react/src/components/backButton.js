@@ -25,6 +25,9 @@ function BackButton({gobackMsg, confirmMsg, abortMsg, callback}) {
     }, [activeState])
 
     const goBack = async () => {
+                console.dir({
+                    callback, activeState, gobackMsg
+                })
 
                 //remove first element of Array
                 activeState.shift();
@@ -32,7 +35,7 @@ function BackButton({gobackMsg, confirmMsg, abortMsg, callback}) {
                 const tmpState  = [...activeState];
                 setActiveState(tmpState);
                 updatePopUpVisible(false);
-                callback && callback();
+                callback && await callback();
       }
 
     return ( 
@@ -47,10 +50,17 @@ function BackButton({gobackMsg, confirmMsg, abortMsg, callback}) {
 
             {popupVisible 
             ? 
-            <div className='backPopup'>
-                <p>{gobackMsg}</p>
-                <button onClick={() => goBack()}>{confirmMsg}</button>
-                <button onClick={() => updatePopUpVisible(false)}>{abortMsg}</button>
+            <div className='backButtonPopupWrapper' onClick={(e) => {
+                updatePopUpVisible(false)
+                e.stopPropagation();
+                }}>
+
+                <div className='backPopup' onClick={(e) => e.stopPropagation()}>
+                    <p>{gobackMsg}</p>
+                    <button className='breakButton' onClick={() => goBack()}>{confirmMsg}</button>
+                    <button className='breakButton' onClick={() => updatePopUpVisible(false)}>{abortMsg}</button>
+                </div>
+
             </div>
             :
             <></>
