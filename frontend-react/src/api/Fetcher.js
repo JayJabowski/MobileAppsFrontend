@@ -98,12 +98,13 @@ const fetchPhotoGET = async (token, photoid) => {
   }
 };
 
-const sendMessagePost = async (token, message) => {
+const sendMessagePost = async (token, message, photoURL) => {
   try {
     const request = {
       token,
       request: "sendmessage",
-      text: message
+      text: message,
+      photo : photoURL?.slice(22)
     };
 
     const response = await axios.post("", request, {
@@ -120,7 +121,7 @@ const sendPhotoPost = async (token, photoURL) => {
     const request = {
       token,
       request: "sendmessage",
-      photo : photoURL.slice(22)
+      
     };
 
     const response = await axios.post("", request, {

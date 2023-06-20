@@ -4,22 +4,20 @@ import ChatMessage from '../components/chatmessage';
 import MessageInput from '../components/MessageInput';
 import useAuth from '../hooks/useAuth';
 
+//Images
+import closeDark from "../icons/close_big_dark.svg"
+import closeLight from "../icons/close_big_light.svg"
 
 //MockData
 import { parseTimeString } from '../tools/tools';
+import useActiveTheme from '../hooks/useActiveTheme';
 
 //TODO: periodically update Chat.
 
 function GroupChat({messageHistory, updateMessageHistory}) {
     const { auth } = useAuth();
+    const { isLight } = useActiveTheme();
 
-    //RECEIVING:
-    const unescapeQuotationMarks = (string) => {
-        //swaps HTML-entity for quotation mark with actual quotation mark
-
-        const newString = string.replaceAll("&#34;", "\"");
-        return newString;
-    }
 
     //useEffect
     useEffect(() => {
@@ -73,7 +71,6 @@ function GroupChat({messageHistory, updateMessageHistory}) {
     return (
         <>
             <div className='chatBoxWrapper'>
-
             <div className="chatBox">
                 {messageHistory.map((msg, i) => {
                     return(

@@ -5,10 +5,10 @@ import sendDark from "../icons/send_dark.svg";
 import sendLight from "../icons/send_light.svg";
 import redoDark from "../icons/redo_dark.svg";
 import redoLight from "../icons/redo_light.svg";
-import cameraDark from "../icons/camera_dark.svg";
-import cameraLight from "../icons/camera_light.svg";
 import closeDark from "../icons/close_big_dark.svg"
 import closeLight from "../icons/close_big_light.svg"
+import cameraDark from "../icons/camera_dark.svg";
+import cameraLight from "../icons/camera_light.svg";
 
 
 import useAuth from "../hooks/useAuth";
@@ -18,33 +18,21 @@ import MessageInput from "./MessageInput";
 
 //https://blog.logrocket.com/using-react-webcam-capture-display-images/
 
-function PhotoButton({ updateChat }) {
+function PhotoButton({ updateChat, updatePhotoURL, photoURL }) {
   const { auth } = useAuth();
   const { isLight } = useActiveTheme();
 
-  const [photoURL, setPhotoURL] = useState("");
   const [photoOverlayVisible, setOverlayVisible] = useState(false);
   const [cameraSupported, setCameraSupported] = useState(false);
-  const [cameraActive, setCameraActive] = useState(false);
-
-
-  const updatePhotoURL = (url) => {
-    setPhotoURL(url);
-  };
 
   const updateOverlayVisible = (bool) => {
     setOverlayVisible(bool);
-    bool  || updatePhotoURL("");
+    //bool  || updatePhotoURL("");
   };
 
   const updateCameraSupported = (bool) => {
     setCameraSupported(bool);
   };
-  const updateCameraActive = (bool) => {
-    setCameraActive(bool);
-  };
-
-
 
   useEffect(() => {
     updateCameraSupported("mediaDevices" in navigator);
@@ -64,6 +52,7 @@ function PhotoButton({ updateChat }) {
     const photoURL = takePhoto();
 
     updatePhotoURL(photoURL);
+    updateOverlayVisible(false);
   };
 
   const switchOn = async () => {
@@ -150,17 +139,9 @@ function PhotoButton({ updateChat }) {
         >
 
           <div onClick={(e) => e.stopPropagation()} className="photoOverlay">
-              {photoURL ? (
-                <img
-                  className="takenPhoto"
-                  src={photoURL}
-                  alt="no photo taken or none displayed"
-                />
-              ) : (
                 <video id="captureStream" autoPlay></video>
-              )}
 
-                <div className="breakButtonWrapper">
+              <div className="breakButtonWrapper">
                   
                   <div className="photoHeader">
                     <div className="placeholder"></div>
@@ -172,37 +153,14 @@ function PhotoButton({ updateChat }) {
                   </div>
 
                   <div className="photoFooter">
-                    {photoURL ? (
-                    <>
-
-                    <button
-                      className="retakePhotoButton"
-                      onClick={() => updatePhotoURL("")}
-                      >
-                      <img alt="retake" src={isLight ? redoDark : redoLight} />
-                    </button>
-
-                    <button
-                      className="sendPhotoButton"
-                      onClick={submitPhotoHandler}
-                      >
-                      <img alt="Send" src={isLight ? sendDark : sendLight} />
-                    </button>
-
-                    <MessageInput />
-
-                      </>
-                ) : (
-                  <>
+                  
                     <div className="placeholder"></div>
                     <div className="shutter" onClick={photoHandler}>
                       <div className="innerShutter"></div>
                     </div>
                     <div className="placeholder"></div>
-                  </>
-
-                  )}
-              </div>
+                  
+                  </div>
             </div>
           </div>
         </div>

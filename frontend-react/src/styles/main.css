@@ -830,7 +830,17 @@ html {
   max-width: var(--maxWidth);
   background-color: var(--backgroundShadeC);
 }
-.photoOverlayWrapper .photoOverlay .breakButtonWrapper {
+.photoOverlayWrapper .photoOverlay video {
+  border-radius: 0.3em;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.photoOverlayWrapper .photoOverlay img {
+  border-radius: 0.3em;
+}
+
+.breakButtonWrapper {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -839,21 +849,21 @@ html {
   width: 100%;
   height: 100%;
 }
-.photoOverlayWrapper .photoOverlay .breakButtonWrapper .photoHeader {
+.breakButtonWrapper .photoHeader {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
-.photoOverlayWrapper .photoOverlay .breakButtonWrapper .photoFooter {
+.breakButtonWrapper .photoFooter {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
-.photoOverlayWrapper .photoOverlay .breakButtonWrapper .photoFooter .shutter {
+.breakButtonWrapper .photoFooter .shutter {
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -865,20 +875,20 @@ html {
   width: 3em;
   height: 3em;
 }
-.photoOverlayWrapper .photoOverlay .breakButtonWrapper .photoFooter .shutter .innerShutter {
+.breakButtonWrapper .photoFooter .shutter .innerShutter {
   background-color: var(--backgroundC);
   flex-grow: 1;
   border-radius: 50%;
   margin: 0.2em;
 }
-.photoOverlayWrapper .photoOverlay .breakButtonWrapper .photoFooter .shutter .innerShutter:hover {
+.breakButtonWrapper .photoFooter .shutter .innerShutter:hover {
   background-color: var(--primaryC);
 }
-.photoOverlayWrapper .photoOverlay .breakButtonWrapper .photoFooter .sendPhotoButton {
+.breakButtonWrapper .photoFooter .sendPhotoButton {
   opacity: 100%;
   background-color: var(--primaryC);
 }
-.photoOverlayWrapper .photoOverlay button {
+.breakButtonWrapper button {
   background-color: var(--backgroundC);
   opacity: 70%;
   margin: 1em;
@@ -886,17 +896,22 @@ html {
   width: 2.5em;
   border-radius: 50%;
 }
-.photoOverlayWrapper .placeholder {
+.breakButtonWrapper .placeholder {
   width: 2em;
   height: 2em;
   margin: 1em;
 }
-.photoOverlayWrapper video {
-  border-radius: 0.3em;
+
+.photoPanel {
   position: relative;
-  height: 100%;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  box-shadow: 0 0 0.7em var(--backgroundShadeC);
+  padding: 1em;
 }
-.photoOverlayWrapper img {
+.photoPanel img {
   border-radius: 0.3em;
+  width: 100%;
 }/*# sourceMappingURL=main.css.map */

@@ -191,6 +191,7 @@ $thin: 300;
     }
 }
 
+
 html {
     margin: 0;
     padding: 0;
@@ -892,82 +893,94 @@ html {
         max-width: var(--maxWidth);
 
         background-color: var(--backgroundShadeC);
-
-        .breakButtonWrapper{
-            position:absolute;
-            @include flexOAJ(column, center, space-between);
-            
-            width:100%;
-            height:100%;
-            
-            .photoHeader{
-                @include flexOAJ(row, center, space-between);
-                width: 100%;
-                
-            }
-            .photoFooter{
-                @include flexOAJ(row, center, space-between);
-                width: 100%;
-
-                .shutter{
-                    @include flexOAJ(row, stretch , center);
-                    opacity: 70%;
-                    margin: 2em;
-                    border-radius: 50%;
-                    border: 0.1em var(--backgroundC) solid;
-
-                    width: 3em;
-                    height:3em;
-
-                    .innerShutter{
-                        background-color: var(--backgroundC);
-                        flex-grow: 1;
-                        border-radius: 50%;
-
-                        margin: 0.2em;
-
-                        &:hover{
-                            background-color: var(--primaryC);
-                        }
-                        
-                    }
-                }
-
-                .sendPhotoButton{
-                    opacity: 100%;
-                    background-color: var(--primaryC);
-                }
-
-            }
+    
+        video {
+            @include roundedCorners(false);
+            position: relative;
+            height: 100%;
+            width: 100%;
         }
-
-        button{
-            background-color: var(--backgroundC);
-            opacity: 70%;
-            margin: 1em;
-
-            height: 2.5em;
-            width: 2.5em;
-
-            border-radius: 50%;
-
+    
+        img {
+            @include roundedCorners(false);
         }
     }
+}
 
+.breakButtonWrapper{
+    position:absolute;
+    @include flexOAJ(column, center, space-between);
+    
+    width:100%;
+    height:100%;
+    
+    .photoHeader{
+        @include flexOAJ(row, center, space-between);
+        width: 100%;
+        
+    }
+    .photoFooter{
+        @include flexOAJ(row, center, space-between);
+        width: 100%;
+
+        .shutter{
+            @include flexOAJ(row, stretch , center);
+            opacity: 70%;
+            margin: 2em;
+            border-radius: 50%;
+            border: 0.1em var(--backgroundC) solid;
+
+            width: 3em;
+            height:3em;
+
+            .innerShutter{
+                background-color: var(--backgroundC);
+                flex-grow: 1;
+                border-radius: 50%;
+
+                margin: 0.2em;
+
+                &:hover{
+                    background-color: var(--primaryC);
+                }
+                
+            }
+        }
+
+        .sendPhotoButton{
+            opacity: 100%;
+            background-color: var(--primaryC);
+        }
+
+    }
+    button{
+        background-color: var(--backgroundC);
+        opacity: 70%;
+        margin: 1em;
+
+        height: 2.5em;
+        width: 2.5em;
+
+        border-radius: 50%;
+
+    }
     .placeholder{
         width:2em;
         height:2em;
         margin: 1em;
     }
+}
 
-    video {
+.photoPanel{
+
+    position:relative;
+    @include flexOAJ(column, center, flex-end);
+    @include dropShadow();
+    padding: 1em;
+    
+    img{
         @include roundedCorners(false);
-        position: relative;
-        height: 100%;
         width: 100%;
     }
-
-    img {
-        @include roundedCorners(false);
-    }
+    
 }
