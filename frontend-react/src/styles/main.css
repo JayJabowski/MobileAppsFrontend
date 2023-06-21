@@ -90,6 +90,7 @@ html {
   align-items: flex-start;
   justify-content: flex-start;
   flex-grow: 1;
+  position: relative;
   -ms-overflow-style: none;
   /* for Internet Explorer, Edge */
   scrollbar-width: none;
@@ -312,6 +313,7 @@ html {
   height: 2.6em;
 }
 .titleBar .titleRight {
+  position: relative;
   margin-right: 0.5em;
   width: 2.5em;
   display: flex;
@@ -803,6 +805,26 @@ html {
 
 .searchFocus {
   background-color: var(--primaryC);
+}
+
+.goToBottom {
+  box-shadow: 0 0 0.7em var(--backgroundShadeC);
+  position: fixed;
+  left: calc(50vw - 3em);
+  margin: 2em;
+  border-width: 0;
+  height: 3em;
+  width: 3em;
+  border-radius: 50%;
+  background-color: var(--backgroundC);
+  top: calc(100vh - 12em);
+}
+.goToBottom:hover {
+  background-color: var(--primaryC);
+}
+.goToBottom img {
+  height: 100%;
+  width: 100%;
 }
 
 .photoOverlayWrapper {

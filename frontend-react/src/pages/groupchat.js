@@ -5,8 +5,8 @@ import MessageInput from '../components/MessageInput';
 import useAuth from '../hooks/useAuth';
 
 //Images
-import closeDark from "../icons/close_big_dark.svg"
-import closeLight from "../icons/close_big_light.svg"
+import downDark from "../icons/down_dark.svg";
+import downLight from "../icons/down_light.svg";
 
 //MockData
 import { parseTimeString } from '../tools/tools';
@@ -18,13 +18,20 @@ function GroupChat({messageHistory, updateMessageHistory}) {
     const { auth } = useAuth();
     const { isLight } = useActiveTheme();
 
+    const [scrollPosition, setScrollPosition] = useState(false);
+
+    const updateScrollPosition = (e) => {
+        const dist = e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight;
+        setScrollPosition(dist > 1000);
+    }
+
 
     //useEffect
     useEffect(() => {
         updateChat();
     }, []);
     useEffect(() => {
-        scrollDown();
+        scrollDown("instant");
     }, [messageHistory]);
 
 
@@ -63,15 +70,17 @@ function GroupChat({messageHistory, updateMessageHistory}) {
 
     //Scrolling
 
-    const scrollDown = () => {
+    const scrollDown = (behavior) => {
         const chatBottom = document.getElementById("chatBottom");
-        chatBottom.scrollIntoView({behavior: "instant", block: "end"});
+        chatBottom.scrollIntoView({behavior ,block: "end"});
     }
 
     return (
         <>
             <div className='chatBoxWrapper'>
-            <div className="chatBox">
+            <div className="chatBox" 
+            onScroll={updateScrollPosition}
+            id="chatBox">
                 {messageHistory.map((msg, i) => {
                     return(
                         <>
@@ -80,9 +89,27 @@ function GroupChat({messageHistory, updateMessageHistory}) {
                         </>)
                 })}
                 <div id="chatBottom"></div>
+
+
             </div>
             <MessageInput updateChat={updateChat} />
             </div>
+                {scrollPosition
+                ?
+        
+                    <button className='goToBottom' 
+                        onClick={(e) => {
+                            e.preventDefault();
+                            
+                            scrollDown("smooth");
+                    }}>
+                        <img alt="Scroll Down" src={isLight ? downDark : downLight} />
+                    </button>
+            
+                :
+                <></>
+                
+                }
         </>
       );
 }

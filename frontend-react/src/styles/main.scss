@@ -236,6 +236,7 @@ html {
 .chatBox {
     @include flexOAJ(column, flex-start, flex-start);
     flex-grow: 1;
+    position:relative;
 
     @include hideScrollbar();
     overflow-y: scroll;
@@ -319,6 +320,8 @@ html {
 
         background-color: var(--backgroundC);
     }
+
+    
 
 }
 
@@ -418,6 +421,7 @@ html {
     }
 
     .titleRight {
+        position:relative;
         margin-right: 0.5em;
         width: 2.5em;
         @include flexOAJ(row, center, flex-end);
@@ -873,7 +877,34 @@ html {
 .searchFocus {
     background-color: var(--primaryC);
 }
+  
+    .goToBottom{
+        @include dropShadow();
+        position:fixed;
 
+        left: calc(50vw - 3em);
+        margin: 2em;
+        border-width:0;
+        
+        height:3em;
+        width: 3em;
+        border-radius:50%;
+        background-color: var(--backgroundC);
+        
+        &:hover{
+            background-color: var(--primaryC);
+        }
+
+        
+        top: calc(100vh - 12em);
+        
+        img{
+            height:100%;
+            width:100%;
+        }
+    }
+
+    
 .photoOverlayWrapper {
     @include flexOAJ(column, center, center);
     position: fixed;

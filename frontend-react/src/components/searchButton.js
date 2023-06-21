@@ -60,8 +60,6 @@ function SearchButton({ messageHistory }) {
   }, [searchString, filter]);
 
   const getSearchResults = (text) => {
-
-
     //calculate ResultArr
     const tmpResults = messageHistory.filter((msg) => {
         if (filter.includeText && msg.text?.includes(text)) {
@@ -158,6 +156,7 @@ function SearchButton({ messageHistory }) {
     updateFilter({ includeText: !filter.includeText });
   };
 
+
   return (
     <>
       {auth.token ? (
@@ -248,8 +247,10 @@ function SearchButton({ messageHistory }) {
           </div>
         </div>
       ) : (
-        <> </>
+        <> 
+        </>
       )}
+      
     </>
   );
 }
