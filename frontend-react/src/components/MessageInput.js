@@ -16,6 +16,7 @@ import redoLight from "../icons/redo_light.svg";
 
 import useActiveTheme from '../hooks/useActiveTheme';
 import PhotoButton from './photobutton';
+import PhotoFromFile from './PhotoFromFile';
 
 
 
@@ -71,7 +72,9 @@ function MessageInput({ updateChat}) {
     <div className="footer">
         {photoURL ? <PhotoPanel updatePhotoURL={updatePhotoURL} photoURL={photoURL} /> : <></>}
         <EmojiPanel callback={appendEmoji} visible={emojiPanelVisible} updateVisible={updateEmojiPanelVisible} />
+
       <div className="messageWrapper">
+
         <button onClick={() => updateEmojiPanelVisible(!emojiPanelVisible)}>
           <img alt="Emojis" src={isLight 
             ? 
@@ -79,50 +82,27 @@ function MessageInput({ updateChat}) {
             : 
             emojiPanelVisible ? downLight : faceLight} />
         </button>
+
+        <PhotoFromFile updatePhotoURL={updatePhotoURL} />
         <PhotoButton updateChat={updateChat} photoURL={photoURL} updatePhotoURL={updatePhotoURL}/>
+        
         <textarea
           placeholder="Type a message"
           value={message}
           onChange={updateMessage}
         ></textarea>
-        <button onClick={submitMessageHandler}>
-          <img alt="Send" src={isLight ? sendDark : sendLight} />
-        </button>
+
+            {(photoURL || message)
+            ?
+            <button  onClick={submitMessageHandler}>
+              <img alt="Send" src={isLight ? sendDark : sendLight} />
+            </button>:
+            <></>
+            }
+
       </div>
     </div>
   );
 }
 
 export default MessageInput;
-
-
-
-/*
-
-
-  :
-            <>
-                <div className="photoBox">
-                    <div className="photoOverlay">
-                        <img
-                        className="takenPhoto"
-                        src={photoURL}
-                        alt="no photo taken or none displayed"
-                        />
-
-                        <div className='breakButtonWrapper'>
-                        <div className="photoHeader">
-                        <div className="placeholder"></div>
-                        <button
-                        onClick={() => updatePhotoURL("")}
-                        >
-                        <img alt="close" src={isLight ? closeDark: closeLight} />
-                        </button>
-                    </div>
-                        </div>
-                    </div>
-                </div>
-            </>
-            }
-
-*/

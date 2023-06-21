@@ -29,7 +29,7 @@ light text: #c3c8cb
   --textShadeC: #848e94;
   --lightIndent: 4%;
   --lightIndentRemainder: calc(100% - 2* var(--lightIndent));
-  --maxWidth: 400px;
+  --maxWidth: 520px;
   --menuWidth: 40%;
   --heightTitlebar: 5em;
   --toneDown: 90%;
@@ -855,6 +855,24 @@ html {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  margin: 1em;
+  border: none;
+}
+.breakButtonWrapper .photoHeader img {
+  width: 60%;
+}
+.breakButtonWrapper .photoHeader button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 2em;
+  border-width: 0;
+  height: 2em;
+  width: 2em;
+}
+.breakButtonWrapper .photoHeader button:hover {
+  background-color: var(--backgroundShadeC);
 }
 .breakButtonWrapper .photoFooter {
   display: flex;
@@ -884,10 +902,6 @@ html {
 .breakButtonWrapper .photoFooter .shutter .innerShutter:hover {
   background-color: var(--primaryC);
 }
-.breakButtonWrapper .photoFooter .sendPhotoButton {
-  opacity: 100%;
-  background-color: var(--primaryC);
-}
 .breakButtonWrapper button {
   background-color: var(--backgroundC);
   opacity: 70%;
@@ -914,4 +928,18 @@ html {
 .photoPanel img {
   border-radius: 0.3em;
   width: 100%;
+}
+
+.uploadWrapper {
+  border-radius: 0.3em;
+  height: 1.5em;
+  width: 1.5em;
+  padding: 0.5em;
+}
+.uploadWrapper input {
+  display: none;
+}
+.uploadWrapper:hover {
+  cursor: pointer;
+  background-color: var(--backgroundShadeC);
 }/*# sourceMappingURL=main.css.map */

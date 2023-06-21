@@ -8,7 +8,8 @@ import eyeCrossedLight from "../icons/eye_crossed_light.svg";
 
 function SignUpPassword({
   placeholder,
-  callback
+  callback,
+  onSubmit
 }) {
   const { isLight } = useActiveTheme();
   const [passwordShown, setPasswordShown] = useState(false);
@@ -18,6 +19,10 @@ function SignUpPassword({
     setPasswordShown(!passwordShown);
   };
 
+  const onEnter = (e) => {
+    if(e.key == "Enter") onSubmit(e);
+  }
+
   return (
     <div className="inputWrapper">
       <div className="defaultInput">
@@ -25,6 +30,7 @@ function SignUpPassword({
           placeholder={placeholder}
           type={passwordShown ? "text" : "password"}
           onChange={callback}
+          onKeyDown={onEnter}
         ></input>
         <button className="inlineButton" onClick={togglePasswordShown}>
           <img

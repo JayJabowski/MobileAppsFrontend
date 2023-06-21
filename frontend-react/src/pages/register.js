@@ -61,12 +61,7 @@ function Register() {
     const RegisterHandler = async (e) => {
         e.preventDefault();
 
-        generateUserMessages();
-
-        if(userForm.repeatedPassword != userForm.password){
-            console.log("Passwords do not match");
-            return;
-        }
+        if(!generateUserMessages()) return;
 
         const response = await register(userForm);
 
@@ -100,10 +95,8 @@ function Register() {
         }
         
         updateInfoMsg({...tmpmsgs});
-    }
 
-    const deleteUserMessages = () => {
-        setInfomsg([]);
+        return !!tmpmsgs.keys().length;
     }
     
     return ( 
@@ -122,7 +115,7 @@ function Register() {
             {infomsg.repeatedPassword ? <ErrorMessage text = {infomsg.repeatedPassword} callback = {() => setInfoMsProperty("repeatedPassword", null)}/> : <></>}
 
             <button className="breakButton firstPrio" onClick={RegisterHandler}>Create Account</button>
-            <button className="breakButton secondPrio" onClick={() => updateActiveState("login")}>Sign In</button>
+            <button className="breakButton secondPrio" onClick={() => updateActiveState("login")}>Already have an account? Sign in!</button>
         </form>
         </div>
 

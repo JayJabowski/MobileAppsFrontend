@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import useActiveState from "../hooks/useActiveState";
 import useAuth from "../hooks/useAuth";
-import useActiveTheme from "../hooks/useActiveTheme";
 
 import LocalStorageHandler from "../tools/localstoragehandler";
 
@@ -9,6 +8,7 @@ import { login } from "../api/Fetcher";
 import RememberMe from "../components/rememberme";
 import SignUpInput from "../components/SignUpInput";
 import SignUpPassword from "../components/SignUpPassword";
+import ErrorMessage from "../components/errMsg";
 
 function Login({msg}) {
 
@@ -19,7 +19,6 @@ function Login({msg}) {
   const { activeState, setActiveState } = useActiveState();
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordShown, setPasswordShown] = useState(false);
   const [rememberLoginCheck, setRememberLoginCheck] = useState(false);
   const [ infomsg, setInfomsg ] = useState(msg ? [msg] : []);
 
@@ -43,20 +42,19 @@ function Login({msg}) {
   const updateAuth = (Obj) => {
     setAuth(Obj);
   };
-  const updateInfoMsg = (msg) =>{
-    const tmpArr = [...infomsg, msg];
-    
-    setInfomsg(tmpArr);
-}
-
-
+  const updateInfoMsg = (obj) =>{  
+    setInfomsg(obj);
+  }
+  const setInfoMsProperty = (name, msg) => {
+    setInfomsg({...infomsg, [name]:msg});
+  }
 
 
 // Fetch-Handlers
 
   const LoginHandler = async (e) => {
     e.preventDefault();
-
+   
     const response = await login(user, password);
 
     switch(response.data.code){
@@ -64,11 +62,10 @@ function Login({msg}) {
         break;
       case 455:
       case 456:
-        updateInfoMsg(response.data.message);
         storageHandler.clearLocalStorage();
         return;
         default:
-        updateInfoMsg(response.data.message);
+        setInfoMsProperty("loginFailed", "Invalid Credentials. Please try again");
         return;
     }
     
@@ -77,31 +74,18 @@ function Login({msg}) {
     updateAuth({ token: response.data.token, user, hash : response.data.hash });
 
     if(typeof(Storage) !== "undefined" && rememberLoginCheck){
-      storageHandler.addToLocalStorage({hash: response.data.hash, token: response.data.token, user});
+      storageHandler.addToLocalStorage({hash: response.data.hash, token: response.data.token, user, isLight: true});
     }
   };
 
+// Error-Handling
+
   return (
     <div className="loginRegister">
-      <div className="msgWrapper">
-        {infomsg.map((msg, i) => {
-          setTimeout(() => {
-            const tmpArr = [...infomsg];
-            tmpArr.splice(i, 1);
-
-            setInfomsg(tmpArr);
-          }, 3000);
-
-          return <div className="infoMsgBox">{msg}</div>;
-        })}
-      </div>
-
-
-        <form>
-        <SignUpInput placeholder={"HSE-Credentials"} state={user} callback={updateUser} />
-
-        <SignUpPassword placeholder={"Password"} callback={updatePassword} />
-
+      <form>
+        {infomsg.loginFailed ? <ErrorMessage text = {infomsg.loginFailed} callback = {() => setInfoMsProperty("loginFailed", null)}/> : <></>}
+        <SignUpInput placeholder={"HSE-Credentials"} state={user} callback={updateUser} onSubmit={LoginHandler} />
+        <SignUpPassword placeholder={"Password"} callback={updatePassword} onSubmit={LoginHandler}/>
         <RememberMe callback={updateRememberLoginCheck} />
 
         <button className="breakButton firstPrio" onClick={LoginHandler}>

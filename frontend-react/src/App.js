@@ -54,13 +54,11 @@ function App() {
   }
 
   useEffect(() => {
- 
     const tempAuth = storageHandler.getLoginFromStorage();
     if(tempAuth.token){
       updateAuth(tempAuth);
-      updateTheme(tempAuth.theme);
+      updateTheme(tempAuth.isLight);
       //work-around to get logout msg at back button in group chat
-      updateActiveState("login");
       updateActiveState("groupChat");
     }
   }, [])

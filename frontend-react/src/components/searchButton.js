@@ -214,9 +214,10 @@ function SearchButton({ messageHistory }) {
                 className="nextResultBtn"
                 onClick={() => {
                   toggleSearchbarVisible(!searchbarVisible);
+                  removeAllFocusStyling();
                 }}
               >
-                <img alt="next" src={isLight ? xDark : xLight} />
+                <img alt="close" src={isLight ? xDark : xLight} />
               </button>
 
             </div>
