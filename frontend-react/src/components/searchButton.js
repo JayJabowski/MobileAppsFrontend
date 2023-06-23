@@ -133,18 +133,18 @@ function SearchButton({ messageHistory }) {
   };
 
   const applyFocusStyling = (id) => {
-    const resultHTML = document.getElementById(`msg${id}`);
+    const resultHTML = document.getElementById(`msgwrap${id}`);
     resultHTML.classList.add("searchFocus");
   };
 
   const removeFocusStyling = (id) => {
-    const resultHTML = document.getElementById(`msg${id}`);
+    const resultHTML = document.getElementById(`msgwrap${id}`);
     resultHTML.classList.remove("searchFocus");
   };
 
   const removeAllFocusStyling = () => {
     messageHistory.map((msg) => {
-      const resultHTML = document.getElementById(`msg${msg.id}`);
+      const resultHTML = document.getElementById(`msgwrap${msg.id}`);
       resultHTML.classList.remove("searchFocus");
     });
   };

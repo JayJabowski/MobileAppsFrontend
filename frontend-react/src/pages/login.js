@@ -77,9 +77,7 @@ function Login({msg}) {
       storageHandler.addToLocalStorage({hash: response.data.hash, token: response.data.token, user, isLight: true});
     }
   };
-
-// Error-Handling
-
+  
   return (
     <div className="loginRegister">
       <form>
@@ -88,11 +86,12 @@ function Login({msg}) {
         <SignUpPassword placeholder={"Password"} callback={updatePassword} onSubmit={LoginHandler}/>
         <RememberMe callback={updateRememberLoginCheck} />
 
-        <button className="breakButton firstPrio" onClick={LoginHandler}>
+        <button className="breakButton firstPrio hoverWhite" onClick={LoginHandler}>
           Login
         </button>
+
         <button
-          className="breakButton secondPrio"
+          className="breakButton secondPrio hoverWhite"
           onClick={() => updateActiveState("register")}
         >
           Sign Up

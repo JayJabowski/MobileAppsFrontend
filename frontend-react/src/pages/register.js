@@ -96,7 +96,7 @@ function Register() {
         
         updateInfoMsg({...tmpmsgs});
 
-        return !!tmpmsgs.keys().length;
+        return !Object.values(tmpmsgs).length;
     }
     
     return ( 
@@ -114,8 +114,8 @@ function Register() {
             <SignUpPassword placeholder={"Repeat Your Password"} callback={updateRepeatedPassword} />
             {infomsg.repeatedPassword ? <ErrorMessage text = {infomsg.repeatedPassword} callback = {() => setInfoMsProperty("repeatedPassword", null)}/> : <></>}
 
-            <button className="breakButton firstPrio" onClick={RegisterHandler}>Create Account</button>
-            <button className="breakButton secondPrio" onClick={() => updateActiveState("login")}>Already have an account? Sign in!</button>
+            <button className="breakButton hoverWhite" onClick={RegisterHandler}>Create Account</button>
+            <button className="breakButton hoverWhite" onClick={() => updateActiveState("login")}>Already have an account? Sign in!</button>
         </form>
         </div>
 

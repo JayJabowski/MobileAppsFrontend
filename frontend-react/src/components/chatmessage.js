@@ -3,7 +3,7 @@ import useAuth from '../hooks/useAuth';
 import { fetchPhoto } from '../api/Fetcher';
 import { parseTimeString } from '../tools/tools';
 
-function ChatMessage({userhash, usernickname, user, text, time, photoid, id}) {
+function ChatMessage({userhash, usernickname, user, text, time, photoid, id, scrollDown}) {
     const { auth } = useAuth();
     const [image, setImage] = useState(undefined);
 
@@ -20,6 +20,7 @@ function ChatMessage({userhash, usernickname, user, text, time, photoid, id}) {
     const photoLoader = async () =>{
         const response = await fetchPhoto(auth.token,photoid);
         updateImage(new Blob([response.data]));
+        scrollDown("instant");
     }
 
     const getFormattedTime = () => {
@@ -46,12 +47,12 @@ function ChatMessage({userhash, usernickname, user, text, time, photoid, id}) {
     }
 
     return (
-        <div id={`msg${id}`} className={`${userhash === auth.hash ? "self" : ""} wrapper`}>
+        <div id={`msgwrap${id}`} className={`${userhash === auth.hash ? "self" : ""} wrapper`}>
             <div className="messageCard" >
                 <label className="name">{usernickname || user}</label>
                 { photoid && image ? <img src={URL.createObjectURL(image)} alt="photo" width="100%" /> : <></>}
                 <label className="text">{text}</label>
-                <label className="time">{getFormattedTime()}</label>
+                <label className="time" id={`msg${id}`}>{getFormattedTime()}</label>
             </div>
         </div>
       );

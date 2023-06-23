@@ -25,14 +25,14 @@ function Title() {
       </div>
 
       <button
-        className="breakButton"
+        className="breakButton hoverWhite"
         onClick={() => updateActiveState("login")}
       >
         Login
       </button>
 
       <button
-        className="breakButton"
+        className="breakButton hoverWhite"
         onClick={() => updateActiveState("register")}
       >
         Sign Up

@@ -11,8 +11,6 @@ import downDark from "../icons/down_dark.svg"
 import downLight from "../icons/down_light.svg"
 import sendDark from "../icons/send_dark.svg";
 import sendLight from "../icons/send_light.svg";
-import redoDark from "../icons/redo_dark.svg";
-import redoLight from "../icons/redo_light.svg";
 
 import useActiveTheme from '../hooks/useActiveTheme';
 import PhotoButton from './photobutton';
@@ -22,11 +20,11 @@ import PhotoFromFile from './PhotoFromFile';
 
 
 
-function MessageInput({ updateChat}) {
+function MessageInput({ updateChat }) {
   const { auth, setAuth } = useAuth();
   const { isLight } = useActiveTheme();
 
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("");
   const [emojiPanelVisible, setEmojiPanelVisible] = useState(false);
   const [photoURL, setPhotoURL] = useState("");
     
@@ -90,6 +88,9 @@ function MessageInput({ updateChat}) {
           placeholder="Type a message"
           value={message}
           onChange={updateMessage}
+
+            style={{}}
+
         ></textarea>
 
             {(photoURL || message)

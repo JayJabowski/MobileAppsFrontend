@@ -34,7 +34,7 @@ function PhotoFromFile({updatePhotoURL}) {
     return ( 
         <form className="uploadWrapper">
             <input id="files" type="file" onChange={createPhotoURL} accept="image/*" />
-            <label for="files"> 
+            <label htmlFor="files"> 
                 <img alt="upload" src={isLight ? clipDark : clipLight} />
             </label>
         </form>

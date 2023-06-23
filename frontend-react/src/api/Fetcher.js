@@ -94,6 +94,9 @@ const fetchPhotoGET = async (token, photoid) => {
 
     return response;
   } catch (err) {
+    console.dir(err);
+    if(!err.response) return err.request;
+
     return err.response;
   }
 };
@@ -113,7 +116,7 @@ const sendMessagePost = async (token, message, photoURL) => {
 
     return response;
   } catch (err) {
-    return err.reponse;
+    return err.response;
   }
 };
 const sendPhotoPost = async (token, photoURL) => {
@@ -130,7 +133,7 @@ const sendPhotoPost = async (token, photoURL) => {
 
     return response;
   } catch (err) {
-    return err.reponse;
+    return err.response;
   }
 };
 
@@ -196,17 +199,20 @@ const logoutPost = async (token) => {
   return response;
 };
 const fetchPhoto = async (token, photoid) => {
-  const request = {
-    request: "fetchphoto",
-    token,
-    photoid
-  };
+ 
 
-  const response = await axios.post("", request, {
-    headers: { "Content-Type": "application/json" },
-    responseType: "blob"
-  });
-  return response;
+    const request = {
+      request: "fetchphoto",
+      token,
+      photoid
+    };
+    
+    const response = await axios.post("", request, {
+      headers: { "Content-Type": "application/json" },
+      responseType: "blob"
+    });
+    return response;
+  
 };
 
 export {

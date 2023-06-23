@@ -48,6 +48,12 @@ html {
   overflow-y: hidden;
 }
 
+.clickable:hover {
+  background-color: var(--backgroundShadeC);
+  border-radius: 0.3em;
+  cursor: pointer;
+}
+
 .background {
   display: flex;
   flex-direction: column;
@@ -91,6 +97,7 @@ html {
   justify-content: flex-start;
   flex-grow: 1;
   position: relative;
+  z-index: 0;
   -ms-overflow-style: none;
   /* for Internet Explorer, Edge */
   scrollbar-width: none;
@@ -207,6 +214,8 @@ html {
   width: 100%;
 }
 .footer .emojiWrapper {
+  position: relative;
+  z-index: 2;
   margin: 0;
   padding-bottom: 0;
   padding-top: 1em;
@@ -261,6 +270,7 @@ html {
   flex-grow: 1;
   overflow-y: hidden;
   resize: none;
+  height: 1.5em;
   border: 0;
   margin-left: 1em;
   margin-right: 1em;
@@ -313,13 +323,17 @@ html {
   height: 2.6em;
 }
 .titleBar .titleRight {
+  font-size: var(--textSize);
   position: relative;
   margin-right: 0.5em;
-  width: 2.5em;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+}
+.titleBar .titleRight .titleButton {
+  margin-left: 0.5em;
 }
 
 .menuWrapper {
@@ -332,6 +346,7 @@ html {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 2;
   height: 100vh;
   width: 100vw;
 }
@@ -365,6 +380,7 @@ html {
   margin-left: 1em;
   margin-right: 1em;
   border-bottom: 0.1em var(--backgroundShadeC) solid;
+  padding-left: 1em;
 }
 .menuWrapper .menu .menuItem label {
   flex-grow: 1;
@@ -400,7 +416,6 @@ html {
   border-bottom: 0.1em var(--textShadeC) solid;
   margin-left: 1em;
   margin-right: 1em;
-  width: calc(100% - 2em);
 }
 .menuWrapper .menu .menuDivider img {
   width: 1em;
@@ -442,11 +457,15 @@ html {
   width: var(--lightIndentRemainder);
 }
 .breakButton:hover {
-  background-color: var(--backgroundC);
+  background-color: var(--backgroundShadeC);
   color: var(--textC);
 }
 .breakButton:hover {
   box-shadow: 0 0 0.7em var(--backgroundShadeC);
+}
+
+.hoverWhite:hover {
+  background-color: var(--backgroundC);
 }
 
 .firstPrio {
@@ -477,6 +496,7 @@ html {
   margin-top: 1em;
 }
 .loginRegister form input {
+  font-size: var(--inputSize);
   border: 0;
   border-radius: 0;
   color: var(--textC);
@@ -653,6 +673,7 @@ html {
 
 .backButtonPopupWrapper {
   position: fixed;
+  z-index: 3;
   top: 0;
   left: 0;
   width: 100vw;
@@ -680,7 +701,7 @@ html {
   box-shadow: 0 0 0.7em var(--backgroundShadeC);
   max-width: calc(var(--maxWidth) - 4em);
   position: relative;
-  z-index: 3;
+  z-index: 4;
   border: var(--frameVisible) var(--textShadeC) solid;
   margin: 1em;
   padding: 1em;
@@ -688,19 +709,27 @@ html {
 }
 
 .titleButton {
+  border-radius: 0.3em;
   background: transparent;
   border: 0;
-  padding: 0;
-  height: calc(var(--titleSize) * 1.2);
-  width: calc(var(--titleSize) * 1.2);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 2.5em;
+  width: 2.5em;
+}
+.titleButton img {
+  height: 2em;
+  width: 2em;
 }
 .titleButton:hover {
   cursor: pointer;
   background-color: var(--backgroundShadeC);
 }
 .titleButton img {
-  height: 100%;
-  width: 100%;
+  height: 70%;
+  width: 70%;
 }
 .titleButton:disabled {
   display: none;
@@ -710,7 +739,7 @@ html {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 2;
   height: 15vh;
   width: 100vw;
   display: flex;
@@ -719,6 +748,8 @@ html {
   justify-content: center;
 }
 .searchOverlay .searchWrapper {
+  z-index: 3;
+  position: relative;
   font-family: Outfit;
   font-weight: 400;
   font-size: var(--inputSize);
@@ -877,7 +908,6 @@ html {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 1em;
   border: none;
 }
 .breakButtonWrapper .photoHeader img {
@@ -890,11 +920,13 @@ html {
   justify-content: center;
   margin: 2em;
   border-width: 0;
-  height: 2em;
-  width: 2em;
+  height: 3em;
+  width: 3em;
+  border-radius: 50%;
+  background-color: var(--backgroundShadeC);
 }
 .breakButtonWrapper .photoHeader button:hover {
-  background-color: var(--backgroundShadeC);
+  background-color: var(--backgroundC);
 }
 .breakButtonWrapper .photoFooter {
   display: flex;
@@ -945,7 +977,18 @@ html {
   align-items: center;
   justify-content: flex-end;
   box-shadow: 0 0 0.7em var(--backgroundShadeC);
+  border-radius: 0.3em;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   padding: 1em;
+  background-color: var(--primaryC);
+}
+.photoPanel .photoHeader {
+  margin-top: 1.1em;
+}
+.photoPanel .photoHeader button {
+  height: 2em;
+  width: 2em;
 }
 .photoPanel img {
   border-radius: 0.3em;

@@ -142,7 +142,7 @@ $thin: 300;
     border-width: 0;
 
     &:hover {
-        background-color: var(--backgroundC);
+        background-color: var(--backgroundShadeC);
         color: var(--textC);
     }
 }
@@ -173,10 +173,15 @@ $thin: 300;
 }
 
 @mixin titleButton() {
+    @include roundedCorners(false);
     background: transparent;
     border: 0;
 
-    padding: 0;
+
+    img{
+        height:2em;
+        width: 2em;
+    }
 
     &:hover {
         cursor: pointer;
@@ -198,6 +203,14 @@ html {
     border: 0;
     overflow-x: hidden;
     overflow-y: hidden;
+}
+
+.clickable{
+    &:hover{
+        background-color: var(--backgroundShadeC);
+        @include roundedCorners(false);
+        cursor: pointer;
+    }
 }
 
 .background {
@@ -237,6 +250,7 @@ html {
     @include flexOAJ(column, flex-start, flex-start);
     flex-grow: 1;
     position:relative;
+    z-index:0;
 
     @include hideScrollbar();
     overflow-y: scroll;
@@ -333,7 +347,10 @@ html {
     background-color: var(--backgroundC);
     width: 100%;
 
+
     .emojiWrapper{
+        position:relative;
+        z-index: 2;
         
         .emojiContainer{
             @include hideScrollbar();
@@ -383,6 +400,7 @@ html {
             flex-grow: 1;
             overflow-y: hidden;
             resize: none;
+            height:1.5em;
 
             border: 0;
 
@@ -421,10 +439,16 @@ html {
     }
 
     .titleRight {
+        font-size: var(--textSize);
+
         position:relative;
         margin-right: 0.5em;
-        width: 2.5em;
+        height: 100%;
         @include flexOAJ(row, center, flex-end);
+
+        .titleButton{
+            margin-left: 0.5em;
+        }
     }
 
 }
@@ -435,6 +459,7 @@ html {
     position:fixed;
     top:0;
     left:0;
+    z-index:2;
 
     height: 100vh;
     width: 100vw;
@@ -465,6 +490,7 @@ html {
             margin-left: 1em;
             margin-right: 1em;
             border-bottom: 0.1em var(--backgroundShadeC) solid;
+            padding-left: 1em;
 
             label{
                 flex-grow: 1;
@@ -498,7 +524,6 @@ html {
             border-bottom: 0.1em var(--textShadeC) solid;
             margin-left: $marginSides;
             margin-right: $marginSides;
-            width: calc(100% - 2* $marginSides);
 
             img{
                 width: 1em;
@@ -538,6 +563,12 @@ html {
     }
 }
 
+.hoverWhite{
+    &:hover{
+        background-color: var(--backgroundC);
+    }
+}
+
 .firstPrio {
     background-color: var(--primaryC);
 }
@@ -561,6 +592,7 @@ html {
         margin-top: 1em;
 
         input {
+            font-size: var(--inputSize);
             border: 0;
             border-radius: 0;
             color: var(--textC);
@@ -740,6 +772,7 @@ html {
 
     .backButtonPopupWrapper{
         position: fixed;
+        z-index:3;
         top: 0;
         left: 0;
         width: 100vw;
@@ -761,7 +794,7 @@ html {
             max-width: calc(var(--maxWidth) - 4* $marginSides);
 
             position: relative;
-            z-index: 3;
+            z-index: 4;
             border: var(--frameVisible) var(--textShadeC) solid;
 
             margin: 1em;
@@ -775,11 +808,17 @@ html {
 
 .titleButton {
     @include titleButton();
+    @include flexOAJ(row, center, center);
 
-    height: calc(var(--titleSize) * 1.2);
-    width: calc(var(--titleSize) * 1.2);
+    height: 2.5em;
+    width: 2.5em;
 
-    @include imageLimiter();
+
+
+   img{
+    height: 70%;
+    width: 70%;
+   }
 
     &:disabled {
         display: none;
@@ -790,7 +829,7 @@ html {
     position:fixed;
     top: 0;
     left: 0;
-    z-index:1;
+    z-index:2;
     height: 15vh;
     width: 100vw;
 
@@ -799,6 +838,8 @@ html {
     .searchWrapper {
         $top: 3.5em;
         $margin: 10%;
+        z-index:3;
+        position:relative;
 
         @mixin margins(){
             padding-top: 0.5em;
@@ -882,6 +923,7 @@ html {
         @include dropShadow();
         position:fixed;
 
+
         left: calc(50vw - 3em);
         margin: 2em;
         border-width:0;
@@ -948,7 +990,6 @@ html {
     .photoHeader{
         @include flexOAJ(row, center, space-between);
         width: 100%;
-        margin: 1em;
         border: none;
         
         img{
@@ -959,11 +1000,13 @@ html {
             margin: 2em;
             border-width:0;
 
-            height:2em;
-            width: 2em;
+            height:3em;
+            width: 3em;
+            border-radius: 50%;
+            background-color: var(--backgroundShadeC);
 
             &:hover{
-                background-color: var(--backgroundShadeC);
+                background-color: var(--backgroundC);
             }
         }
         
@@ -1020,7 +1063,23 @@ html {
     position:relative;
     @include flexOAJ(column, center, flex-end);
     @include dropShadow();
+    @include roundedCorners(false);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     padding: 1em;
+
+    .photoHeader{
+        margin-top: 1.1em;
+
+        button{
+            height:2em;
+            width: 2em;
+        }
+    }
+
+
+
+    background-color: var(--primaryC);
     
     img{
         @include roundedCorners(false);
@@ -1045,3 +1104,4 @@ html {
         background-color: var(--backgroundShadeC);
     }
 }
+

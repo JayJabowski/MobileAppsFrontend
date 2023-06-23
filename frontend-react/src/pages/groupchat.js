@@ -85,7 +85,7 @@ function GroupChat({messageHistory, updateMessageHistory}) {
                     return(
                         <>
                             {insertDatecard(msg,i)}
-                            <ChatMessage {...msg} key={msg.id} />
+                            <ChatMessage {...msg} scrollDown={scrollDown} key={msg.id} />
                         </>)
                 })}
                 <div id="chatBottom"></div>
@@ -100,6 +100,7 @@ function GroupChat({messageHistory, updateMessageHistory}) {
                     <button className='goToBottom' 
                         onClick={(e) => {
                             e.preventDefault();
+                            updateChat();
                             
                             scrollDown("smooth");
                     }}>
