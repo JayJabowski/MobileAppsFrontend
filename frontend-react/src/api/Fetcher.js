@@ -20,11 +20,9 @@ const getDateInFuture = (MonthsInAdvance) => {
 
 const loginGET = async (user, pass) => {
   try {
-    //returns token in response.data
-    const lazyFix = pass || "WeakArmsStrongPasswords";
 
     const response = await axios.get(
-      `?request=login&userid=${user}&password=${lazyFix}`
+      `?request=login&userid=${user}&password=${pass}`
     );
 
     return response;
